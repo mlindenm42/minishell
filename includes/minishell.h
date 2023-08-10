@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 19:03:19 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/10 19:08:52 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/10 19:47:27 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,7 @@
 # include <stdlib.h>
 
 typedef struct s_data {
-	int				nb_of_ps;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				have_to_eat;
-	long			start_time;
-	int				death;
-	int				finished;
-
+	int				number;
 }	t_data;
 
 // check.c
@@ -35,6 +27,7 @@ typedef struct s_data {
 // void	free_all(void);
 
 // main.c
+t_data	*get_data(void);
 
 // utils.c
 size_t	ft_strlen(const char *s);
