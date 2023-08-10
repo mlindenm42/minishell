@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/10 19:08:54 by mlindenm         ###   ########.fr       */
+/*   Created: 2023/08/10 19:01:22 by mlindenm          #+#    #+#             */
+/*   Updated: 2023/08/10 19:08:45 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 
-int	main(void)
+size_t	ft_strlen(const char *s)
 {
-	char	*prompt;
-	char	*input;
+	size_t	i;
 
-	prompt = getenv("USER");
-	ft_strlcat(prompt, " % ", ft_strlen(prompt) + 4);
-	while (1)
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
+
+size_t	ft_strlcat(char *dst, const char *src, size_t n)
+{
+	size_t	dst_len;
+	size_t	i;
+
+	dst_len = ft_strlen(dst);
+	if (n <= dst_len)
+		return (ft_strlen(src) + n);
+	i = 0;
+	while ((dst_len + i) < (n - 1) && src[i] != '\0')
 	{
-		input = readline(prompt);
-		if (!input)
-			break ;
-		if (*input)
-			add_history(input);
-		printf("You entered: %s\n", input);
-		free(input);
+		dst[dst_len + i] = src[i];
+		i++;
 	}
-	return (0);
+	dst[dst_len + i] = '\0';
+	return (ft_strlen(src) + dst_len);
 }
