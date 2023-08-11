@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/10 19:46:30 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:37:11 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_data	*get_data(void)
 	return (&all_t_data);
 }
 
-int	main(void)
+void	prompt(void)
 {
 	char	*prompt;
 	char	*input;
@@ -39,5 +39,10 @@ int	main(void)
 		printf("You entered: %s\n", input);
 		free(input);
 	}
+}
+
+int	main(void)
+{
+	prompt();
 	return (0);
 }
