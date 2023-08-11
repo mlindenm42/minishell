@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 19:03:19 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/10 19:47:27 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:36:07 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 
 typedef struct s_data {
-	int				number;
+	char	*prompt;
 }	t_data;
 
 // check.c
