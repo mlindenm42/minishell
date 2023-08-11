@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 18:32:39 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/11 18:34:49 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/11 22:26:25 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,22 @@ void	lexer(char *input)
 void	prompt(void)
 {
 	char	*input;
-	char	*name;
 
-	name = getenv("USER");
-	get_data()->prompt = (char *) malloc((ft_strlen(name) + 4) * sizeof(char));
-	printf("HALLO\n");
-	// if (get_data()->prompt == NULL)
-	// 	error("malloc prompt failed");
-	get_data()->prompt = name;
-	// ft_strlcat(get_data()->prompt, " % ", ft_strlen(get_data()->prompt) + 4);
+	if (getenv("USER") != NULL)
+	{
+		get_data()->prompt = (char *) malloc((ft_strlen(getenv("USER")) + 4) * sizeof(char));
+		// if (get_data()->prompt == NULL)
+		// 	error("malloc prompt failed");
+		get_data()->prompt = getenv("USER");
+		ft_strlcat(get_data()->prompt, " % ", ft_strlen(get_data()->prompt) + 4);
+	}
+	else
+	{
+		get_data()->prompt = (char *) malloc(8 * sizeof(char));
+		// if (get_data()->prompt == NULL)
+		// 	error("malloc prompt failed");
+		get_data()->prompt = "USER % ";
+	}
 	while (1)
 	{
 		input = readline(get_data()->prompt);
@@ -45,5 +52,5 @@ void	prompt(void)
 		lexer(input);
 		free(input);
 	}
-	// free(get_data()->prompt);
+	free(get_data()->prompt);
 }
