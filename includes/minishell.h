@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 19:03:19 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/11 15:47:29 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:34:26 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ typedef struct s_data {
 // error.c
 // void	error(char *reason);
 // void	free_all(void);
+
+// lexer.c
+void	prompt(void);
+void	lexer(char *input);
 
 // main.c
 t_data	*get_data(void);
