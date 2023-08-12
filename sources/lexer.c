@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 18:32:39 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/11 22:26:25 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/12 23:35:53 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,67 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <signal.h>
+#include <unistd.h>
 
 void	lexer(char *input)
 {
 	char	**test;
+	int		i;
 
 	test = ft_split(input, ' ');
 	printf("%s \n", test[0]);
+	i = 0;
+	while (test[i] != NULL)
+	{
+		if (test[i] != NULL)
+			free(test[i++]);
+	}
+	if (test != NULL)
+		free(test);
 }
 
-void	prompt(void)
+void	handle_ctrl_c(int signal)
+{
+	if (signal == SIGINT)
+	{
+		write(2, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
+void	handle_ctrl_backslash(int signal)
+{
+	if (signal == SIGQUIT)
+		rl_redisplay();
+}
+
+void	handle_ctrl_d(void)
+{
+	printf("exit\n");
+}
+
+void	terminal(void)
 {
 	char	*input;
 
-	if (getenv("USER") != NULL)
-	{
-		get_data()->prompt = (char *) malloc((ft_strlen(getenv("USER")) + 4) * sizeof(char));
-		// if (get_data()->prompt == NULL)
-		// 	error("malloc prompt failed");
-		get_data()->prompt = getenv("USER");
-		ft_strlcat(get_data()->prompt, " % ", ft_strlen(get_data()->prompt) + 4);
-	}
-	else
-	{
-		get_data()->prompt = (char *) malloc(8 * sizeof(char));
-		// if (get_data()->prompt == NULL)
-		// 	error("malloc prompt failed");
-		get_data()->prompt = "USER % ";
-	}
 	while (1)
 	{
+		signal(SIGINT, handle_ctrl_c);
+		signal(SIGQUIT, handle_ctrl_backslash);
+		signal(SIGTSTP, SIG_IGN);
 		input = readline(get_data()->prompt);
-		if (!input)
+		if (input == NULL)
+		{
+			handle_ctrl_d();
 			break ;
+		}
 		if (*input)
 			add_history(input);
 		lexer(input);
 		free(input);
 	}
-	free(get_data()->prompt);
+	rl_clear_history();
 }

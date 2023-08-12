@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 19:03:19 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/11 18:34:26 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/12 23:36:49 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,28 @@
 
 # include <stdlib.h>
 
+typedef struct s_token {
+	char	*word;
+}	t_token;
+
 typedef struct s_data {
 	char	*prompt;
+	char	**tokens;
 }	t_data;
 
 // check.c
 // void	check_arg(int argc, char *argv[]);
 
+// init.c
+void	init_prompt(void);
+
 // error.c
-// void	error(char *reason);
+void	error(char *reason);
 // void	free_all(void);
 
 // lexer.c
-void	prompt(void);
 void	lexer(char *input);
+void	terminal(void);
 
 // main.c
 t_data	*get_data(void);
