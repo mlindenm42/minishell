@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/12 13:57:53 by mrubina          ###   ########.fr       */
+/*   Created: 2022/10/31 14:34:41 by mrubina           #+#    #+#             */
+/*   Updated: 2022/12/07 00:29:16 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(void)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	//char	*input;
-	t_token *tkns;
-	t_cmdtable *tbl;
+	unsigned int	i;
+	char			*str;
 
-	tkns = lexer();
-	tbl = parser(tkns);
-	print_table(tbl, 2);
-
-	/* rl_bind_key('\t', rl_complete);
-	input = readline("Enter something: ");
-	if (input && *input)
+	if (s == 0)
+		return (0);
+	str = (char *)malloc(ft_strlen(s) + 1);
+	if (str == 0)
+		return (0);
+	i = 0;
+	while (s[i] != '\0')
 	{
-		add_history(input);
+		str[i] = f(i, s[i]);
+		i++;
 	}
-	printf("You entered: %s\n", input);
-	free(input); */
-	return (0);
+	str[i] = '\0';
+	return (str);
 }

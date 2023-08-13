@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/12 13:57:53 by mrubina          ###   ########.fr       */
+/*   Created: 2022/11/06 22:12:51 by mrubina           #+#    #+#             */
+/*   Updated: 2022/12/07 14:57:47 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(void)
+int	ft_lstsize(t_list *lst)
 {
-	//char	*input;
-	t_token *tkns;
-	t_cmdtable *tbl;
+	int	count;
 
-	tkns = lexer();
-	tbl = parser(tkns);
-	print_table(tbl, 2);
-
-	/* rl_bind_key('\t', rl_complete);
-	input = readline("Enter something: ");
-	if (input && *input)
+	count = 0;
+	while (lst != 0)
 	{
-		add_history(input);
+		count++;
+		lst = lst->next;
 	}
-	printf("You entered: %s\n", input);
-	free(input); */
-	return (0);
+	return (count);
 }

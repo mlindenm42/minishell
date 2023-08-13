@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/12 13:57:53 by mrubina          ###   ########.fr       */
+/*   Created: 2022/11/06 21:13:58 by mrubina           #+#    #+#             */
+/*   Updated: 2022/12/07 14:54:07 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(void)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	//char	*input;
-	t_token *tkns;
-	t_cmdtable *tbl;
-
-	tkns = lexer();
-	tbl = parser(tkns);
-	print_table(tbl, 2);
-
-	/* rl_bind_key('\t', rl_complete);
-	input = readline("Enter something: ");
-	if (input && *input)
+	if ((lst != 0) && (del != 0))
 	{
-		add_history(input);
+		del(lst->content);
+		free(lst);
 	}
-	printf("You entered: %s\n", input);
-	free(input); */
-	return (0);
 }

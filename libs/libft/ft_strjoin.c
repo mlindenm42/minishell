@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/12 13:57:53 by mrubina          ###   ########.fr       */
+/*   Created: 2022/10/31 14:35:31 by mrubina           #+#    #+#             */
+/*   Updated: 2022/12/07 00:11:56 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(void)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	//char	*input;
-	t_token *tkns;
-	t_cmdtable *tbl;
+	char	*str;
+	size_t	len1;
+	size_t	len2;
 
-	tkns = lexer();
-	tbl = parser(tkns);
-	print_table(tbl, 2);
-
-	/* rl_bind_key('\t', rl_complete);
-	input = readline("Enter something: ");
-	if (input && *input)
+	if ((s1 != 0) && (s2 != 0))
 	{
-		add_history(input);
+		len1 = ft_strlen(s1);
+		len2 = ft_strlen(s2);
+		str = malloc(len1 + len2 + 1);
+		if (str != 0)
+		{
+			ft_strlcpy(str, s1, len1 + 1);
+			ft_strlcat(str, s2, len2 + len1 + 1);
+		}
+		return (str);
 	}
-	printf("You entered: %s\n", input);
-	free(input); */
-	return (0);
+	else
+		return (0);
 }

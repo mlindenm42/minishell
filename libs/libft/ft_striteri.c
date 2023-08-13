@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/12 13:57:53 by mrubina          ###   ########.fr       */
+/*   Created: 2022/10/31 14:35:20 by mrubina           #+#    #+#             */
+/*   Updated: 2022/12/07 00:10:52 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
+#include <string.h>
 
-int	main(void)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	//char	*input;
-	t_token *tkns;
-	t_cmdtable *tbl;
+	unsigned int	i;
 
-	tkns = lexer();
-	tbl = parser(tkns);
-	print_table(tbl, 2);
-
-	/* rl_bind_key('\t', rl_complete);
-	input = readline("Enter something: ");
-	if (input && *input)
+	i = 0;
+	while ((s != 0) && (s[i] != '\0'))
 	{
-		add_history(input);
+		f(i, &(s[i]));
+		i++;
 	}
-	printf("You entered: %s\n", input);
-	free(input); */
-	return (0);
 }

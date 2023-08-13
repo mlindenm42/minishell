@@ -1,34 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/12 13:57:53 by mrubina          ###   ########.fr       */
+/*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
+/*   Updated: 2023/08/12 13:54:00 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+/* structures */
 
-int	main(void)
+#ifndef STRUCTS_H
+# define STRUCTS_H
+
+typedef struct s_token
 {
-	//char	*input;
-	t_token *tkns;
-	t_cmdtable *tbl;
+	int		token;
+	char	*val;
+}	t_token;
 
-	tkns = lexer();
-	tbl = parser(tkns);
-	print_table(tbl, 2);
+typedef struct s_iof
+{
+	int		io;
+	char	*file;
+}	t_iof;
 
-	/* rl_bind_key('\t', rl_complete);
-	input = readline("Enter something: ");
-	if (input && *input)
-	{
-		add_history(input);
-	}
-	printf("You entered: %s\n", input);
-	free(input); */
-	return (0);
-}
+typedef struct s_cmdtable
+{
+	int		pipe;
+	char	*cmd;
+	char	**args;
+	t_iof	*infiles;
+	t_iof	*outfiles;
+	char	**curr_a;
+	t_iof	*curr_i;
+	t_iof	*curr_o;
+	int		nargs;
+	int		nins;
+	int		nouts;
+}	t_cmdtable;
+
+#endif

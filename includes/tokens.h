@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   tokens.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/12 13:57:53 by mrubina          ###   ########.fr       */
+/*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
+/*   Updated: 2023/08/13 18:08:44 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#ifndef TOKENS_H
+# define TOKENS_H
 
-int	main(void)
-{
-	//char	*input;
-	t_token *tkns;
-	t_cmdtable *tbl;
+# define NOTOKEN 0
+# define GT 1
+# define LT 2
+# define GGT 3
+# define LLT 4
+# define PIPE 5
+# define WORD 6
+# define END 7
 
-	tkns = lexer();
-	tbl = parser(tkns);
-	print_table(tbl, 2);
-
-	/* rl_bind_key('\t', rl_complete);
-	input = readline("Enter something: ");
-	if (input && *input)
-	{
-		add_history(input);
-	}
-	printf("You entered: %s\n", input);
-	free(input); */
-	return (0);
-}
+#endif
