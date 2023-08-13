@@ -6,17 +6,19 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/13 21:58:31 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/13 22:25:06 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <signal.h>
-#include <unistd.h>
+#include <stdio.h> // printf(); FILE;
+#include <readline/readline.h> // rl_replace_line(); rl_on_new_line();
+// rl_redisplay(); readline(); rl_clear_history();
+#include <readline/history.h> // add_history(input);
+#include <signal.h> // signal(); SIGINT; SIGQUIT; SIGSTP; SIG_IGN;
+#include <unistd.h> // write();
 
+// handles ctrl-C. Displays a new prompt on a new line.
 static void	handle_ctrl_c(int signal)
 {
 	if (signal == SIGINT)
@@ -28,21 +30,38 @@ static void	handle_ctrl_c(int signal)
 	}
 }
 
+// handles ctrl-D. Exits the shell.
+static void	handle_ctrl_d(void)
+{
+	printf("exit\n");
+}
+
+// handles ctrl-\. Does nothing.
 static void	handle_ctrl_backslash(int signal)
 {
 	if (signal == SIGQUIT)
 		rl_redisplay();
 }
 
-static void	handle_ctrl_d(void)
+// gets the username(if available) and saves it in data->prompt
+static void	prompt(void)
 {
-	printf("exit\n");
+	if (getenv("USER") != NULL)
+	{
+		get_data()->prompt = getenv("USER");
+		ft_strlcat(get_data()->prompt, " % ",
+			ft_strlen(get_data()->prompt) + 4);
+	}
+	else
+		get_data()->prompt = "USER % ";
 }
 
+// prints terminal with the prompt and handles the signals
 void	terminal(void)
 {
 	char	*input;
 
+	prompt();
 	while (1)
 	{
 		signal(SIGINT, handle_ctrl_c);

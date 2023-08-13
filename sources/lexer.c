@@ -6,16 +6,12 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 18:32:39 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/13 21:57:43 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/13 22:09:26 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <signal.h>
-#include <unistd.h>
+#include <stdio.h> // printf();
 
 // void	check_arg(t_stack_ptr *p, int argc, char *argv[])
 // {

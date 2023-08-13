@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/12 23:37:14 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/13 22:15:27 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_data	*get_data(void)
 
 int	main(void)
 {
-	init_prompt();
 	terminal();
 	return (0);
 }
