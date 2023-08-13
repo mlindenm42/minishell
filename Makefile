@@ -6,7 +6,7 @@
 #    By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/10 17:13:37 by mlindenm          #+#    #+#              #
-#    Updated: 2023/08/12 23:37:02 by mlindenm         ###   ########.fr        #
+#    Updated: 2023/08/13 21:58:47 by mlindenm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS		=	-Wall -Werror -Wextra
 SRC_DIR		=	sources
 OBJ_DIR		=	$(SRC_DIR)/obj
 
-SRC			=	$(SRC_DIR)/error.c $(SRC_DIR)/init.c $(SRC_DIR)/lexer.c $(SRC_DIR)/main.c $(SRC_DIR)/utils.c $(SRC_DIR)/utils_ft_split.c
+SRC			=	$(SRC_DIR)/error.c $(SRC_DIR)/init.c $(SRC_DIR)/lexer.c $(SRC_DIR)/main.c $(SRC_DIR)/terminal.c $(SRC_DIR)/utils.c $(SRC_DIR)/utils_ft_split.c
 OBJ			=	$(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
 all: $(NAME)

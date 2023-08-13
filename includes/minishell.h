@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 19:03:19 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/12 23:36:49 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/13 21:59:41 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,12 @@ void	error(char *reason);
 
 // lexer.c
 void	lexer(char *input);
-void	terminal(void);
 
 // main.c
 t_data	*get_data(void);
+
+// terminal.c
+void	terminal(void);
 
 // utils.c
 size_t	ft_strlen(const char *s);

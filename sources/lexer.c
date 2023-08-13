@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 18:32:39 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/12 23:35:53 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/13 21:57:43 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,30 @@
 #include <readline/history.h>
 #include <signal.h>
 #include <unistd.h>
+
+// void	check_arg(t_stack_ptr *p, int argc, char *argv[])
+// {
+// 	int		i;
+// 	int		j;
+
+// 	i = 1;
+// 	j = 0;
+// 	p->ptrptr = NULL;
+// 	while (i < argc)
+// 	{
+// 		p->ptrptr = ft_split(argv[i++], ' ');
+// 		if (p->ptrptr == NULL)
+// 			error_data(p, "split failed!\n");
+// 		while (*(p->ptrptr + j) != NULL)
+// 		{
+// 			if (!check_string(*(p->ptrptr + j)))
+// 				error_data(p, "invalid characters as arguments!\n");
+// 			j++;
+// 		}
+// 		j = 0;
+// 		free_ptrptr(p);
+// 	}
+// }
 
 void	lexer(char *input)
 {
@@ -32,49 +56,4 @@ void	lexer(char *input)
 	}
 	if (test != NULL)
 		free(test);
-}
-
-void	handle_ctrl_c(int signal)
-{
-	if (signal == SIGINT)
-	{
-		write(2, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
-
-void	handle_ctrl_backslash(int signal)
-{
-	if (signal == SIGQUIT)
-		rl_redisplay();
-}
-
-void	handle_ctrl_d(void)
-{
-	printf("exit\n");
-}
-
-void	terminal(void)
-{
-	char	*input;
-
-	while (1)
-	{
-		signal(SIGINT, handle_ctrl_c);
-		signal(SIGQUIT, handle_ctrl_backslash);
-		signal(SIGTSTP, SIG_IGN);
-		input = readline(get_data()->prompt);
-		if (input == NULL)
-		{
-			handle_ctrl_d();
-			break ;
-		}
-		if (*input)
-			add_history(input);
-		lexer(input);
-		free(input);
-	}
-	rl_clear_history();
 }
