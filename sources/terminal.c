@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/13 22:25:06 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/13 23:24:03 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,22 @@ static void	prompt(void)
 // prints terminal with the prompt and handles the signals
 void	terminal(void)
 {
-	char	*input;
-
 	prompt();
 	while (1)
 	{
 		signal(SIGINT, handle_ctrl_c);
 		signal(SIGQUIT, handle_ctrl_backslash);
 		signal(SIGTSTP, SIG_IGN);
-		input = readline(get_data()->prompt);
-		if (input == NULL)
+		get_data()->input = readline(get_data()->prompt);
+		if (get_data()->input == NULL)
 		{
 			handle_ctrl_d();
 			break ;
 		}
-		if (*input)
-			add_history(input);
-		lexer(input);
-		free(input);
+		if (*get_data()->input)
+			add_history(get_data()->input);
+		lexer(get_data()->input);
+		free(get_data()->input);
 	}
 	rl_clear_history();
 }

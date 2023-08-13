@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/12 13:54:00 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/13 23:36:10 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,11 @@ typedef struct s_cmdtable
 	int		nins;
 	int		nouts;
 }	t_cmdtable;
+
+typedef struct s_data {
+	char	*prompt;
+	char	*input;
+	char	**tokens;
+}	t_data;
 
 #endif
