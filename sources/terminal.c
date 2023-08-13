@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/13 23:24:03 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/14 00:11:24 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <readline/history.h> // add_history(input);
 #include <signal.h> // signal(); SIGINT; SIGQUIT; SIGSTP; SIG_IGN;
 #include <unistd.h> // write();
+#include <termios.h> // tcgetattr(); tcsetattr(); ECHOCTL; TCSANOW;
 
 // handles ctrl-C. Displays a new prompt on a new line.
 static void	handle_ctrl_c(int signal)
@@ -56,9 +57,15 @@ static void	prompt(void)
 		get_data()->prompt = "USER % ";
 }
 
-// prints terminal with the prompt and handles the signals
+// modifies terminal settings to disable echoing of control characters in the
+// terminal's input. prints terminal with the prompt and handles the signals
 void	terminal(void)
 {
+	struct termios	settings;
+
+	tcgetattr(STDIN_FILENO, &settings);
+	settings.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &settings);
 	prompt();
 	while (1)
 	{
