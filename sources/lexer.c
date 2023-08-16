@@ -6,67 +6,91 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 18:32:39 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/14 01:25:08 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/17 00:23:55 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <stdio.h> // printf();
 
-static int	check_string(char *str)
-{
-	int	i;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
-	i = 0;
-	if (*(str) == '+' || *(str) == '-')
-		i++;
-	if (*(str + i) < '0' || *(str + i) > '9')
-		return (0);
-	while (*(str + i) != '\0')
-	{
-		if (*(str + i) >= '0' && *(str + i) <= '9')
-			i++;
-		else
-			return (0);
-	}
-	return (1);
+t_token	*create_token(int type, const char *val)
+{
+	t_token	*token;
+
+	token = NULL;
+	token = (t_token *)malloc(sizeof(t_token));
+	if (token == NULL)
+		error("malloc");
+	token->type = type;
+	token->val = strdup(val);
+	return (token);
 }
 
-void	split_input(char *input)
+void	free_token(t_token *token)
 {
-	int		j;
+	free(token->val);
+	free(token);
+}
 
-	j = 0;
-	get_data()->tokens = NULL;
-	get_data()->tokens = ft_split(input, ' ');
-	if (get_data()->tokens == NULL)
-		error("split failed!\n");
-	while (*(get_data()->tokens + j) != NULL)
+t_token	*get_next_token(char **input)
+{
+	char	val[256];
+	int		i;
+
+	while (**input == ' ' || **input == '\t')
+		(*input)++;
+	if (**input == '\0')
+		return (create_token(END, ""));
+	if (**input == '|')
 	{
-		if (!check_string(*(get_data()->tokens + j)))
-			error("invalid characters as arguments!\n");
-		j++;
+		(*input)++;
+		return (create_token(PIPE, "|"));
 	}
-	j = 0;
-	// free_ptrptr(p);
+	else if (**input == '<')
+	{
+		(*input)++;
+		return (create_token(LT, "<"));
+	}
+	else if (**input == '>')
+	{
+		(*input)++;
+		return (create_token(GT, ">"));
+	}
+	i = 0;
+	while (**input != '\0' && **input != ' ' && **input != '\t'
+		&& **input != '|' && **input != '<' && **input != '>')
+	{
+		val[i++] = **input;
+		(*input)++;
+	}
+	val[i] = '\0';
+	if (strcmp(val, "echo") == 0 || strcmp(val, "cd") == 0
+		|| strcmp(val, "pwd") == 0 || strcmp(val, "export") == 0
+		|| strcmp(val, "unset") == 0 || strcmp(val, "env") == 0
+		|| strcmp(val, "exit") == 0)
+		return (create_token(CMD, val));
+	else
+		return (create_token(ARG, val));
 }
 
 void	lexer(char *input)
 {
 	int		i;
 
-	get_data()->tokens = ft_split(input, ' ');
+	get_data()->tokens = (t_token **) malloc(100 * sizeof(t_token *));
 	i = 0;
-	while (get_data()->tokens[i] != NULL)
-		printf("%d\n", ++i);
-	// split_input(input);
-	printf("%s \n", get_data()->tokens[0]);
-	i = 0;
-	while (get_data()->tokens[i] != NULL)
+	while (1)
 	{
-		if (get_data()->tokens[i] != NULL)
-			free(get_data()->tokens[i++]);
+		get_data()->tokens[i] = get_next_token(&input);
+		if (get_data()->tokens[i]->type == END)
+			break ;
+		printf("Token type: %d, Value: %s\n",
+			get_data()->tokens[i]->type, get_data()->tokens[i]->val);
+		i++;
 	}
-	if (get_data()->tokens != NULL)
-		free(get_data()->tokens);
 }
