@@ -6,21 +6,24 @@
 #    By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/10 17:13:37 by mlindenm          #+#    #+#              #
-#    Updated: 2023/08/12 23:38:13 by mrubina          ###   ########.fr        #
+#    Updated: 2023/08/19 18:08:02 by mrubina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
 CC			=	cc
-CFLAGS		=	-Wall -Werror -Wextra
+#CFLAGS		=	-Wall -Werror -Wextra
 
 SRC_DIR		=	sources
 OBJ_DIR		=	$(SRC_DIR)/obj
 
-SRC			=	$(SRC_DIR)/main.c $(SRC_DIR)/parser.c $(SRC_DIR)/parser_utils.c $(SRC_DIR)/err_handler.c $(SRC_DIR)/testfunc.c
-#SRC			=	$(SRC_DIR)/*.c
-OBJ			=	$(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+SRC_M		=	main.c
+SRC_P		= 	parser.c parser_utils.c err_handler.c testfunc.c getpath.c
+SRC_E		= 	executor.c exe_utils.c
+SRC 		= 	$(SRC_P) $(SRC_M) $(SRC_E)
+
+OBJ			=	$(patsubst $(SRC_DIR/*)/%.c, $(OBJ_DIR)/%.o, $(addprefix $(SRC_DIR/*)/, $(SRC)))
 
 LIBFT_A		=	libs/libft/libft.a
 LIBFT_D		=	libs/libft
@@ -30,7 +33,7 @@ all: $(NAME)
 $(NAME): $(LIBFT_A) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -pthread -lreadline -L$(LIBFT_D) -lft -o $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/*/%.c $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
