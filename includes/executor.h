@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/19 18:16:07 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/19 19:31:48 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-in this file we have functions used only in the parser
+in this file we have functions used only in the executor
 */
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef EXECUTOR_H
+# define EXECUTOR_H
 
-int		calcpipes(t_token *tkns);
-int		calcargs(t_token *tkns);
-int		calcins(t_token *tkns);
-int		calcouts(t_token *tkns);
-void	rowalloc(t_cmdtable *tbl, t_token *tkns, int pipes);
-char	*getpath(char *fpath, char *envp[]);
+typedef struct s_exdata
+{
+	int		*pipefds;
+	int		*filefds;
+	int		status;
+	pid_t	*id;
+}	t_exdata;
 
-//tester functions
-void	printio(t_iof *files, int n);
-void	printargs(char **args, int size);
+int	inopen(char *name, int *status);
+void	redir_close(int fd, int stdfd, int *status);
+void	create_pipe(int *pipefd, int *status);
+int createfork(t_cmdtable *row, char *envp[], t_exdata *data);
+int	wait_end(t_exdata data, int pipes);
+int	outopen(char *outfile, int *status);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/12 13:54:00 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/18 20:59:39 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_iof
 
 typedef struct s_cmdtable
 {
+	int		nrows;
 	int		pipe;
 	char	*cmd;
 	char	**args;

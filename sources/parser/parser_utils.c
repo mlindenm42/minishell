@@ -6,11 +6,11 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/13 18:12:06 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/19 20:07:56 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 //calculates the total number of pipes
 int	calcpipes(t_token *tkns)
@@ -52,14 +52,13 @@ int	calcouts(t_token *tkns)
 	{
 		if (tkns->token == GT || tkns->token == GGT)
 			cnt++;
-		//printf("calc token %i\n", tkns->token);
 		tkns++;
 	}
 	return (cnt);
 }
 
 //calculates arguments for a pipe
-//we calculate args + cmd and then subtract cmd
+//we calculate args + cmd which should be argument zero
 int	calcargs(t_token *tkns)
 {
 	int		cnt;
@@ -75,19 +74,20 @@ int	calcargs(t_token *tkns)
 			cnt++;
 		tkns++;
 	}
-	return (cnt - 1);
+	return (cnt);
 }
 
 //we allocate arg array, ins and outs for a pipe
-void	rowalloc(t_cmdtable *tbl, t_token *tkns)
+void	rowalloc(t_cmdtable *tbl, t_token *tkns, int pipes)
 {
+	tbl->nrows = pipes;
 	tbl->nins = calcins(tkns);
 	tbl->nouts = calcouts(tkns);
 	tbl->nargs = calcargs(tkns);
-	tbl->args = malloc(tbl->nargs * sizeof(char *));
+	tbl->args = malloc((tbl->nargs + 1) * sizeof(char *));
 	tbl->infiles = malloc(tbl->nins * sizeof(t_iof));
 	tbl->outfiles = malloc(tbl->nouts * sizeof(t_iof));
-	if (tbl->args == NULL || tbl->infiles == NULL ||tbl->outfiles == NULL)
+	if (tbl->args == NULL || tbl->infiles == NULL || tbl->outfiles == NULL)
 		err_handler(tbl);
 	tbl->curr_a = tbl->args;
 	tbl->curr_i = tbl->infiles;

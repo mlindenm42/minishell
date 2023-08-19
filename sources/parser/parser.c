@@ -6,11 +6,11 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/13 18:14:11 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/19 20:27:26 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 //printf("end pipe%i, %s\n", tkn->token, tkn->val);
 //printf("nd token%i, %s\n", tkn->token, tkn->val);
 //printf("%i\n", pipe_cnt);
@@ -30,19 +30,19 @@ t_token *lexer()
 	tkns[1].val = "-e";
 	tkns[2].token = WORD;
 	tkns[2].val = "f1";
-	tkns[3].token = PIPE;
+	/* tkns[3].token = PIPE;
 	tkns[4].token = WORD;
 	tkns[4].val = "grep";
 	tkns[5].token = WORD;
-	tkns[5].val = "line";
+	tkns[5].val = "lin";
 	tkns[6].token = GT;
 	tkns[7].token = WORD;
-	tkns[7].val = "out1";
-	tkns[8].token = GT;
-	tkns[9].token = WORD;
-	tkns[9].val = "out2";
-	tkns[10].token = END;
-	tkns[10].val = NULL;
+	tkns[7].val = "out1";*/
+	tkns[3].token = GT;
+	tkns[4].token = WORD;
+	tkns[4].val = "out1";
+	tkns[5].token = END;
+	tkns[5].val = NULL;
 	return (tkns);
 }
 
@@ -73,7 +73,7 @@ void	argtotbl(t_token *tkn, t_cmdtable *row)
 //fills a row of the table (one pipe)
 //returns either the token that should go to the next row
 //or the last token in the token array
-t_token	*to_row(t_token *tkn, t_cmdtable *row, int npipes)
+t_token	*to_row(t_token *tkn, t_cmdtable *row, int npipes, char *envp[])
 {
 	t_token *starttkn;
 
@@ -85,7 +85,11 @@ t_token	*to_row(t_token *tkn, t_cmdtable *row, int npipes)
 		if (tkn->token == WORD)
 		{
 			if (tkn == starttkn)
-				row->cmd = tkn->val;
+			{
+				row->cmd = getpath(tkn->val, envp);
+				*row->args = tkn->val;
+				(row->curr_a)++;
+			}
 			else if((tkn - 1)->token != WORD)
 				iototbl(tkn, row);
 			else
@@ -93,6 +97,7 @@ t_token	*to_row(t_token *tkn, t_cmdtable *row, int npipes)
 		}
 		tkn++;
 	}
+	row->args[row->nargs] = NULL;
 	if (tkn->token != END)
 		return (tkn + 1);
 	else
@@ -100,7 +105,7 @@ t_token	*to_row(t_token *tkn, t_cmdtable *row, int npipes)
 }
 
 //takes an array of tokens and outputs the command table
-t_cmdtable	*parser (t_token *tkns)
+t_cmdtable	*parser (t_token *tkns, char *envp[])
 {
 	t_cmdtable	*tbl;
 	t_cmdtable	*row;
@@ -117,8 +122,8 @@ t_cmdtable	*parser (t_token *tkns)
 		tbl->pipe = 0;
 	while (row != NULL && tkn->token != END)
 	{
-		rowalloc(row, tkn);
-		tkn = to_row(tkn, row, pipe_cnt);
+		rowalloc(row, tkn, pipe_cnt);
+		tkn = to_row(tkn, row, pipe_cnt, envp);
 		row++;
 	}
 	return (tbl);

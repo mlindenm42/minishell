@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/12 13:50:46 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/19 18:14:12 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@
 # include "tokens.h"
 # include "structs.h"
 # include "parser.h"
+# include "executor.h"
 
 t_token		*lexer(); //dummy function
-t_cmdtable	*parser (t_token *tkns);
+t_cmdtable	*parser (t_token *tkns, char *envp[]);
+void	executor (t_cmdtable *tbl, char *envp[]);
 void		err_handler(t_cmdtable *tbl);
 void	print_table(t_cmdtable *tbl, int size); //tester function
 #endif
