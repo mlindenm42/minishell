@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/19 20:32:55 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/20 20:56:30 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	main(int argc, char *argv[], char *envp[])
 	tkns = lexer();
 	tbl = parser(tkns, envp);
 	//printf("%s\n", tbl->cmd);
+	print_table(tbl, tbl->nrows);
 	executor(tbl, envp);
-	//print_table(tbl, tbl->nrows);
 
 	/* rl_bind_key('\t', rl_complete);
 	input = readline("Enter something: ");

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/19 19:52:15 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/22 13:57:55 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,32 +24,33 @@ void	redir_close(int fd, int stdfd, int *status)
 		//error_handler(ERR, "", status);
 }
 
-//open input file
-int	inopen(char *infile, int *status)
+int	outopen(t_cmdtable *row, int *fd, int *flag)
 {
-	int	fd;
+	int	i;
+	//int	status;
 
-	fd = open(infile, O_RDONLY);
-	if (fd < 0)
+	i = 0;
+	while (i <= row->nouts - 1)
 	{
-		//error_handler(ENOENT, infile, status);
-		fd = open("/dev/null", O_RDONLY);
-	}
-	return (fd);
-}
-
-int	outopen(char *outfile, int *status)
-{
-	int	fd;
-
-	//if (access(outfile, W_OK) == -1 && errno == EACCES)
+		if (access(row->outfiles[i].file, W_OK) == -1 && errno == EACCES)
+		{
+			*flag = EO;
+			perror("");
+			//return (0);
+		}
 		//error_handler(EACCES, outfile, status);
-	if (access(outfile, F_OK) == 0)
-		unlink(outfile);
-	fd = open(outfile, O_CREAT | O_WRONLY, 0644);
-	//if (fd < 0)
-	//	error_handler(ERR, "", status);
-	return (fd);
+		if (access(row->outfiles[i].file, F_OK) == 0 && row->outfiles[i].io == GT)
+			unlink(row->outfiles[i].file);
+		if (row->outfiles[i].io == GGT)
+			*fd = open(row->outfiles[i].file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		else
+			*fd = open(row->outfiles[i].file, O_CREAT | O_WRONLY, 0644);
+		if (*fd < 0)
+			perror("");
+			//	error_handler(ERR, "", status);
+		i++;
+	}
+	return (0);
 }
 
 void	create_pipe(int *pipefd, int *status)
@@ -73,37 +74,53 @@ int	wait_end(t_exdata data, int pipes)
 	return (WEXITSTATUS(data.status));
 }
 
-int createfork(t_cmdtable *row, char *envp[], t_exdata *data)
+	/* handling infiles
+	in case of an error at least in one of the files process doesn't start in this pipeline
+	the next pipeline receives an empty input
+	in case of no error only the last infile is used!!!
+	for each pipe explicit input of that pipe overrides output from the previous pipe
+	*/	
+int	inopen(t_cmdtable *row, int *fd, int *flag)
 {
-		//printf("p%i\n", data->status);
-		//printargs(row.args, row.nargs);
-		//printf(" n%i\n", row.nargs);
-		//execve(row->cmd, row->args, envp);
-		//execve(tbl->cmd, tbl->args, envp);
-	data->id[row->pipe] = fork();
-	//ft_putendl_fd(row->cmd, 2);
-	//ft_putnbr_fd(data.id[row.pipe], 2);
+	int	i;
+
+	i = 0;
+	while (i <= row->nins - 1)
+	{
+		*fd = open(row->infiles[i].file, O_RDONLY);
+		if (*fd < 0)
+		{
+			*flag = EO;
+			*fd = open("/dev/null", O_RDONLY);
+			perror("minishell");
+			return (0);
+		}
+		i++;
+	}
+	return (0);
+}
+
+/* creates child process, redirects output to the next pipe and executes command */
+void create_child(t_cmdtable *row, char *envp[], t_exdata *data, int flag)
+{
+	data->id[row->pipeid] = fork();
 	//if (id == -1)
 	//	error_handler(ERR, "", status);
-	//ft_putnbr_fd(data.id[row.pipe], 2);
-	if (data->id[row->pipe] == 0)
+	if (data->id[row->pipeid] == 0)
 	{
-		//exit(0);
 		data->status = 0;
-		//execve(row->cmd, row->args, envp);
-		if (row->pipe != row->nrows - 1)
+		if (row->pipeid != row->nrows - 1)
 		{
-			close(data->pipefds[row->pipe * 2]);
-			dup2(data->pipefds[row->pipe * 2 + 1], 1);
+			close(data->pipefds[row->pipeid * 2]);
+			ft_putnbr_fd(flag, 2);
+			ft_putchar_fd('\n', 2);
+			if (flag != BR)
+				dup2(data->pipefds[row->pipeid * 2 + 1], 1);
 			//if (close(pipefd[0]) == -1 || dup2(pipefd[1], 1) == -1)
 			//	error_handler(ERR, "", &status);
 		}
-		//execve(row.cmd, row.args, envp);
-		//ft_putnbr_fd(data.id[row.pipe], 2);
 		if (execve(row->cmd, row->args, envp) == -1)
 			perror("exe err");
 		//	error_handler(NFOUND, cmd_path, &status);
 	}
-	//exit(0);
-	return (data->status);
 }

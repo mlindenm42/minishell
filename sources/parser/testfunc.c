@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/18 23:36:28 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/20 20:31:54 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	print_table(t_cmdtable *tbl, int size)
 	i = 0;
 	while (i <= size - 1)
 	{
-		printf("pipe%i: %s | ", tbl[i].pipe, tbl[i].cmd);
+		printf("pipe%i: %s | ", tbl[i].pipeid, tbl[i].cmd);
 		printf("args: ");
 		printargs(tbl[i].args, tbl[i].nargs + 1);
 		printf("\n in: ");
