@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/22 01:19:19 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/22 19:33:57 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ t_token	*to_row(t_token *tkn, t_cmdtable *row, int npipes, char *envp[])
 }
 
 //takes an array of tokens and outputs the command table
-t_cmdtable	*parser (t_token *tkns, char *envp[])
+t_cmdtable	*parser (t_token *tkns, char *envp[], t_errdata *err)
 {
 	t_cmdtable	*tbl;
 	t_cmdtable	*row;
@@ -156,12 +156,12 @@ t_cmdtable	*parser (t_token *tkns, char *envp[])
 	tbl = malloc(pipe_cnt * sizeof(t_cmdtable));
 	row = tbl;
 	if (tbl == NULL)
-		err_handler(tbl);
-	if (tbl != NULL)
+		err_handler(err, NULL, NULL);
+	else
 		tbl->pipeid = 0;
 	while (row != NULL && tkn->token != END)
 	{
-		rowalloc(row, tkn, pipe_cnt);
+		rowalloc(row, tkn, pipe_cnt, err);
 		tkn = to_row(tkn, row, pipe_cnt, envp);
 		row++;
 	}

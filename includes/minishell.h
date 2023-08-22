@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/19 18:14:12 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/22 19:33:30 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@
 # include "executor.h"
 
 t_token		*lexer(); //dummy function
-t_cmdtable	*parser (t_token *tkns, char *envp[]);
-void	executor (t_cmdtable *tbl, char *envp[]);
-void		err_handler(t_cmdtable *tbl);
+t_cmdtable	*parser (t_token *tkns, char *envp[], t_errdata *err);
+void	executor (t_cmdtable *tbl, char *envp[], t_errdata *err);
+void	err_handler(t_errdata *err, void *struc, void (*delstruct)(void *));
 void	print_table(t_cmdtable *tbl, int size); //tester function
+void	free_row(void *row);
+void	free_rows(void *row);
 #endif

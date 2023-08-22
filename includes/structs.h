@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/20 20:28:38 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/22 19:39:40 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,29 @@ typedef struct s_iof
 	char	*file;
 }	t_iof;
 
+typedef struct s_errdata
+{
+	int		type;
+	char	*name;
+	int		stat;
+	void	*struc;
+}	t_errdata;
+
 typedef struct s_cmdtable
 {
-	int		nrows;
-	int		pipeid;
-	char	*cmd;
-	char	**args;
-	t_iof	*infiles;
-	t_iof	*outfiles;
-	char	**curr_a;
-	t_iof	*curr_i;
-	t_iof	*curr_o;
-	int		nargs;
-	int		nins;
-	int		nouts;
+	int			pipeid;
+	char		*cmd;
+	char		**args;
+	t_iof		*infiles;
+	t_iof		*outfiles;
+	char		**curr_a;
+	t_iof		*curr_i;
+	t_iof		*curr_o;
+	int			nrows;
+	int			nargs;
+	int			nins;
+	int			nouts;
+	t_errdata	*err;
 }	t_cmdtable;
 
 #endif

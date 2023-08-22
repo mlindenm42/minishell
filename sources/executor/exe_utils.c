@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/22 13:57:55 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/22 19:42:11 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,6 @@ void create_child(t_cmdtable *row, char *envp[], t_exdata *data, int flag)
 		if (row->pipeid != row->nrows - 1)
 		{
 			close(data->pipefds[row->pipeid * 2]);
-			ft_putnbr_fd(flag, 2);
-			ft_putchar_fd('\n', 2);
 			if (flag != BR)
 				dup2(data->pipefds[row->pipeid * 2 + 1], 1);
 			//if (close(pipefd[0]) == -1 || dup2(pipefd[1], 1) == -1)

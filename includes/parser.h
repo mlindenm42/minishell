@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/19 18:16:07 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/22 19:26:05 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		calcpipes(t_token *tkns);
 int		calcargs(t_token *tkns);
 int		calcins(t_token *tkns);
 int		calcouts(t_token *tkns);
-void	rowalloc(t_cmdtable *tbl, t_token *tkns, int pipes);
+void	rowalloc(t_cmdtable *tbl, t_token *tkns, int pipes, t_errdata *err);
 char	*getpath(char *fpath, char *envp[]);
 
 //tester functions

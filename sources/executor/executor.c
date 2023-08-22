@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/22 14:08:56 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/22 19:39:58 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 	int		nouts; */
 
 
-void	executor (t_cmdtable *tbl, char *envp[])
+void	executor (t_cmdtable *tbl, char *envp[], t_errdata *err)
 {
 	t_cmdtable	*row;
 	t_exdata data;

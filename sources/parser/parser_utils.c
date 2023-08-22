@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/19 20:07:56 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/22 19:34:11 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ int	calcargs(t_token *tkns)
 }
 
 //we allocate arg array, ins and outs for a pipe
-void	rowalloc(t_cmdtable *tbl, t_token *tkns, int pipes)
+void	rowalloc(t_cmdtable *tbl, t_token *tkns, int pipes, t_errdata *err)
 {
+	tbl->err = err;
 	tbl->nrows = pipes;
 	tbl->nins = calcins(tkns);
 	tbl->nouts = calcouts(tkns);
@@ -88,7 +89,7 @@ void	rowalloc(t_cmdtable *tbl, t_token *tkns, int pipes)
 	tbl->infiles = malloc(tbl->nins * sizeof(t_iof));
 	tbl->outfiles = malloc(tbl->nouts * sizeof(t_iof));
 	if (tbl->args == NULL || tbl->infiles == NULL || tbl->outfiles == NULL)
-		err_handler(tbl);
+		err_handler(err, tbl, &free_rows);
 	tbl->curr_a = tbl->args;
 	tbl->curr_i = tbl->infiles;
 	tbl->curr_o = tbl->outfiles;
