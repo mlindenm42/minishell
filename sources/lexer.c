@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 18:32:39 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/17 00:23:55 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/18 19:26:00 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,20 @@ t_token	*get_next_token(char **input)
 		return (create_token(ARG, val));
 }
 
+int	token_counter(char *input)
+{
+	// while (**input == ' ' || **input == '\t')
+		(input)++;
+	// if (**input == '\0')
+	// 	return (create_token(END, ""));
+	return 0;
+}
+
 void	lexer(char *input)
 {
 	int		i;
 
+	i = token_counter(input);
 	get_data()->tokens = (t_token **) malloc(100 * sizeof(t_token *));
 	i = 0;
 	while (1)
