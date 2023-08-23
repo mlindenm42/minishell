@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 18:32:39 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/18 19:26:00 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/23 14:45:22 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,29 @@ t_token	*get_next_token(char **input)
 
 int	token_counter(char *input)
 {
-	// while (**input == ' ' || **input == '\t')
+	int	i;
+
+	if (*input == '\0')
+		return (0);
+	i = 1;
+	while (*input != '\0')
+	{
+		if (*input == ' ' || *input == '\t')
+			i++;
+		if (*input == '"')
+		{
+			(input)++;
+			while (*input != '"')
+			{
+				if (*input == '\0')
+					error("wrong syntax!\n");
+				(input)++;
+			}
+		}
 		(input)++;
-	// if (**input == '\0')
-	// 	return (create_token(END, ""));
-	return 0;
+	}
+		(input)++;
+	return (i);
 }
 
 void	lexer(char *input)
@@ -92,6 +110,7 @@ void	lexer(char *input)
 	int		i;
 
 	i = token_counter(input);
+	printf("Tokens: %d\n", i);
 	get_data()->tokens = (t_token **) malloc(100 * sizeof(t_token *));
 	i = 0;
 	while (1)
