@@ -6,7 +6,7 @@
 #    By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/10 17:13:37 by mlindenm          #+#    #+#              #
-#    Updated: 2023/08/22 15:29:52 by mrubina          ###   ########.fr        #
+#    Updated: 2023/08/24 00:07:30 by mrubina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC			=	cc
 SRC_DIR		=	sources
 OBJ_DIR		=	$(SRC_DIR)/obj
 
-SRC_M		=	main.c err_handler.c
+SRC_M		=	main.c err_handler.c lexsim.c
 SRC_P		= 	parser.c parser_utils.c testfunc.c getpath.c
 SRC_E		= 	executor.c exe_utils.c
 SRC 		= 	$(SRC_P) $(SRC_M) $(SRC_E)

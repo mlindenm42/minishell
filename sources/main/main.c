@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/22 19:40:54 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/23 22:26:56 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,20 @@ void errinit(t_errdata *err)
 	err->name = "minishell";
 	err->type = NOERR;
 	err->stat = 0;
+	err->stop = 0;
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	//char	*input;
-	t_token *tkns;
+	t_tkn *tkns;
 	t_cmdtable *tbl;
 	t_errdata err;
 
+	envp = NULL;
 	errinit(&err);
 	tkns = lexer();
 	tbl = parser(tkns, envp, &err);
-	//printf("%s\n", tbl->cmd);
 	print_table(tbl, tbl->nrows);
 	executor(tbl, envp, &err);
 
