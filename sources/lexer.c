@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 18:32:39 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/23 14:45:22 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/25 21:19:20 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ t_token	*get_next_token(char **input)
 	char	val[256];
 	int		i;
 
-	while (**input == ' ' || **input == '\t')
-		(*input)++;
 	if (**input == '\0')
 		return (create_token(END, ""));
 	if (**input == '|')
@@ -77,7 +75,7 @@ t_token	*get_next_token(char **input)
 	else
 		return (create_token(ARG, val));
 }
-
+// || *input == '\\' || *input == '$' || *input == '*'
 int	token_counter(char *input)
 {
 	int	i;
@@ -87,8 +85,16 @@ int	token_counter(char *input)
 	i = 1;
 	while (*input != '\0')
 	{
-		if (*input == ' ' || *input == '\t')
+		if (*input == ' ' || *input == '\t' || *input == ';' || *input == '<' || *input == '>' || *input == '|' || *input == '&' || *input == '/')
+		{
+			while (*input == ' ' || *input == '\t')
+			{
+				if (*input == '\0')
+					return (i);
+				(input)++;
+			}
 			i++;
+		}
 		if (*input == '"')
 		{
 			(input)++;
@@ -108,12 +114,15 @@ int	token_counter(char *input)
 void	lexer(char *input)
 {
 	int		i;
+	int		counter;
 
-	i = token_counter(input);
-	printf("Tokens: %d\n", i);
-	get_data()->tokens = (t_token **) malloc(100 * sizeof(t_token *));
+	input = ft_strtrim(input, " ");
+	input = ft_strtrim(input, "\t");
+	counter = token_counter(input);
+	printf("Tokens: %d\n", counter);
+	get_data()->tokens = (t_token **) malloc(counter * sizeof(t_token *));
 	i = 0;
-	while (1)
+	while (i < counter)
 	{
 		get_data()->tokens[i] = get_next_token(&input);
 		if (get_data()->tokens[i]->type == END)
