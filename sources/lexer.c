@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 18:32:39 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/25 21:19:20 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/26 14:34:00 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	token_counter(char *input)
 	i = 1;
 	while (*input != '\0')
 	{
-		if (*input == ' ' || *input == '\t' || *input == ';' || *input == '<' || *input == '>' || *input == '|' || *input == '&' || *input == '/')
+		if (*input == ' ' || *input == '\t' || *input == '\n' || *input == '|' || *input == '&' || *input == ';' || *input == '(' || *input == ')' || *input == '<' || *input == '>')
 		{
 			while (*input == ' ' || *input == '\t')
 			{
