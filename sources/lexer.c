@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 18:32:39 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/26 14:34:00 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:36:49 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,14 @@ t_token	*get_next_token(char **input)
 	else
 		return (create_token(ARG, val));
 }
+
+int	is_normal_char(char c)
+{
+	if (c == '!' || (c >= '#' && c <= '&') || (c >= '+' && c <= '.') || (c >= '0' && c <= ':') || c == '=' || (c >= '?' && c <= 'Z') || (c >= '^' && c <= 'z'))
+		return (1);
+	return (0);
+}
+
 // || *input == '\\' || *input == '$' || *input == '*'
 int	token_counter(char *input)
 {
@@ -82,23 +90,57 @@ int	token_counter(char *input)
 
 	if (*input == '\0')
 		return (0);
-	i = 1;
+	i = 0;
 	while (*input != '\0')
 	{
-		if (*input == ' ' || *input == '\t' || *input == '\n' || *input == '|' || *input == '&' || *input == ';' || *input == '(' || *input == ')' || *input == '<' || *input == '>')
+		while (*input == ' ' || *input == '\t')
 		{
-			while (*input == ' ' || *input == '\t')
+			if (*input == '\0')
+				return (i);
+			(input)++;
+		}
+		if (is_normal_char(*input))
+		{
+			i++;
+			// printf("is_normal_char: %d\n", i);
+			while (is_normal_char(*input))
 			{
 				if (*input == '\0')
 					return (i);
 				(input)++;
 			}
+		}
+		// if (!(*input == ' ' || *input == '\t' || *input == '\n' || *input == '|' || *input == '&' || *input == ';' || *input == '(' || *input == ')' || *input == '<' || *input == '>') || *input == '"' || *input == '\'')
+		// {
+		// 	i++;
+		// 	while (!(*input == ' ' || *input == '\t' || *input == '\n' || *input == '|' || *input == '&' || *input == ';' || *input == '(' || *input == ')' || *input == '<' || *input == '>'))
+		// 	{
+		// 		if (*input == '\0')
+		// 			return (i);
+		// 		(input)++;
+		// 	}
+		// }
+		if (*input == '\n' || *input == '|' || *input == '&' || *input == ';' || *input == '(' || *input == ')' || *input == '<' || *input == '>')
+		{
 			i++;
+			// printf("is_metacharacter: %d\n", i);
 		}
 		if (*input == '"')
 		{
+			i++;
 			(input)++;
 			while (*input != '"')
+			{
+				if (*input == '\0')
+					error("wrong syntax!\n");
+				(input)++;
+			}
+		}
+		if (*input == '\'')
+		{
+			i++;
+			(input)++;
+			while (*input != '\'')
 			{
 				if (*input == '\0')
 					error("wrong syntax!\n");
