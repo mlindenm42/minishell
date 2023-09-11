@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/23 16:51:21 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/26 22:36:11 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,16 @@
 
 t_tkn		*lexer(); //dummy function
 t_cmdtable	*parser (t_tkn *tkns, char *envp[], t_errdata *err);
-void	executor (t_cmdtable *tbl, char *envp[], t_errdata *err);
-void	err_handler(t_errdata *err, void *struc, void (*del)(void *), int st);
+int	executor (t_cmdtable *tbl, char *envp[], t_errdata *err);
+void	errfree(t_errdata *err, void *struc, void (*del)(void *), int stop);
+void	err_handler(t_errdata *err, char *str, int stop);
+//void	err_handler(t_errdata *err, void *struc, void (*f)(void *), int st);
 void	print_table(t_cmdtable *tbl, int size); //tester function
 void	free_row(void *row);
 void	free_rows(void *row);
+void	free_exedt(void *data);
+//void	cmderr(void *cmd);
+void	cmderr(t_errdata *err, void *cmd, int stop);
+//void	cmderr(void *cmd);
+//void	addtext(void *fpath, t_errdata *err);
 #endif

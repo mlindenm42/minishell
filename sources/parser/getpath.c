@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 22:37:30 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/24 00:00:36 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/03 21:08:50 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*getpath(char *fpath, char *envp[])
 	int		i;
 	char	*path_str;
 
-	if (access(fpath, X_OK) == 0 && fpath[0] == '.' && fpath[1] == '/')
+	if (fpath[0] == '.' && fpath[1] == '/')
 		return (fpath);
 	if (fpath[0] == '\0')
 		return (fpath);

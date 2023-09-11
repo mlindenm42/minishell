@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/24 00:17:08 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/08/26 22:16:15 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,14 @@ t_cmdtable	*parser(t_tkn *tkns, char *envp[], t_errdata *err)
 	tbl = malloc(pipes * sizeof(t_cmdtable));
 	row = tbl;
 	if (tbl == NULL)
-		err_handler(err, NULL, NULL, 1);
+		errfree(err, NULL, NULL, STP);
 	else
 		tbl->pipeid = 0;
-	while (tkn->tkn != END && err->stop == 0)
+	while (tkn->tkn != END && err->stop == CNT)
 	{
 		rowalloc(row, tkn, pipes, err);
-		tkn = to_row(tkn, row, pipes, envp);
+		if (err->stop == CNT)
+			tkn = to_row(tkn, row, pipes, envp);
 		row++;
 	}
 	return (tbl);
