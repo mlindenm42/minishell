@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/11 22:25:48 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/14 19:57:45 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,18 @@ void	free_exedt(void *data)
 	if (((t_exedata*)data)->id != NULL)
 		free(((t_exedata*)data)->id);
 	((t_exedata*)data)->id = NULL;
+	exit(0);
+	if (((t_exedata*)data)->path != NULL)
+		free(((t_exedata*)data)->path);
+	((t_exedata*)data)->path = NULL;
 }
 
-
+void	free_ptr(void *p)
+{
+	if (p != NULL)
+		free(p);
+	p = NULL;
+}
 
 /* void	addtext(void *fpath)
 {

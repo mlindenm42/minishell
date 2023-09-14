@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/07 18:48:43 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/13 00:59:57 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_tkn
 typedef struct s_iof
 {
 	int		io;
-	char	*file;
+	char	*pth;
 }	t_iof;
 
 typedef struct s_errdata

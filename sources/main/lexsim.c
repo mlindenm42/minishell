@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/11 22:08:23 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/14 20:08:05 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,12 +172,12 @@
 	return (tkns);
 } */
 
-t_tkn *lexer()
+/* t_tkn *lexer()
 {
 	t_tkn *tkns;
 	int size;
 
-	size = 20;
+	size = 22;
 	tkns = malloc(size * sizeof(t_tkn));
 	tkns[0].tkn = WORD;
 	tkns[0].val = "cat";
@@ -185,7 +185,7 @@ t_tkn *lexer()
 	tkns[1].val = "-e";
 	tkns[2].tkn = LT;
 	tkns[3].tkn = WORD;
-	tkns[3].val = "f10";
+	tkns[3].val = "f1";
 	// tkns[4].tkn = GT;
 	// tkns[5].tkn = WORD;
 	// tkns[5].val = "out4";
@@ -204,21 +204,24 @@ t_tkn *lexer()
 	tkns[10].tkn = LT;
 	tkns[11].tkn = WORD;
 	tkns[11].val = "f2";
-	/* tkns[12].tkn = LLT;
-	tkns[13].tkn = WORD;
-	tkns[13].val = "."; */
+	// tkns[12].tkn = LLT;
+	// tkns[13].tkn = WORD;
+	// tkns[13].val = ".";
 	tkns[12].tkn = WORD;
 	tkns[12].val = "cat";
 	// tkns[13].tkn = GT;
 	// tkns[14].tkn = WORD;
 	// tkns[14].val = "out3";
 	tkns[15].tkn = PIPE;
-	tkns[16].tkn = GT;
-	tkns[17].tkn = WORD;
-	tkns[17].val = "out4";
-	tkns[18].tkn = WORD;
-	tkns[18].val = "cat";
-	tkns[19].tkn = END;
-	tkns[19].val = NULL;
+	// tkns[16].tkn = GT;
+	// tkns[17].tkn = WORD;
+	// tkns[17].val = "out4";
+	tkns[16].tkn = WORD;
+	tkns[16].val = "cat";
+	// tkns[19].tkn = LLT;
+	// tkns[20].tkn = WORD;
+	// tkns[20].val = ",";
+	tkns[21].tkn = END;
+	tkns[21].val = NULL;
 	return (tkns);
- }
+ } */

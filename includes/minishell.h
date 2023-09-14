@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/26 22:36:11 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/12 23:51:42 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	print_table(t_cmdtable *tbl, int size); //tester function
 void	free_row(void *row);
 void	free_rows(void *row);
 void	free_exedt(void *data);
+void	free_ptr(void *p);
 //void	cmderr(void *cmd);
 void	cmderr(t_errdata *err, void *cmd, int stop);
 //void	cmderr(void *cmd);
