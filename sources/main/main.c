@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/08 01:38:56 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/16 17:15:12 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int argc, char *argv[], char *envp[])
 	errinit(&err);
 	tkns = lexer();
 	tbl = parser(tkns, envp, &err);
+	expander(tbl, &err);
 	//printf("%p\n", tbl->infiles);
 	print_table(tbl, tbl->nrows);
 	if (err.stop == CNT)

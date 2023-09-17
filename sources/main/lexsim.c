@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/14 20:08:05 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/17 19:56:45 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,16 +194,16 @@
 	tkns[5].val = "cat";
 	tkns[6].tkn = WORD;
 	tkns[6].val = "-e";
-	tkns[7].tkn = GT;
-	tkns[8].tkn = WORD;
-	tkns[8].val = "out3";
-	// tkns[9].tkn = LT;
-	// tkns[10].tkn = WORD;
-	// tkns[10].val = "f2";
-	tkns[9].tkn = PIPE;
-	tkns[10].tkn = LT;
-	tkns[11].tkn = WORD;
-	tkns[11].val = "f2";
+	// tkns[7].tkn = GT;
+	// tkns[8].tkn = WORD;
+	// tkns[8].val = "out3";
+	tkns[9].tkn = LT;
+	tkns[10].tkn = WORD;
+	tkns[10].val = "f20";
+	tkns[11].tkn = PIPE;
+	// tkns[10].tkn = LT;
+	// tkns[11].tkn = WORD;
+	// tkns[11].val = "out6";
 	// tkns[12].tkn = LLT;
 	// tkns[13].tkn = WORD;
 	// tkns[13].val = ".";
@@ -217,7 +217,7 @@
 	// tkns[17].tkn = WORD;
 	// tkns[17].val = "out4";
 	tkns[16].tkn = WORD;
-	tkns[16].val = "cat";
+	tkns[16].val = "wc";
 	// tkns[19].tkn = LLT;
 	// tkns[20].tkn = WORD;
 	// tkns[20].val = ",";
@@ -225,3 +225,37 @@
 	tkns[21].val = NULL;
 	return (tkns);
  } */
+
+ t_tkn *lexer()
+{
+	t_tkn *tkns;
+	int size;
+
+	size = 15;
+	tkns = malloc(size * sizeof(t_tkn));
+	tkns[0].tkn = WORD;
+	tkns[0].val = "hostname";
+	tkns[1].tkn = GT;
+	tkns[2].tkn = WORD;
+	tkns[2].val = "$USE";
+	//tkns[0].val = "\"$USE\"";
+	// tkns[1].tkn = WORD;
+	// tkns[1].val = "-e";
+	// tkns[2].tkn = WORD;
+	// tkns[2].val = "tre";
+	// tkns[1].tkn = WORD;
+	// tkns[1].val = "5";
+	// tkns[2].tkn = WORD;
+	// tkns[2].val = "f2";
+	// tkns[3].tkn = PIPE;
+	// tkns[4].tkn = WORD;
+	// tkns[4].val = "wc";
+	// tkns[5].tkn = WORD;
+	// tkns[5].val = "-l";
+	// tkns[6].tkn = GT;
+	// tkns[7].tkn = WORD;
+	// tkns[7].val = "out2";
+	tkns[8].tkn = END;
+	tkns[8].val = NULL;
+	return (tkns);
+}

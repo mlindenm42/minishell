@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/14 19:58:01 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/17 20:33:34 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	setin(t_cmdtable *row, t_exedata *data, int *i)
 	{
 		inopen(row, &data->infd, data->path[0]);
 		redir_close(data->infd, 0, row->err);
-		if (row->flag == EO && row->nrows > 1)
+		if (row->eflag == ERR && row->nrows > 1)
 			(*i)++;
 	}
 	else
@@ -66,7 +66,7 @@ int	data_init(t_cmdtable *tbl, t_exedata *data, int *i)
 	data->outtmpfd = dup(1);
 	if (data->outtmpfd < 0)
 		err_handler(tbl->err, NULL, CNT);
-	if (heredoc(tbl, data) == 1) //free id here
+	if (heredoc(tbl, data) == 1)
 		return (1);
 	setin(tbl, data, i);
 	return (0);
@@ -88,13 +88,14 @@ void	finish(t_cmdtable *tbl, t_exedata *data)
 	while (i <= tbl->nrows - 1)
 	{
 		errstr = ft_itoa(data->id[i]);
-		if (tbl[i].flag != EO && waitpid(data->id[i], &data->status, 0) == -1)
+		if (tbl[i].eflag != ERR && waitpid(data->id[i], &data->status, 0) == -1)
 			err_handler(tbl->err, errstr, CNT);
 		if (errstr != NULL)
 			free(errstr);
 		i++;
 	}
-	tbl->err->stat = WEXITSTATUS(data->status);
+	if (tbl[tbl->nrows - 1].eflag != ERR)
+		tbl->err->stat = WEXITSTATUS(data->status);
 	redir_close(data->intmpfd, 0, tbl->err);
 	redir_close(data->outtmpfd, 1, tbl->err);
 	i = 0;
@@ -110,14 +111,13 @@ void	finish(t_cmdtable *tbl, t_exedata *data)
 //set output for the last command
 int	lastcmd(t_cmdtable *row, t_exedata *data, char *envp[])
 {
-	outopen(row, &data->outfd, STP);
-	if (row->err->stop == STP)
-		return (1); //free
+	outopen(row, &data->outfd, NXT);
 	if (row->nouts == 0)
 		data->outfd = dup(data->outtmpfd);
-	if (row->pipeid != 0 && data->pbreak != BR)
+	if (row->pipeid != 0 && data->pbreak != BR && (row - 1)->eflag != ERR)
 		redir_close(data->infd, 0, row->err);
-	create_child(row, envp, data);
+	if (row->err->stop != NXT)
+		create_child(row, envp, data);
 	return (0);
 }
 
@@ -130,9 +130,9 @@ int	executor(t_cmdtable *tbl, char *envp[], t_errdata *err)
 	i = 0;
 	if (data_init(tbl, &data, &i) == 1)
 		return (1);
-	while (err->stop != STP && i <= tbl->nrows - 2)
+	while (i <= tbl->nrows - 2)
 	{
-		if (i != 0 && data.pbreak != BR && tbl[i - 1].flag != EO)
+		if (i != 0 && data.pbreak != BR && tbl[i - 1].eflag != ERR)
 			redir_close(data.infd, 0, err);
 		data.pbreak = NB;
 		midouts(&tbl[i], &data);
@@ -144,8 +144,6 @@ int	executor(t_cmdtable *tbl, char *envp[], t_errdata *err)
 		i++;
 	}
 	lastcmd(&tbl[i], &data, envp);
-	if (err->stop == STP)
-		return (1);
 	finish(tbl, &data);
 	return (0);
 }

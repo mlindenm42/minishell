@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/13 21:15:50 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/17 20:35:50 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,50 +31,57 @@ void	inopen(t_cmdtable *row, int *fd, char *hdpath)
 		if (row->infiles[i].io == LLT)
 			*fd = open(hdpath, O_RDONLY);
 		else
-			*fd = open(row->infiles[i].pth, O_RDONLY);
+			*fd = open(row->infiles[i].file, O_RDONLY);
 		if (*fd < 0)
 		{
-			row->flag = EO;
-			errstr = row->infiles[i].pth;
+			row->eflag = ERR;
+			errstr = row->infiles[i].file;
 			*fd = open("/dev/null", O_RDONLY);
 			if (row->infiles[i].io == LLT)
 				errstr = "here-document";
-			if (row->pipeid == row->nrows - 1)
-				err_handler(row->err, errstr, STP);
-			else
-				err_handler(row->err, errstr, CNT);
+			err_handler(row->err, errstr, CNT);
 		}
 		i++;
 	}
 }
 
+//sets error flag for the pipeline and prints out error
+static void	seterr(t_cmdtable *row, int i, int stop)
+{
+	row->eflag = ERR;
+	err_handler(row->err, row->outfiles[i].file, stop);
+}
+
 /*
 opening fds one by one
 1) check if access permited (if denied we don't execute this pipe)
+(we catch it at the start because we don't want it to be deleted)
 2) check if file exist and delete if not appended mode
 3) open file
  */
-int	outopen(t_cmdtable *r, int *fd, int stop)
+int	outopen(t_cmdtable *row, int *fd, int stop)
 {
 	int	i;
 
 	i = 0;
-	while (i <= r->nouts - 1)
+	while (i <= row->nouts - 1)
 	{
-		if (access(r->outfiles[i].pth, W_OK) == -1)
+		if ((access(row->outfiles[i].file, W_OK) == -1 && errno == EACCES)
+			|| wrongvar(row->outfiles[i].file))
 		{
-			r->flag = EO;
-			err_handler(r->err, r->outfiles[i].pth, stop);//for end cmd stop
+			seterr(row, i, stop);
 			return (1);
 		}
-		if (access(r->outfiles[i].pth, F_OK) == 0 && r->outfiles[i].io == GT)
-			unlink(r->outfiles[i].pth);
-		if (r->outfiles[i].io == GGT)
-			*fd = open(r->outfiles[i].pth, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		if (access(row->outfiles[i].file, F_OK) == 0
+			&& row->outfiles[i].io == GT)
+			unlink(row->outfiles[i].file);
+		if (row->outfiles[i].io == GGT)
+			*fd = open(row->outfiles[i].file, O_CREAT | O_WRONLY
+					| O_APPEND, 0644);
 		else
-			*fd = open(r->outfiles[i].pth, O_CREAT | O_WRONLY, 0644);
+			*fd = open(row->outfiles[i].file, O_CREAT | O_WRONLY, 0644);
 		if (*fd < 0)
-			err_handler(r->err, r->outfiles[i].pth, stop);
+			seterr(row, i, stop);
 		i++;
 	}
 	return (0);
@@ -83,9 +90,9 @@ int	outopen(t_cmdtable *r, int *fd, int stop)
 //handling output before executing cmd
 void	midouts(t_cmdtable *row, t_exedata *data)
 {
-	if (row->err->stop != STP && row->nouts != 0)
+	if (row->nouts != 0)
 	{
-		outopen(row, &data->outfd, CNT);
+		outopen(row, &data->outfd, NXT);
 		data->pbreak = BR;
 		if (row->err->stop != NXT)
 		{
@@ -104,7 +111,7 @@ void	setnextin(t_cmdtable *row, t_exedata *data, int i)
 {
 	if (row->err->stop == NXT && row->nins == 0)
 		data->infd = open("/dev/null", O_RDONLY);
-	if (row->err->stop != STP && row->nins != 0)
+	if (row->nins != 0)
 	{
 		inopen(row, &data->infd, data->path[i]);
 		data->pbreak = NB;

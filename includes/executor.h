@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/13 20:29:17 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/17 21:10:59 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ typedef struct s_exedata
 # define BR 2
 
 //error
-# define EO 3
+# define ERR 3
 
-//constants showing what to do after error stop/continue/ go to the next pipe
+//constants showing what to do after error stop/continue/go to the next pipeline
+//
 # define STP 5
 # define CNT 6
 # define NXT 7
@@ -50,4 +51,5 @@ void	wrtofile(int end, int filefd, char *cur, char *buf);
 char	*readbuf(char *buf, int size);
 void	midouts(t_cmdtable *row, t_exedata *data);
 void	setnextin(t_cmdtable *row, t_exedata *data, int i);
+int		ft_strcmp(const char *s1, const char *s2);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/13 19:16:22 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/16 20:01:44 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static void	inputscan(t_exedata *data, t_cmdtable *row, int i)
 				fd = open(data->path[i], O_CREAT | O_RDWR, 0644);
 				if (fd >= 0)
 				{
-					if (stdintofd(row->infiles[k].pth, fd) == 1)
+					if (stdintofd(row->infiles[k].file, fd) == 1)
 						err_handler(row->err, "here_document", CNT);
 					close(fd);
 				}

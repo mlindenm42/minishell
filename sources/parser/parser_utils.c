@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/26 22:15:53 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/15 14:05:18 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,11 @@ int	calcouts(t_tkn *tkns)
 	return (cnt);
 }
 
-//calculates arguments for a pipe
-//we calculate args + cmd which should be argument zero
+/* calculates number of arguments for a single pipeline
+we calculate args + cmd which should be argument zero
+it calculates the first word token after the pipe
+and any word preceeded by (another) word
+*/
 int	calcargs(t_tkn *tkns)
 {
 	int		cnt;
@@ -68,9 +71,10 @@ int	calcargs(t_tkn *tkns)
 	first = tkns;
 	while (tkns->tkn != END && tkns->tkn != PIPE)
 	{
-		if (tkns->tkn == WORD && tkns == first)
+		if (tkns->tkn == WORD && tkns == first && !wrongvar(tkns->val))
 			cnt++;
-		if (tkns->tkn == WORD && tkns != first && (tkns - 1)->tkn == WORD)
+		if (tkns->tkn == WORD && tkns != first && (tkns - 1)->tkn == WORD
+			&& !wrongvar(tkns->val))
 			cnt++;
 		tkns++;
 	}

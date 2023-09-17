@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/13 01:01:13 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/16 20:01:44 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	printio(t_iof *files, int n)
 	i = 0;
 	while (i <= n - 1)
 	{
-		printf("%i, %s ", files[i].io, files[i].pth);
+		printf("%i, %s ", files[i].io, files[i].file);
 		i++;
 	}
 	printf("\n");

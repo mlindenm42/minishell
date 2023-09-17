@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/12 23:51:42 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/15 18:34:11 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 
 t_tkn		*lexer(); //dummy function
 t_cmdtable	*parser (t_tkn *tkns, char *envp[], t_errdata *err);
+void	expander(t_cmdtable *tbl, t_errdata *err);
 int	executor (t_cmdtable *tbl, char *envp[], t_errdata *err);
 void	errfree(t_errdata *err, void *struc, void (*del)(void *), int stop);
 void	err_handler(t_errdata *err, char *str, int stop);
@@ -43,6 +44,8 @@ void	free_exedt(void *data);
 void	free_ptr(void *p);
 //void	cmderr(void *cmd);
 void	cmderr(t_errdata *err, void *cmd, int stop);
+void	echo(char *argv[]);
+int		isbuiltin(char *cmd);
 //void	cmderr(void *cmd);
 //void	addtext(void *fpath, t_errdata *err);
 #endif

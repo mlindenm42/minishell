@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/13 01:03:40 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/16 20:01:44 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static void	iototbl(t_tkn *tkn, t_cmdtable *row)
 {
 	if ((tkn - 1)->tkn == LT || (tkn - 1)->tkn == LLT)
 	{
-		row->curr_i->pth = tkn->val;
+		row->curr_i->file = tkn->val;
 		row->curr_i->io = (tkn - 1)->tkn;
 		(row->curr_i)++;
 	}
 	else
 	{
-		row->curr_o->pth = tkn->val;
+		row->curr_o->file = tkn->val;
 		row->curr_o->io = (tkn - 1)->tkn;
 		(row->curr_o)++;
 	}
@@ -61,11 +61,12 @@ t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes, char *envp[])
 	{
 		if (tkn->tkn == WORD)
 		{
-			if (tkn == tkn0 || ((tkn - 2)->tkn >= GT && (tkn - 2)->tkn <= LLT))
+			if ((tkn == tkn0 || ((tkn - 2)->tkn >= GT && (tkn - 2)->tkn <= LLT))
+				&& !wrongvar(tkn->val))
 				cmdtotbl(tkn, row, envp);
 			else if ((tkn - 1)->tkn != WORD)
 				iototbl(tkn, row);
-			else
+			else if (!wrongvar(tkn->val))
 				argtotbl(tkn, row);
 		}
 		tkn++;
