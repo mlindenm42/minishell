@@ -6,28 +6,28 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/16 20:01:44 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/18 00:20:26 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-//printf("end pipe%i, %s\n", tkn->tkn, tkn->val);
-//printf("nd token%i, %s\n", tkn->tkn, tkn->val);
+//printf("end pipe%i, %s\n", tkn->type, tkn->val);
+//printf("nd token%i, %s\n", tkn->type, tkn->val);
 //printf("%i\n", pipes);
 
 //writing io_part to a row
 static void	iototbl(t_tkn *tkn, t_cmdtable *row)
 {
-	if ((tkn - 1)->tkn == LT || (tkn - 1)->tkn == LLT)
+	if ((tkn - 1)->type == LT || (tkn - 1)->type == LLT)
 	{
 		row->curr_i->file = tkn->val;
-		row->curr_i->io = (tkn - 1)->tkn;
+		row->curr_i->io = (tkn - 1)->type;
 		(row->curr_i)++;
 	}
 	else
 	{
 		row->curr_o->file = tkn->val;
-		row->curr_o->io = (tkn - 1)->tkn;
+		row->curr_o->io = (tkn - 1)->type;
 		(row->curr_o)++;
 	}
 }
@@ -57,14 +57,14 @@ t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes, char *envp[])
 	tkn0 = tkn;
 	if (row->pipeid < npipes - 1)
 		(row + 1)->pipeid = row->pipeid + 1;
-	while (tkn->tkn != PIPE && tkn->tkn != END)
+	while (tkn->type != PIPE && tkn->type != END)
 	{
-		if (tkn->tkn == WORD)
+		if (tkn->type == WORD)
 		{
-			if ((tkn == tkn0 || ((tkn - 2)->tkn >= GT && (tkn - 2)->tkn <= LLT))
+			if ((tkn == tkn0 || ((tkn - 2)->type >= GT && (tkn - 2)->type <= LLT))
 				&& !wrongvar(tkn->val))
 				cmdtotbl(tkn, row, envp);
-			else if ((tkn - 1)->tkn != WORD)
+			else if ((tkn - 1)->type != WORD)
 				iototbl(tkn, row);
 			else if (!wrongvar(tkn->val))
 				argtotbl(tkn, row);
@@ -72,7 +72,7 @@ t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes, char *envp[])
 		tkn++;
 	}
 	row->args[row->nargs] = NULL;
-	if (tkn->tkn != END)
+	if (tkn->type != END)
 		return (tkn + 1);
 	return (tkn);
 }
@@ -93,7 +93,7 @@ t_cmdtable	*parser(t_tkn *tkns, char *envp[], t_errdata *err)
 		errfree(err, NULL, NULL, STP);
 	else
 		tbl->pipeid = 0;
-	while (tkn->tkn != END && err->stop == CNT)
+	while (tkn->type != END && err->stop == CNT)
 	{
 		rowalloc(row, tkn, pipes, err);
 		if (err->stop == CNT)

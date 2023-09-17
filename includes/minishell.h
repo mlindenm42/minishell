@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/17 22:26:46 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/18 00:21:36 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include "parser.h"
 # include "executor.h"
 
-t_tkn		*lexer(); //dummy function
+//t_tkn		*lexer(); //dummy function
 t_cmdtable	*parser (t_tkn *tkns, char *envp[], t_errdata *err);
 void	expander(t_cmdtable *tbl, t_errdata *err);
 int	executor (t_cmdtable *tbl, char *envp[], t_errdata *err);
@@ -46,6 +46,7 @@ void	free_ptr(void *p);
 void	cmderr(t_errdata *err, void *cmd, int stop);
 void	echo(char *argv[]);
 int		isbuiltin(char *cmd);
+void	execute(char *input, char *envp[]);
 
 
 // check.c
@@ -64,7 +65,7 @@ void	lexer(char *input);
 t_data	*get_data(void);
 
 // terminal.c
-void	terminal(void);
+void terminal(char *envp[]);
 
 // utils.c
 size_t	ft_strlen(const char *s);

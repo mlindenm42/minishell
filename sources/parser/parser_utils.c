@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/15 14:05:18 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/18 00:20:26 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	calcpipes(t_tkn *tkns)
 	int	cnt;
 
 	cnt = 1;
-	while (tkns->tkn != END)
+	while (tkns->type != END)
 	{
-		if (tkns->tkn == PIPE)
+		if (tkns->type == PIPE)
 			cnt++;
 		tkns++;
 	}
@@ -33,9 +33,9 @@ int	calcins(t_tkn *tkns)
 	int	cnt;
 
 	cnt = 0;
-	while (tkns->tkn != END && tkns->tkn != PIPE)
+	while (tkns->type != END && tkns->type != PIPE)
 	{
-		if (tkns->tkn == LT || tkns->tkn == LLT)
+		if (tkns->type == LT || tkns->type == LLT)
 			cnt++;
 		tkns++;
 	}
@@ -48,9 +48,9 @@ int	calcouts(t_tkn *tkns)
 	int	cnt;
 
 	cnt = 0;
-	while (tkns->tkn != END && tkns->tkn != PIPE)
+	while (tkns->type != END && tkns->type != PIPE)
 	{
-		if (tkns->tkn == GT || tkns->tkn == GGT)
+		if (tkns->type == GT || tkns->type == GGT)
 			cnt++;
 		tkns++;
 	}
@@ -69,11 +69,11 @@ int	calcargs(t_tkn *tkns)
 
 	cnt = 0;
 	first = tkns;
-	while (tkns->tkn != END && tkns->tkn != PIPE)
+	while (tkns->type != END && tkns->type != PIPE)
 	{
-		if (tkns->tkn == WORD && tkns == first && !wrongvar(tkns->val))
+		if (tkns->type == WORD && tkns == first && !wrongvar(tkns->val))
 			cnt++;
-		if (tkns->tkn == WORD && tkns != first && (tkns - 1)->tkn == WORD
+		if (tkns->type == WORD && tkns != first && (tkns - 1)->type == WORD
 			&& !wrongvar(tkns->val))
 			cnt++;
 		tkns++;

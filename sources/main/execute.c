@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/18 00:25:41 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/18 00:26:32 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_data	*get_data(void)
+void errinit(t_errdata *err)
 {
-	static t_data	all_t_data;
-
-	return (&all_t_data);
+	err->type = NOERR;
+	err->stat = 0;
+	err->stop = CNT;
 }
 
-int	main(int argc, char *argv[], char *envp[])
+void	execute(char *input, char *envp[])
 {
-	terminal(envp);
-	return (0);
+	t_cmdtable	*tbl;
+	t_errdata	err;
+
+	errinit(&err);
+	lexer(input);
+	tbl = parser(*get_data()->tokens, envp, &err);
+	expander(tbl, &err);
+	//print_table(tbl, tbl->nrows);
+	if (err.stop == CNT)
+		executor(tbl, envp, &err);
+	//printf("\nexit stat: %i\n", err.stat);
 }

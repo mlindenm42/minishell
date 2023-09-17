@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/17 22:22:52 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/17 23:34:21 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef struct s_tkn
 {
-	int		tkn;
+	int		type;
 	char	*val;
 }	t_tkn;
 
@@ -58,7 +58,7 @@ typedef struct s_cmdtable
 typedef struct s_data {
 	char	*prompt;
 	char	*input;
-	t_token	**tokens;
+	t_tkn	**tokens;
 }	t_data;
 
 #endif
