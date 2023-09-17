@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/17 20:33:34 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/17 22:22:52 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,13 @@ typedef struct s_cmdtable
 	int			eflag;
 	t_errdata	*err;
 }	t_cmdtable;
+
+
+
+typedef struct s_data {
+	char	*prompt;
+	char	*input;
+	t_token	**tokens;
+}	t_data;
 
 #endif

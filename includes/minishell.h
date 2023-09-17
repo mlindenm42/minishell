@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/15 18:34:11 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/17 22:26:46 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,32 @@ void	free_ptr(void *p);
 void	cmderr(t_errdata *err, void *cmd, int stop);
 void	echo(char *argv[]);
 int		isbuiltin(char *cmd);
-//void	cmderr(void *cmd);
-//void	addtext(void *fpath, t_errdata *err);
+
+
+// check.c
+// void	check_arg(int argc, char *argv[]);
+
+// init.c
+
+// error.c
+void	error(char *reason);
+// void	free_all(void);
+
+// lexer.c
+void	lexer(char *input);
+
+// main.c
+t_data	*get_data(void);
+
+// terminal.c
+void	terminal(void);
+
+// utils.c
+size_t	ft_strlen(const char *s);
+size_t	ft_strlcat(char *dst, const char *src, size_t n);
+char	*ft_strtrim(char const *s1, char const *set);
+
+//utils_ft_split.c
+char	**ft_split(char const *s, char c);
+
 #endif

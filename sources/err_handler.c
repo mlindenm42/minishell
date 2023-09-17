@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   err_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/17 22:17:41 by mrubina          ###   ########.fr       */
+/*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
+/*   Updated: 2023/08/12 13:58:56 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "../includes/minishell.h"
 
-int	main(void)
+//for now it frees only a row of a cmd table pointed by the argument
+//to be completed later
+void	err_handler(t_cmdtable *tbl)
 {
-	char	*input;
-
-	rl_bind_key('\t', rl_complete);
-	input = readline("Enter something: ");
-	if (input && *input)
+	if (tbl != NULL)
 	{
-		add_history(input);
+		if (tbl->args != NULL)
+			free(tbl->args);
+		if (tbl->infiles != NULL)
+			free(tbl->infiles);
+		if (tbl->outfiles != NULL)
+			free(tbl->outfiles);
 	}
-	printf("You entered: %s\n", input);
-	free(input);
-	return (0);
+	perror("minishell");
 }
