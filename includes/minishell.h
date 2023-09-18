@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/15 18:34:11 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/18 19:36:58 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	free_ptr(void *p);
 void	cmderr(t_errdata *err, void *cmd, int stop);
 void	echo(char *argv[]);
 int		isbuiltin(char *cmd);
+void	setstatstr(t_errdata *err);
 //void	cmderr(void *cmd);
 //void	addtext(void *fpath, t_errdata *err);
 #endif
