@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/17 21:10:59 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/18 23:53:36 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,5 @@ char	*readbuf(char *buf, int size);
 void	midouts(t_cmdtable *row, t_exedata *data);
 void	setnextin(t_cmdtable *row, t_exedata *data, int i);
 int		ft_strcmp(const char *s1, const char *s2);
+char	*varsubst(char *str, char *start);
 #endif

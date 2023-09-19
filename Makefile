@@ -6,7 +6,7 @@
 #    By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/10 17:13:37 by mlindenm          #+#    #+#              #
-#    Updated: 2023/09/17 20:45:37 by mrubina          ###   ########.fr        #
+#    Updated: 2023/09/19 16:30:19 by mrubina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJ_DIR		=	$(SRC_DIR)/obj
 
 SRC_M		=	main.c err_handler.c lexsim.c free.c
 SRC_P		= 	parser.c parser_utils.c testfunc.c getpath.c var_check.c
-SRC_E		= 	executor.c exe_utils.c heredoc.c hdutils.c ins_outs.c expander.c
+SRC_E		= 	executor.c exe_utils.c heredoc.c hdutils.c ins_outs.c expander.c vars.c
 SRC_B		=	echo.c cd.c builtin_utils.c
 
 SRC 		= 	$(SRC_P) $(SRC_M) $(SRC_E) $(SRC_B)
