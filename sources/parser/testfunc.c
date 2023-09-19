@@ -6,11 +6,11 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/13 18:09:06 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/16 20:01:44 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 //tester functions
 //to be removed in final version
@@ -48,9 +48,9 @@ void	print_table(t_cmdtable *tbl, int size)
 	i = 0;
 	while (i <= size - 1)
 	{
-		printf("pipe%i: %s | ", tbl[i].pipe, tbl[i].cmd);
+		printf("pipe%i: %s | ", tbl[i].pipeid, tbl[i].cmd);
 		printf("args: ");
-		printargs(tbl[i].args, tbl[i].nargs);
+		printargs(tbl[i].args, tbl[i].nargs + 1);
 		printf("\n in: ");
 		printio(tbl[i].infiles, tbl[i].nins);
 		printf("\n out: ");

@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.h                                           :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/31 20:33:26 by mrubina          ###   ########.fr       */
+/*   Created: 2022/10/31 14:34:41 by mrubina           #+#    #+#             */
+/*   Updated: 2022/12/07 00:29:16 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENS_H
-# define TOKENS_H
+#include "libft.h"
 
-# define NOTOKEN 0
-# define GT 1
-# define LT 2
-# define GGT 3
-# define LLT 4
-# define PIPE 5
-# define WORD 6
-# define END 7
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	unsigned int	i;
+	char			*str;
 
-#define NOERR 0
-
-#endif
+	if (s == 0)
+		return (0);
+	str = (char *)malloc(ft_strlen(s) + 1);
+	if (str == 0)
+		return (0);
+	i = 0;
+	while (s[i] != '\0')
+	{
+		str[i] = f(i, s[i]);
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}

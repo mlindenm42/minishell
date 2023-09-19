@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.h                                           :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/31 20:33:26 by mrubina          ###   ########.fr       */
+/*   Created: 2022/11/06 22:12:51 by mrubina           #+#    #+#             */
+/*   Updated: 2022/12/07 14:57:47 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENS_H
-# define TOKENS_H
+#include "libft.h"
 
-# define NOTOKEN 0
-# define GT 1
-# define LT 2
-# define GGT 3
-# define LLT 4
-# define PIPE 5
-# define WORD 6
-# define END 7
+int	ft_lstsize(t_list *lst)
+{
+	int	count;
 
-#define NOERR 0
-
-#endif
+	count = 0;
+	while (lst != 0)
+	{
+		count++;
+		lst = lst->next;
+	}
+	return (count);
+}

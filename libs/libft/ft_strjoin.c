@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.h                                           :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/31 20:33:26 by mrubina          ###   ########.fr       */
+/*   Created: 2022/10/31 14:35:31 by mrubina           #+#    #+#             */
+/*   Updated: 2022/12/07 00:11:56 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENS_H
-# define TOKENS_H
+#include "libft.h"
 
-# define NOTOKEN 0
-# define GT 1
-# define LT 2
-# define GGT 3
-# define LLT 4
-# define PIPE 5
-# define WORD 6
-# define END 7
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*str;
+	size_t	len1;
+	size_t	len2;
 
-#define NOERR 0
-
-#endif
+	if ((s1 != 0) && (s2 != 0))
+	{
+		len1 = ft_strlen(s1);
+		len2 = ft_strlen(s2);
+		str = malloc(len1 + len2 + 1);
+		if (str != 0)
+		{
+			ft_strlcpy(str, s1, len1 + 1);
+			ft_strlcat(str, s2, len2 + len1 + 1);
+		}
+		return (str);
+	}
+	else
+		return (0);
+}

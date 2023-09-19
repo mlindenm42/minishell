@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.h                                           :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/31 20:33:26 by mrubina          ###   ########.fr       */
+/*   Created: 2022/10/31 14:36:29 by mrubina           #+#    #+#             */
+/*   Updated: 2022/12/07 15:06:21 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENS_H
-# define TOKENS_H
+#include "libft.h"
 
-# define NOTOKEN 0
-# define GT 1
-# define LT 2
-# define GGT 3
-# define LLT 4
-# define PIPE 5
-# define WORD 6
-# define END 7
-
-#define NOERR 0
-
-#endif
+void	ft_putendl_fd(char *s, int fd)
+{
+	if (s != 0)
+	{
+		ft_putstr_fd(s, fd);
+		ft_putchar_fd('\n', fd);
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/13 00:24:51 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/18 17:21:29 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ in this file we have functions used only in the parser
 #ifndef PARSER_H
 # define PARSER_H
 
-int		calcpipes(t_token *tkns);
-int		calcargs(t_token *tkns);
-int		calcins(t_token *tkns);
-int		calcouts(t_token *tkns);
-void	rowalloc(t_cmdtable *tbl, t_token *tkns);
+int		calcpipes(t_tkn *tkns);
+int		calcargs(t_tkn *tkns);
+int		calcins(t_tkn *tkns);
+int		calcouts(t_tkn *tkns);
+void	rowalloc(t_cmdtable *tbl, t_tkn *tkns, int pipes, t_errdata *err);
+char	*getpath(char *fpath, char *envp[]);
+int		isvar(char *str);
 
 //tester functions
 void	printio(t_iof *files, int n);

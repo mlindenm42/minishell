@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.h                                           :+:      :+:    :+:   */
+/*   err_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/31 20:33:26 by mrubina          ###   ########.fr       */
+/*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
+/*   Updated: 2023/08/18 12:09:44 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENS_H
-# define TOKENS_H
+#include "../../includes/minishell.h"
 
-# define NOTOKEN 0
-# define GT 1
-# define LT 2
-# define GGT 3
-# define LLT 4
-# define PIPE 5
-# define WORD 6
-# define END 7
-
-#define NOERR 0
-
-#endif
+//for now it frees only a row of a cmd table pointed by the argument
+//to be completed later
+void	err_handler(t_cmdtable *tbl)
+{
+	if (tbl != NULL)
+	{
+		if (tbl->args != NULL)
+			free(tbl->args);
+		if (tbl->infiles != NULL)
+			free(tbl->infiles);
+		if (tbl->outfiles != NULL)
+			free(tbl->outfiles);
+	}
+	perror("minishell");
+}
