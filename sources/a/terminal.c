@@ -6,11 +6,11 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/14 00:11:24 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/09/19 17:35:37 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 #include <stdio.h> // printf(); FILE;
 #include <readline/readline.h> // rl_replace_line(); rl_on_new_line();
 // rl_redisplay(); readline(); rl_clear_history();
@@ -25,7 +25,7 @@ static void	handle_ctrl_c(int signal)
 	if (signal == SIGINT)
 	{
 		write(2, "\n", 1);
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
@@ -83,5 +83,5 @@ void	terminal(void)
 		lexer(get_data()->input);
 		free(get_data()->input);
 	}
-	rl_clear_history();
+	// rl_clear_history();
 }
