@@ -6,11 +6,11 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 18:32:39 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/28 16:49:56 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/09/19 17:34:28 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 #include <stdio.h> // printf();
 
 #include <stdio.h>
@@ -18,12 +18,12 @@
 #include <string.h>
 #include <stdbool.h>
 
-t_token	*create_token(int type, const char *val)
+t_tkn	*create_token(int type, const char *val)
 {
-	t_token	*token;
+	t_tkn	*token;
 
 	token = NULL;
-	token = (t_token *)malloc(sizeof(t_token));
+	token = (t_tkn *)malloc(sizeof(t_tkn));
 	if (token == NULL)
 		error("malloc");
 	token->type = type;
@@ -31,13 +31,13 @@ t_token	*create_token(int type, const char *val)
 	return (token);
 }
 
-void	free_token(t_token *token)
+void	free_token(t_tkn *token)
 {
 	free(token->val);
 	free(token);
 }
 
-t_token	*get_next_token(char **input)
+t_tkn	*get_next_token(char **input)
 {
 	char	val[256];
 	int		i;
@@ -71,9 +71,9 @@ t_token	*get_next_token(char **input)
 		|| strcmp(val, "pwd") == 0 || strcmp(val, "export") == 0
 		|| strcmp(val, "unset") == 0 || strcmp(val, "env") == 0
 		|| strcmp(val, "exit") == 0)
-		return (create_token(CMD, val));
+		return (create_token(WORD, val));
 	else
-		return (create_token(ARG, val));
+		return (create_token(NOTOKEN, val));
 }
 
 int	is_normal_char(char c)
@@ -153,7 +153,7 @@ int	token_counter(char *input)
 	return (i);
 }
 
-void	lexer(char *input)
+t_tkn	lexer(char *input)
 {
 	int		i;
 	int		counter;
@@ -162,7 +162,7 @@ void	lexer(char *input)
 	input = ft_strtrim(input, "\t");
 	counter = token_counter(input);
 	printf("Tokens: %d\n", counter);
-	get_data()->tokens = (t_token **) malloc(counter * sizeof(t_token *));
+	get_data()->tokens = (t_tkn **) malloc(counter * sizeof(t_tkn *));
 	i = 0;
 	while (i < counter)
 	{
@@ -173,4 +173,5 @@ void	lexer(char *input)
 			get_data()->tokens[i]->type, get_data()->tokens[i]->val);
 		i++;
 	}
+	return *(*get_data()->tokens);
 }

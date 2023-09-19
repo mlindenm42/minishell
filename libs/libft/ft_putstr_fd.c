@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/13 23:37:15 by mlindenm         ###   ########.fr       */
+/*   Created: 2022/10/31 14:36:12 by mrubina           #+#    #+#             */
+/*   Updated: 2022/12/07 15:11:00 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-t_data	*get_data(void)
+void	ft_putstr_fd(char *s, int fd)
 {
-	static t_data	all_t_data;
-
-	return (&all_t_data);
-}
-
-int	main(void)
-{
-	terminal();
-	return (0);
+	while ((s != 0) && (*s != '\0'))
+	{
+		ft_putchar_fd(*s, fd);
+		s++;
+	}
 }

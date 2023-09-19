@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err_handler.c                                      :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/08/12 13:58:56 by mrubina          ###   ########.fr       */
+/*   Created: 2022/11/06 22:13:13 by mrubina           #+#    #+#             */
+/*   Updated: 2022/12/07 14:55:59 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-//for now it frees only a row of a cmd table pointed by the argument
-//to be completed later
-void	err_handler(t_cmdtable *tbl)
+t_list	*ft_lstlast(t_list *lst)
 {
-	if (tbl != NULL)
+	if (lst != 0)
 	{
-		if (tbl->args != NULL)
-			free(tbl->args);
-		if (tbl->infiles != NULL)
-			free(tbl->infiles);
-		if (tbl->outfiles != NULL)
-			free(tbl->outfiles);
+		while (lst->next != 0)
+			lst = lst->next;
 	}
-	perror("minishell");
+	return (lst);
 }
