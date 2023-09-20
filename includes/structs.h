@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/17 23:34:21 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/20 13:57:28 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 typedef struct s_tkn
 {
+	int		type;
 	int		type;
 	char	*val;
 }	t_tkn;
@@ -29,10 +30,9 @@ typedef struct s_iof
 
 typedef struct s_errdata
 {
-	int		type;
 	int		stop;
 	int		stat;
-	void	*struc;
+	char	*statstr;
 }	t_errdata;
 
 typedef struct s_cmdtable

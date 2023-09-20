@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/17 23:33:52 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/20 13:50:57 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,28 @@
 	return (tkns);
  } */
 
+//awk
+/*  t_tkn *lexer()
+{
+	t_tkn *tkns;
+	int size;
+
+	size = 15;
+	tkns = malloc(size * sizeof(t_tkn));
+	tkns[0].type = WORD;
+	tkns[0].val = "cat";
+	tkns[1].type = WORD;
+	tkns[1].val = "f1";
+	 tkns[2].type = PIPE;
+	tkns[3].type = WORD;
+	tkns[3].val = "awk";
+	tkns[4].type = WORD;
+	tkns[4].val = "\"{count++} END {print count}\"";
+	tkns[8].type = END;
+	tkns[8].val = NULL;
+	return (tkns);
+} */
+
  t_tkn *lexer()
 {
 	t_tkn *tkns;
@@ -234,28 +256,28 @@
 	size = 15;
 	tkns = malloc(size * sizeof(t_tkn));
 	tkns[0].type = WORD;
-	tkns[0].val = "hostname";
-	tkns[1].type = GT;
+	tkns[0].val = "cat";
+	tkns[1].type = LLT;
 	tkns[2].type = WORD;
-	tkns[2].val = "$USE";
+	tkns[2].val = "$?";
 	//tkns[0].val = "\"$USE\"";
 	// tkns[1].type = WORD;
-	// tkns[1].val = "-e";
-	// tkns[2].type = WORD;
-	// tkns[2].val = "tre";
+	// tkns[1].val = "user name is \"$USER\"";
+	// tkns[1].type = WORD;
+	// tkns[1].val = "$USER";
 	// tkns[1].type = WORD;
 	// tkns[1].val = "5";
 	// tkns[2].type = WORD;
 	// tkns[2].val = "f2";
-	// tkns[3].type = PIPE;
+	//  tkns[2].type = PIPE;
+	// tkns[3].type = WORD;
+	// tkns[3].val = "awk";
 	// tkns[4].type = WORD;
-	// tkns[4].val = "wc";
-	// tkns[5].type = WORD;
-	// tkns[5].val = "-l";
-	// tkns[6].type = GT;
-	// tkns[7].type = WORD;
-	// tkns[7].val = "out2";
-	tkns[8].type = END;
-	tkns[8].val = NULL;
+	// tkns[4].val = "\"{count++} END {print count}\"";
+	// tkns[2].type = GT;
+	// tkns[3].type = WORD;
+	// tkns[3].val = "out3";
+	tkns[4].type = END;
+	tkns[4].val = NULL;
 	return (tkns);
 }
