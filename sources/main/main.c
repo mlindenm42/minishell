@@ -6,11 +6,13 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/19 00:24:02 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/20 13:07:08 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+// dprintf(2, "p %p\n", str);
+// dprintf(2, "t %s\n", str);
 
 void errinit(t_errdata *err)
 {
@@ -26,11 +28,6 @@ int	main(int argc, char *argv[], char *envp[])
 	t_cmdtable *tbl;
 	t_errdata err;
 
-	char *str = "no$USE=tete";
-	char *start = str + 2;
-	//char	*varsubst(char *str, char *start);
-	dprintf(2, "t %s\n", varsubst(str, start));
-	exit(0);
 	errinit(&err);
 	tkns = lexer();
 	tbl = parser(tkns, envp, &err);

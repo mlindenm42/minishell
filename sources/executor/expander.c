@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/19 16:33:59 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/20 13:46:53 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,10 @@ static void	replace_filename(int last_ind, t_iof *file, t_errdata *err)
 	int		j;
 
 	j = 0;
-	while (j <= last_ind && isvar(file[j].file))
+	while (j <= last_ind)
 	{
-		if (file[j].file[0] == '$' && ft_strcmp(file[j].file, "$?") != 0)
-			file[j].file = getenv(file[j].file + 1);
-		else if (ft_strcmp(file[j].file, "$?") == 0)
-			file[j].file = err->statstr;
+		if (file[j].io != LLT)
+			expand_word(&file[j].file, err->statstr);
 		j++;
 	}
 }
@@ -35,10 +33,7 @@ static void	replace_arg(int last_ind, char **args, t_errdata *err)
 	j = 0;
 	while (j <= last_ind)
 	{
-		if (ft_strcmp(args[j], "$?") == 0)
-			args[j] = err->statstr;
-		else if (args[j][0] == '$')
-			args[j] = getenv(args[j] + 1);
+		expand_word(&args[j], err->statstr);
 		j++;
 	}
 }
@@ -51,13 +46,30 @@ void	expander(t_cmdtable *tbl, t_errdata *err)
 	setstatstr(err);
 	while (i <= tbl->nrows - 1)
 	{
-		if (ft_strcmp(tbl[i].cmd, "$?") == 0)
-			tbl[i].cmd = err->statstr;
-		else if (tbl[i].cmd[0] == '$')
-			tbl[i].cmd = getenv(tbl[i].cmd + 1);
+		expand_word(&tbl[i].cmd, err->statstr);
 		replace_arg(tbl[i].nargs - 1, tbl[i].args, err);
 		replace_filename(tbl[i].nins - 1, tbl[i].infiles, err);
 		replace_filename(tbl[i].nouts - 1, tbl[i].outfiles, err);
 		i++;
 	}
+}
+
+//if single quotes remove them
+//if double quotes expand variables and remove quotes
+//if no quotes expand vars
+void	expand_word(char **word, char *exit_stat)
+{
+	char	*tmp;
+
+	if (**word == '\'')
+		*word = ft_strtrim(*word, "\'");
+	else if (**word == '"')
+	{
+		tmp = ft_strtrim(*word, "\"");
+		*word = tmp;
+		varscan(word, exit_stat);
+		free(tmp);
+	}
+	else
+		varscan(word, exit_stat);
 }

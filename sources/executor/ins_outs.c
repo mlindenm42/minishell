@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/18 17:23:14 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/20 13:34:35 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	outopen(t_cmdtable *row, int *fd, int stop)
 	while (i <= row->nouts - 1)
 	{
 		if ((access(row->outfiles[i].file, W_OK) == -1 && errno == EACCES)
-			|| !isvar(row->outfiles[i].file))
+			|| !varvalid(row->outfiles[i].file))
 		{
 			seterr(row, i, stop);
 			return (1);

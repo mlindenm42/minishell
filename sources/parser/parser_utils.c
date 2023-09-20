@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/18 17:56:35 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/20 13:34:35 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ int	calcargs(t_tkn *tkns)
 	first = tkns;
 	while (tkns->type != END && tkns->type != PIPE)
 	{
-		if (tkns->type == WORD && tkns == first && isvar(tkns->val))
+		if (tkns->type == WORD && tkns == first && varvalid(tkns->val))
 			cnt++;
 		if (tkns->type == WORD && tkns != first && (tkns - 1)->type == WORD
-			&& isvar(tkns->val))
+			&& varvalid(tkns->val))
 			cnt++;
 		tkns++;
 	}

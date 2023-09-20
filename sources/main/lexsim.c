@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/18 21:43:31 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/20 13:44:45 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,14 +257,14 @@
 	tkns = malloc(size * sizeof(t_tkn));
 	tkns[0].type = WORD;
 	tkns[0].val = "cat";
-/* 	tkns[1].type = GT;
+	tkns[1].type = LLT;
 	tkns[2].type = WORD;
-	tkns[2].val = "$USE"; */
+	tkns[2].val = "$?";
 	//tkns[0].val = "\"$USE\"";
 	// tkns[1].type = WORD;
 	// tkns[1].val = "user name is \"$USER\"";
-	tkns[1].type = WORD;
-	tkns[1].val = "f1";
+	// tkns[1].type = WORD;
+	// tkns[1].val = "$USER";
 	// tkns[1].type = WORD;
 	// tkns[1].val = "5";
 	// tkns[2].type = WORD;
@@ -274,10 +274,10 @@
 	// tkns[3].val = "awk";
 	// tkns[4].type = WORD;
 	// tkns[4].val = "\"{count++} END {print count}\"";
-	tkns[6].type = GT;
-	tkns[7].type = WORD;
-	tkns[7].val = "$USE";
-	tkns[8].type = END;
-	tkns[8].val = NULL;
+	// tkns[2].type = GT;
+	// tkns[3].type = WORD;
+	// tkns[3].val = "out3";
+	tkns[4].type = END;
+	tkns[4].val = NULL;
 	return (tkns);
 }
