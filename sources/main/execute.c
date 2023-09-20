@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/18 00:26:32 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/20 14:11:16 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void errinit(t_errdata *err)
 {
-	err->type = NOERR;
 	err->stat = 0;
 	err->stop = CNT;
 }
