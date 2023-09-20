@@ -6,11 +6,11 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 13:10:20 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/08/13 22:07:25 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/09/19 17:28:28 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 #include <stdlib.h> // exit(); EXIT_FAILURE;
 #include <unistd.h> //NULL; write();
 

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/20 14:11:16 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/20 20:47:11 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void errinit(t_errdata *err)
 {
 	err->stat = 0;
 	err->stop = CNT;
+	err->statstr = NULL;
 }
 
 void	execute(char *input, char *envp[])
@@ -27,7 +28,7 @@ void	execute(char *input, char *envp[])
 	lexer(input);
 	tbl = parser(*get_data()->tokens, envp, &err);
 	expander(tbl, &err);
-	//print_table(tbl, tbl->nrows);
+	print_table(tbl, tbl->nrows);
 	if (err.stop == CNT)
 		executor(tbl, envp, &err);
 	//printf("\nexit stat: %i\n", err.stat);

@@ -6,10 +6,11 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/20 13:55:22 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/20 20:11:31 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../includes/minishell.h"
 #include "../../includes/minishell.h"
 
 //calculates the total number of pipes
@@ -19,11 +20,14 @@ int	calcpipes(t_tkn *tkns)
 
 	cnt = 1;
 	while (tkns->type != END)
+	while (tkns->type != END)
 	{
+		if (tkns->type == PIPE)
 		if (tkns->type == PIPE)
 			cnt++;
 		tkns++;
 	}
+	return (cnt);
 	return (cnt);
 }
 
@@ -34,7 +38,9 @@ int	calcins(t_tkn *tkns)
 
 	cnt = 0;
 	while (tkns->type != END && tkns->type != PIPE)
+	while (tkns->type != END && tkns->type != PIPE)
 	{
+		if (tkns->type == LT || tkns->type == LLT)
 		if (tkns->type == LT || tkns->type == LLT)
 			cnt++;
 		tkns++;
@@ -50,6 +56,7 @@ int	calcouts(t_tkn *tkns)
 	cnt = 0;
 	while (tkns->type != END && tkns->type != PIPE)
 	{
+		if (tkns->type == GT || tkns->type == GGT)
 		if (tkns->type == GT || tkns->type == GGT)
 			cnt++;
 		tkns++;
@@ -70,6 +77,7 @@ int	calcargs(t_tkn *tkns)
 	cnt = 0;
 	first = tkns;
 	while (tkns->type != END && tkns->type != PIPE)
+	while (tkns->type != END && tkns->type != PIPE)
 	{
 		if (tkns->type == WORD && tkns == first && varvalid(tkns->val))
 			cnt++;
@@ -78,6 +86,7 @@ int	calcargs(t_tkn *tkns)
 			cnt++;
 		tkns++;
 	}
+	return (cnt);
 	return (cnt);
 }
 

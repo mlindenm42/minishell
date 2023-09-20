@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/17 22:20:22 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/20 14:34:00 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@
 # define LLT 4
 # define PIPE 5
 # define WORD 6
-# define CMD 7
-# define ARG 8
-# define END 9
+# define END 7
 
 #define NOERR 0
+
 #endif

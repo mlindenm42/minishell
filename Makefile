@@ -6,13 +6,14 @@
 #    By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/10 17:13:37 by mlindenm          #+#    #+#              #
-#    Updated: 2023/09/20 13:59:11 by mrubina          ###   ########.fr        #
+#    Updated: 2023/09/20 14:29:57 by mrubina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
 CC			=	cc
+#CFLAGS		=	-Wall -Werror -Wextra
 #CFLAGS		=	-Wall -Werror -Wextra
 
 SRC_DIR		=	sources
@@ -37,6 +38,7 @@ $(NAME): $(LIBFT_A) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -lreadline -L$(LIBFT_D) -lft -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/*/%.c $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/*/%.c $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
@@ -47,7 +49,13 @@ $(LIBFT_A): make_libft
 make_libft:
 	make -C $(LIBFT_D)
 
+$(LIBFT_A): make_libft
+
+make_libft:
+	make -C $(LIBFT_D)
+
 clean:
+	make fclean -C libs/libft
 	make fclean -C libs/libft
 	@rm -rf $(OBJ_DIR)
 

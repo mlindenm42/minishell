@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/20 13:58:53 by mrubina          ###   ########.fr       */
+/*   Created: 2023/08/10 19:03:19 by mlindenm          #+#    #+#             */
+/*   Updated: 2023/09/20 20:09:53 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
+# include "tokens.h"
+# include "structs.h"
+# include "parser.h"
+# include "executor.h"
+
 # include "tokens.h"
 # include "structs.h"
 # include "parser.h"
@@ -60,7 +65,7 @@ void	error(char *reason);
 // void	free_all(void);
 
 // lexer.c
-void	lexer(char *input);
+t_tkn	lexer(char *input);
 
 // main.c
 t_data	*get_data(void);
