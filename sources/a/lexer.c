@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/21 17:21:00 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/09/21 18:53:03 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ t_tkn	*get_next_token(char **input)
 		while (**input == ' ' || **input == '\t')
 		{
 			if (**input == '\0')
-				return &(*get_next_token(input));
+				return (create_token(END, "END2"));
 			(*input)++;
 		}
 		if (is_normal_char(**input))
@@ -128,7 +128,7 @@ t_tkn	*get_next_token(char **input)
 			while (is_normal_char(**input))
 			{
 				if (**input == '\0')
-					return (create_token(WORD, "A"));
+					return (create_tokenn(WORD, begin));
 				if (**input == '"')
 				{
 					(*input)++;
@@ -136,6 +136,11 @@ t_tkn	*get_next_token(char **input)
 					{
 						if (**input == '\0')
 							error("wrong syntax!\n");
+						actual->character = **input;
+						actual->next = (t_stringlist *)malloc(sizeof(t_stringlist));
+						actual = actual->next;
+						actual->next = NULL;
+						actual->character = '\0';
 						(*input)++;
 					}
 				}
@@ -146,6 +151,11 @@ t_tkn	*get_next_token(char **input)
 					{
 						if (**input == '\0')
 							error("wrong syntax!\n");
+						actual->character = **input;
+						actual->next = (t_stringlist *)malloc(sizeof(t_stringlist));
+						actual = actual->next;
+						actual->next = NULL;
+						actual->character = '\0';
 						(*input)++;
 					}
 				}
@@ -165,43 +175,76 @@ t_tkn	*get_next_token(char **input)
 		}
 		(*input)++;
 	}
-	// printf("TEST: %s\n", *input);
-	return &(*get_next_token(input));
+	return (create_token(END, "END3"));
 }
 
-void	lexer(char *input)
+int	tokencounter(t_tokenlist token_list)
+{
+	int	counter;
+	t_tokenlist	*actual;
+
+	counter = 0;
+	actual = &token_list;
+	while (actual != NULL)
+	{
+		counter++;
+		actual = actual->next;
+	}
+	return (counter);
+}
+
+t_tkn	*tkn_list_array(t_tokenlist *token_list)
+{
+	int	i;
+	int	tokens;
+	t_tokenlist	*actual;
+
+	tokens = tokencounter(*token_list);
+	get_data()->tokens = (t_tkn **) malloc(tokencounter(*token_list) * sizeof(t_tkn *));
+	i = 0;
+	actual = token_list;
+	while (i < tokens)
+	{
+		get_data()->tokens[i] = &actual->token;
+		actual = actual->next;
+		i++;
+	}
+	return *(get_data()->tokens);
+}
+
+t_tkn	lexer(char *input)
 {
 	int		i;
 	t_tokenlist	*begin;
 	t_tokenlist	*actual;
 
-	// printf("Input: %s\n", input);
 	begin = NULL;
 	begin = (t_tokenlist *)malloc(sizeof(t_tokenlist));
 	actual = begin;
 	actual->next = NULL;
 	actual->token = *get_next_token(&input);
-	// printf("Token type: %d, Value: %s\n", actual->token.type, actual->token.val);
 	// input = ft_strtrim(input, " ");
 	// input = ft_strtrim(input, "\t");
 	i = 0;
 	while (*input != '\0')
 	{
-		// printf("REST Input: %s\n", input);
 		actual->next = (t_tokenlist *)malloc(sizeof(t_tokenlist));
 		actual = actual->next;
 		actual->next = NULL;
 		actual->token = *get_next_token(&input);
-		// printf("Token type: %d, Value: %s\n", actual->token.type, actual->token.val);
 		i++;
 	}
-	// printf("\n");
+
 	actual = begin;
-	while (actual->next != NULL)
+	tkn_list_array(actual);
+
+	i = 0;
+	while (get_data()->tokens[i]->type != END)
 	{
-		printf("Token type: %d, Value: %s\n", actual->token.type, actual->token.val);
-		actual = actual->next;
+		printf("Token type: %d, Value: %s\n", get_data()->tokens[i]->type, get_data()->tokens[i]->val);
+		i++;
 	}
-	printf("Token type: %d, Value: %s\n", actual->token.type, actual->token.val);
-	return ;
+	printf("Token type: %d, Value: %s\n", get_data()->tokens[i]->type, get_data()->tokens[i]->val);
+	actual = begin;
+	return *(tkn_list_array(actual));
 }
