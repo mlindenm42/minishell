@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 19:03:19 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/20 20:09:53 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/21 21:59:11 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	error(char *reason);
 // void	free_all(void);
 
 // lexer.c
-t_tkn	lexer(char *input);
+void	lexer(char *input);
 
 // main.c
 t_data	*get_data(void);
