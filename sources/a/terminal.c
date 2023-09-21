@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/20 20:52:48 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/21 17:11:19 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	handle_ctrl_c(int signal)
 	if (signal == SIGINT)
 	{
 		write(2, "\n", 1);
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
@@ -83,5 +83,5 @@ void	terminal(char *envp[])
 		execute(get_data()->input, envp);
 		free(get_data()->input);
 	}
-	// rl_clear_history();
+	rl_clear_history();
 }
