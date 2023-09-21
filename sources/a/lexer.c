@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/21 20:31:35 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/09/21 21:01:21 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	free_token(t_tkn *token)
 
 int	is_normal_char(char c)
 {
-	if (c == '!' || (c >= '"' && c <= '\'') || (c >= '+' && c <= '.') || (c >= '/' && c <= ':') || c == '=' || (c >= '?' && c <= 'Z') || (c >= '^' && c <= 'z'))
+	if ((c >= 33 && c <= 39) || (c >= 43 && c <= 58) || c == 61 || (c >= 63 && c <= 90) || (c >= 94 && c <= 122))
 		return (1);
 	return (0);
 }
@@ -170,8 +170,40 @@ t_tkn	*get_next_token(char **input)
 		}
 		if (**input == '\n' || **input == '|' || **input == '&' || **input == ';' || **input == '(' || **input == ')' || **input == '<' || **input == '>')
 		{
+			if (**input == '>' && !(*(*input + 1) == '>'))
+			{
+				(*input)++;
+				return (create_token(GT, ">"));
+			}
+			if (**input == '<' && !(*(*input + 1) == '<'))
+			{
+				(*input)++;
+				return (create_token(LT, "<"));
+			}
+			if (**input == '>' && (*(*input + 1)) == '>')
+			{
+				(*input)++;
+				(*input)++;
+				return (create_token(GGT, ">>"));
+			}
+			if (**input == '<' && (*(*input + 1)) == '<')
+			{
+				(*input)++;
+				(*input)++;
+				return (create_token(LLT, "<<"));
+			}
+			if (**input == '|')
+			{
+				(*input)++;
+				return (create_token(PIPE, "|"));
+			}
+			actual->character = **input;
+			actual->next = (t_stringlist *)malloc(sizeof(t_stringlist));
+			actual = actual->next;
+			actual->next = NULL;
+			actual->character = '\0';
 			(*input)++;
-			return (create_token(WORD, "OP"));
+			return (create_tokenn(WORD, begin));
 		}
 		(*input)++;
 	}
