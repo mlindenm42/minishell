@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/21 18:53:03 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/09/21 20:31:35 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,8 +223,6 @@ t_tkn	lexer(char *input)
 	actual = begin;
 	actual->next = NULL;
 	actual->token = *get_next_token(&input);
-	// input = ft_strtrim(input, " ");
-	// input = ft_strtrim(input, "\t");
 	i = 0;
 	while (*input != '\0')
 	{
@@ -234,10 +232,15 @@ t_tkn	lexer(char *input)
 		actual->token = *get_next_token(&input);
 		i++;
 	}
-
+	if (actual->token.type != END)
+	{
+		actual->next = (t_tokenlist *)malloc(sizeof(t_tokenlist));
+		actual = actual->next;
+		actual->next = NULL;
+		actual->token = *create_token(END, "END4");
+	}
 	actual = begin;
 	tkn_list_array(actual);
-
 	i = 0;
 	while (get_data()->tokens[i]->type != END)
 	{
