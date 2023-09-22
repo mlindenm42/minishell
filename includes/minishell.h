@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/18 19:36:58 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/22 23:02:31 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,18 @@ void	free_row(void *row);
 void	free_rows(void *row);
 void	free_exedt(void *data);
 void	free_ptr(void *p);
+void	free_str(char *str);
+char	**copy_arr(char **newarr, char **arr);
 //void	cmderr(void *cmd);
 void	cmderr(t_errdata *err, void *cmd, int stop);
 void	echo(char *argv[]);
+void	printenv(char *env[]);
 int		isbuiltin(char *cmd);
+void export(char **envp_loc, t_cmdtable *row);
 void	setstatstr(t_errdata *err);
+void	set_loc_env(char *envp[], t_errdata *err);
+int		arr_len(char **arr);
+char	**expand_loc_env(char **envp_loc, int nvar);//move to execotor
 //void	cmderr(void *cmd);
 //void	addtext(void *fpath, t_errdata *err);
 #endif

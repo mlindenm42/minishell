@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/20 13:44:45 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/22 18:30:20 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,13 +256,13 @@
 	size = 15;
 	tkns = malloc(size * sizeof(t_tkn));
 	tkns[0].type = WORD;
-	tkns[0].val = "cat";
-	tkns[1].type = LLT;
+	tkns[0].val = "export";
+/* 	tkns[1].type = LLT;
 	tkns[2].type = WORD;
-	tkns[2].val = "$?";
+	tkns[2].val = "$?"; */
 	//tkns[0].val = "\"$USE\"";
-	// tkns[1].type = WORD;
-	// tkns[1].val = "user name is \"$USER\"";
+	tkns[1].type = WORD;
+	tkns[1].val = "var1=tertre";
 	// tkns[1].type = WORD;
 	// tkns[1].val = "$USER";
 	// tkns[1].type = WORD;

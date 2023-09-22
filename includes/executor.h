@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/19 22:38:24 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/23 00:02:52 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,5 @@ char	*varsubst(char **str, char *start, char *exit_stat);
 void	varscan(char **word, char *exit_stat);
 void	expand_word(char **word, char *exit_stat);
 char	*skip_var(char *start);
+void	exe_builtin(t_cmdtable *row, char *env[], int id);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/18 20:11:07 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/23 00:05:41 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,22 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 /* 	else if(ft_strcmp(argv[0], "cd") == 0)
 		cd(argv);
-	else if(ft_strcmp(argv[0], "pwd") == 0)
-		pwd(argv);
-	else if(ft_strcmp(argv[0], "export") == 0)
-		export(argv);
 	else if(ft_strcmp(argv[0], "unset") == 0)
 		unset(argv);
-	else if(ft_strcmp(argv[0], "env") == 0)
-		env(argv);
 	else if(ft_strcmp(argv[0], "exit") == 0)
 		changedir(argv); */
-void	exe_builtin(char **argv)
+void	exe_builtin(t_cmdtable *row, char *env[], int id)
 {
-	if (ft_strcmp(argv[0], "echo") == 0)
-		echo(argv);
-	else if(ft_strcmp(argv[0], "pwd") == 0)
+	if (ft_strcmp(row->args[0], "echo") == 0)
+		echo(row->args);
+	else if(ft_strcmp(row->args[0], "pwd") == 0)
 		printf("%s", getenv("PWD"));
-	exit(0);
+	else if(ft_strcmp(row->args[0], "env") == 0)
+		printenv(env);
+	else if(ft_strcmp(row->args[0], "export") == 0)
+		export(row->err->envp_loc, row);
+	if (id == 0)
+		exit(0);
 }
 
 /* redirects stdout to the pipe, creates child process and executes command */
@@ -87,7 +86,7 @@ int	create_child(t_cmdtable *row, char *envp[], t_exedata *data)
 	{
 		data->status = 0;
 		if (isbuiltin(row->args[0]))
-			exe_builtin(row->args);
+			exe_builtin(row, envp, 0);
 		else if (execve(row->cmd, row->args, envp) == -1)
 			cmderr(row->err, row->cmd, CNT);
 	}
