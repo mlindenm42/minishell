@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/18 20:03:04 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/27 20:05:09 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	echo(char *argv[])
 	}
 }
 
-void	pwd(void)
+/* void	pwd(void)
 {
 	
-}
+} */
 
 //char *getenv(const char *name)
 

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/18 19:37:06 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/27 19:45:14 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	setstatstr(t_errdata *err)
 
 void	custom_err(char *pref, const char *txt)
 {
-	char *newtxt;
-	char *tmp;
+	char	*newtxt;
+	char	*tmp;
 
 	tmp = ft_strjoin(pref, ": ");
 	newtxt = ft_strjoin(tmp, txt);
@@ -45,6 +45,7 @@ void	custom_err(char *pref, const char *txt)
 	ft_putendl_fd(newtxt, 2);
 	free(newtxt);
 }
+
 //output error extending its description if needed
 void	err_handler(t_errdata *err, char *str, int stop)
 {
@@ -53,7 +54,6 @@ void	err_handler(t_errdata *err, char *str, int stop)
 
 	err->stop = stop;
 	err->stat = 1;
-
 	if (str != NULL)
 	{
 		pref = ft_strjoin("minishell: ", (char *)str);

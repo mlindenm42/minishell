@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/23 00:09:38 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/27 19:54:48 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	lastcmd(t_cmdtable *row, t_exedata *data, char *envp[])
 		redir_close(data->infd, 0, row->err);
 	if (row->err->stop != NXT)
 	{
-		if (isbuiltin(row->args[0]) && row->nrows == 1 && ft_strcmp(row->cmd, "export") == 0)
+		if (env_change(row->cmd, row->nrows))
 		{
 			exe_builtin(row, envp, 1);
 			row->eflag = ERR;

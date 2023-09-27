@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/23 00:05:41 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/27 20:00:12 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,20 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 /* 	else if(ft_strcmp(argv[0], "cd") == 0)
 		cd(argv);
-	else if(ft_strcmp(argv[0], "unset") == 0)
-		unset(argv);
 	else if(ft_strcmp(argv[0], "exit") == 0)
 		changedir(argv); */
-void	exe_builtin(t_cmdtable *row, char *env[], int id)
+void	exe_builtin(t_cmdtable *row, char *envp[], int id)
 {
 	if (ft_strcmp(row->args[0], "echo") == 0)
 		echo(row->args);
-	else if(ft_strcmp(row->args[0], "pwd") == 0)
+	else if (ft_strcmp(row->args[0], "pwd") == 0)
 		printf("%s", getenv("PWD"));
-	else if(ft_strcmp(row->args[0], "env") == 0)
-		printenv(env);
-	else if(ft_strcmp(row->args[0], "export") == 0)
-		export(row->err->envp_loc, row);
+	else if (ft_strcmp(row->args[0], "env") == 0)
+		printenv(envp);
+	else if (ft_strcmp(row->args[0], "export") == 0)
+		export(row, envp);
+	else if (ft_strcmp(row->args[0], "unset") == 0)
+		unset(row, envp);
 	if (id == 0)
 		exit(0);
 }

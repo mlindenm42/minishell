@@ -6,13 +6,13 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/23 00:10:21 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/27 20:07:42 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-//prints all env variables
+//prints all env variables excluding no value format
 void	printenv(char *envp[])
 {
 	int	i;
@@ -20,82 +20,48 @@ void	printenv(char *envp[])
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		printf("%s\n", envp[i]);
+		if (ft_strchr(envp[i], '=') != NULL)
+			printf("%s\n", envp[i]);
 		i++;
 	}
 }
 
-//allocates memory for local environment and copies the initial environment
-void	set_loc_env(char *envp[], t_errdata *err)
+//checks if env has OLDPWD and corrects it if needed
+int	hasoldpwd(char *envp[])
 {
 	int	i;
-	int	n;
+	int	oldpwd;
 
 	i = 0;
-	n = arr_len(envp);
-	err->envp_loc = malloc(sizeof(char*) * n);
+	oldpwd = FALSE;
 	while (envp[i] != NULL)
 	{
-		err->envp_loc[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	err->envp_loc[i] = NULL;
-}
-
-//increase the size of local environment to add more variables
-char	**expand_loc_env(char **envp_loc, int nvar)
-{
-	char **tmp;
-	int	n;
-
-	tmp = envp_loc;
-	n = arr_len(envp_loc);
-	envp_loc = malloc(sizeof(char*) * (n + nvar));
-	envp_loc = copy_arr(envp_loc, tmp);
-	envp_loc[n + nvar - 2] = NULL;
-	free(tmp);
-	return (envp_loc);
-}
-
-//later
-void printexport(char **envp_loc)
-{
-	printf("prints variables");
-}
-
-
-void export(char **envp_loc, t_cmdtable *row)
-{
-	int i;
-	int n;
-
-	if (row->nargs == 1)
-		printexport(row->err->envp_loc);
-	else
-	{
-		i = 1;
-		row->err->envp_loc = expand_loc_env(row->err->envp_loc, row->nargs - 1);
-		n = arr_len(row->err->envp_loc);
-		while (i <= row->nargs - 1)
+		if (ft_strncmp(envp[i], "OLDPWD", 6) == 0)
 		{
-			row->err->envp_loc[n - 2 + i] = ft_strdup(row->args[i]);
-			i++;
+			if (ft_strchr(envp[i], '=') != NULL)
+				envp[i] = "OLDPWD";
+			oldpwd = TRUE;
 		}
-	}
-}
-
-/* void	addenv(char *envp[], char *name, char *value)
-{
-	int	i;
-	int	n;
-
-	i = 0;
-	n = arr_len(envp);
-
-	while (env[i] != NULL)
-	{
-		printf("%s\n", env[i]);
 		i++;
 	}
-} */
+	return (oldpwd);
+}
 
+//edits or adds OLDPWD as in bash
+void	set_loc_env(char *envp[])
+{
+	int	n;
+
+	n = arr_len(envp);
+	if (hasoldpwd(envp) == FALSE)
+	{
+		if (envp[n - 2] != NULL && envp[n - 2] == getenv("_") - 2)
+		{
+			envp[n - 1] = envp[n - 2];
+			envp[n - 2] = "OLDPWD";
+		}
+		else
+			envp[n - 1] = "OLDPWD";
+		envp[n] = NULL;
+	}
+}

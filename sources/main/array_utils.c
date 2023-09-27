@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/22 16:21:01 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/27 19:45:53 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ char	**copy_arr(char **newarr, char **arr)
 	newarr[i] = NULL;
 	return (newarr);
 }
-
 
 //frees a string
 void	free_str(char *s)
