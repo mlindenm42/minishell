@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 16:34:26 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 18:54:06 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void		setstatstr(t_errdata *err);
 void		set_loc_env(char *envp[]);
 int			arr_len(char **arr);
 void		printexport(char **envp_loc);
-void	execute(char *input, char *envp[]);
+void	execute(char *input, char *envp[], t_errdata *err);
 
 
 // check.c
@@ -73,7 +73,7 @@ void	lexer(char *input);
 t_data	*get_data(void);
 
 // terminal.c
-void terminal(char *envp[]);
+void terminal(char *envp[], t_errdata *err);
 
 // utils.c
 size_t	ft_strlen(const char *s);

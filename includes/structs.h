@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 16:34:51 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 19:32:26 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_errdata
 	int		stat;
 	char	*statstr;
 	char	**envp_loc;
+	char	*envmem_end;
 }	t_errdata;
 
 typedef struct s_cmdtable

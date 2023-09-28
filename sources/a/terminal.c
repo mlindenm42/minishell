@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/28 00:42:05 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 18:52:46 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	prompt(void)
 
 // modifies terminal settings to disable echoing of control characters in the
 // terminal's input. prints terminal with the prompt and handles the signals
-void	terminal(char *envp[])
+void	terminal(char *envp[], t_errdata *err)
 {
 	struct termios	settings;
 
@@ -80,7 +80,7 @@ void	terminal(char *envp[])
 		}
 		if (*get_data()->input)
 			add_history(get_data()->input);
-		execute(get_data()->input, envp);
+		execute(get_data()->input, envp, err);
 		free(get_data()->input);
 	}
 	rl_clear_history();

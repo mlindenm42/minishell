@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/27 20:04:10 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 20:37:55 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,12 +138,17 @@ void	export(t_cmdtable *row, char *envp[])
 		{
 			if (inenv(*row->curr_a, envp) == FALSE)
 			{
+				//ft_strlcpy(row->err->envmem_end + 1, *row->curr_a, ft_strlen(*row->curr_a) + 1);
+				//envp[n - 1 + i] = row->err->envmem_end + 1;
 				envp[n - 1 + i] = *row->curr_a;
+				//row->err->envmem_end = row->err->envmem_end + ft_strlen(*row->curr_a) + 1;
+				//printf("n %s\n", getenv("var1"));
 				i++;
 			}
 			row->curr_a++;
 		}
 		envp[n - 1 + i] = undsc;
 		envp[n + i] = NULL;
+		//printf("n %s\n", getenv("var4"));
 	}
 }
