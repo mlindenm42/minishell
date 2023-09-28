@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/28 23:19:47 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/09/28 23:24:37 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,11 +267,11 @@ void	lexer(char *input)
 		actual->token = *create_token(END, "END4");
 	}
 	tokenlist_to_array(begin);
- 	int i = 0;
-	while (get_data()->tokens[i].type != END)
-	{
-		printf("Token type: %d, Value: %s\n", get_data()->tokens[i].type, get_data()->tokens[i].val);
-		i++;
-	}
-	printf("Token type: %d, Value: %s\n", get_data()->tokens[i].type, get_data()->tokens[i].val);
+ 	// int i = 0;
+	// while (get_data()->tokens[i].type != END)
+	// {
+	// 	printf("Token type: %d, Value: %s\n", get_data()->tokens[i].type, get_data()->tokens[i].val);
+	// 	i++;
+	// }
+	// printf("Token type: %d, Value: %s\n", get_data()->tokens[i].type, get_data()->tokens[i].val);
 }
