@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/20 14:24:24 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 16:32:26 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ typedef struct s_exedata
 # define CNT 6
 # define NXT 7
 
-int		heredoc	(t_cmdtable *tbl, t_exedata *data);
-void	redir_close(int fd, int stdfd,  t_errdata *err);
+int		heredoc(t_cmdtable *tbl, t_exedata *data);
+void	redir_close(int fd, int stdfd, t_errdata *err);
 int		create_pipe(t_exedata *data, t_errdata *err);
-int 	create_child(t_cmdtable *row, char *envp[], t_exedata *data);
-int		outopen(t_cmdtable *row,  int *fd, int stop);
+int		create_child(t_cmdtable *row, char *envp[], t_exedata *data);
+int		outopen(t_cmdtable *row, int *fd, int stop);
 void	inopen(t_cmdtable *row, int *fd, char *hdpath);
 void	wrtofile(int end, int filefd, char *cur, char *buf);
 char	*readbuf(char *buf, int size);
@@ -56,4 +56,7 @@ char	*varsubst(char **str, char *start, char *exit_stat);
 void	varscan(char **word, char *exit_stat);
 void	expand_word(char **word, char *exit_stat);
 char	*skip_var(char *start);
+void	exe_builtin(t_cmdtable *row, char *env[], int id);
+void	arr_sort(char **arr, int n);
+int		env_change(char *cmd, int nrows);
 #endif

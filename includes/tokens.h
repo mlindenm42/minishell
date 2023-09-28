@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/20 14:34:00 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 16:35:03 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@
 # define WORD 6
 # define END 7
 
-#define NOERR 0
+# define NOERR 0
 
 #endif

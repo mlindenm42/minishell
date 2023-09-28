@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/20 14:32:04 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 16:35:12 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,3 +20,8 @@ int	isbuiltin(char *cmd)
 		|| ft_strcmp(cmd, "exit") == 0);
 }
 
+int	env_change(char *cmd, int nrows)
+{
+	return (nrows == 1 && (ft_strcmp(cmd, "cd") == 0
+			|| ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "unset") == 0));
+}

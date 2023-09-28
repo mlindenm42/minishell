@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 00:45:55 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 16:31:07 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes, char *envp[])
 	{
 		if (tkn->type == WORD)
 		{
-			if ((tkn == tkn0 || ((tkn - 2)->type >= GT && (tkn - 2)->type <= LLT))
-				&& varvalid(tkn->val))
+			if ((tkn == tkn0 || ((tkn - 2)->type >= GT
+						&& (tkn - 2)->type <= LLT)) && varvalid(tkn->val))
 				cmdtotbl(tkn, row, envp);
 			else if ((tkn - 1)->type >= GT && (tkn - 1)->type <= LLT)
 				iototbl(tkn, row);

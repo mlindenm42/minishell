@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/20 14:30:56 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 16:34:35 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		calcouts(t_tkn *tkns);
 void	rowalloc(t_cmdtable *tbl, t_tkn *tkns, int pipes, t_errdata *err);
 char	*getpath(char *fpath, char *envp[]);
 int		varvalid(char *str);
+void	free_arr(char **arr);
 
 //tester functions
 void	printio(t_iof *files, int n);

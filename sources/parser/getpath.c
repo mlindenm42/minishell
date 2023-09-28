@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 22:37:30 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/03 21:08:50 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/22 15:04:58 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,6 @@
 
 /* "/dir1/dir2:/dir3/dir4:..." - path_str
 	"dir3/dir4/file" - path */
-
-void	free_arr(char **arr)
-{
-	char	**i;
-
-	if (arr != NULL)
-	{
-		i = arr;
-		while (*i != NULL)
-		{
-			free(*i);
-			i++;
-		}
-		free(arr);
-	}
-}
-
-void	free_str(char *s)
-{
-	if (s != NULL)
-	{
-		free(s);
-		s = NULL;
-	}
-}
-
 // gets path for a command
 //if path not found returns command
 char	*extract_path(char *path_str, char *cmd)

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/20 13:34:35 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/27 19:57:48 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	varchar(char c)
 	return (ft_isalnum(c) == 1 || ft_isalpha(c) == 1 || c == '_');
 }
 
-
-//takes variable start ($) and returns the pointer to the first char after its end
+/* takes variable start ($) and returns the pointer
+to the first char after its end */
 char	*skip_var(char *start)
 {
 	char	*cur;
@@ -75,7 +75,7 @@ char	*varsubst(char **str, char *start, char *exit_stat)
 	if (start == *str && *after_var == '\0' && !varvalid(start))
 		return (after_var);
 	value = get_value(start, after_var - 1, exit_stat);
-	before_var = ft_substr(*str, 0, start - *str);//allocated
+	before_var = ft_substr(*str, 0, start - *str);
 	if (value != NULL)
 		*str = strjoin3(before_var, value, after_var);
 	else
