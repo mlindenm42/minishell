@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/21 23:23:28 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/09/28 00:15:14 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,12 +241,12 @@ void	tokenlist_to_array(t_tokenlist *token_list)
 		counter++;
 		actual = actual->next;
 	}
-	get_data()->tokens = (t_tkn **) malloc(counter * sizeof(t_tkn *));
+	get_data()->tokens = (t_tkn *) malloc(counter * sizeof(t_tkn));
 	i = 0;
 	actual = token_list;
 	while (i < counter)
 	{
-		get_data()->tokens[i] = &actual->token;
+		get_data()->tokens[i] = actual->token;
 		actual = actual->next;
 		i++;
 	}
@@ -277,11 +277,12 @@ void	lexer(char *input)
 		actual->token = *create_token(END, "END4");
 	}
 	tokenlist_to_array(begin);
-	int i = 0;
+	
+/* 	int i = 0;
 	while (get_data()->tokens[i]->type != END)
 	{
 		printf("Token type: %d, Value: %s\n", get_data()->tokens[i]->type, get_data()->tokens[i]->val);
 		i++;
 	}
-	printf("Token type: %d, Value: %s\n", get_data()->tokens[i]->type, get_data()->tokens[i]->val);
+	printf("Token type: %d, Value: %s\n", get_data()->tokens[i]->type, get_data()->tokens[i]->val); */
 }

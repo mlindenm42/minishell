@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/27 23:37:49 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 00:45:55 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ t_cmdtable	*parser(t_tkn *tkns, char *envp[], t_errdata *err)
 	// printf("id %i Token type: %d, Value: %s\n", 0, tkns[0].type, tkns[0].val);
 	// printf("id %i Token type: %d, Value: %s\n", 0, tkns[1].type, tkns[1].val);
 
-	printf("pointer to tkns: %p,\n", get_data()->tokens);
+	//printf("pointer to tkns: %p,\n", *get_data()->tokens);
+	//exit(0);
 	tkn = tkns;
 	pipes = calcpipes(tkns);
 	tbl = malloc(pipes * sizeof(t_cmdtable));
