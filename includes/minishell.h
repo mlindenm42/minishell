@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 16:34:26 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 21:44:06 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ void	lexer(char *input);
 t_data	*get_data(void);
 
 // terminal.c
-void terminal(char *envp[]);
+void	terminal(char *envp[]);
+void	handle_ctrl_c(int signal);
+void	handle_ctrl_d(void);
+void	handle_ctrl_backslash(int signal);
 
 // utils.c
 size_t	ft_strlen(const char *s);

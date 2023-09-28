@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 16:39:16 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 21:42:57 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ int	create_child(t_cmdtable *row, char *envp[], t_exedata *data)
 		err_handler(row->err, NULL, NXT);
 	if (data->id[row->pipeid] == 0)
 	{
+		signal(SIGINT, handle_ctrl_c);
+		signal(SIGQUIT, handle_ctrl_backslash);
+		signal(SIGTSTP, SIG_IGN);
 		data->status = 0;
 		if (isbuiltin(row->args[0]))
 			exe_builtin(row, envp, 0);
