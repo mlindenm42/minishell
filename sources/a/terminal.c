@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/28 21:49:17 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/09/28 21:53:47 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ void	handle_ctrl_backslash(int signal)
 // gets the username(if available) and saves it in data->prompt
 static void	prompt(void)
 {
-	// if (getenv("USER") != NULL)
-	// {
-	// 	get_data()->prompt = getenv("USER");
-	// 	ft_strlcat(get_data()->prompt, " % ",
-	// 		ft_strlen(get_data()->prompt) + 4);
-	// }
-	// else
+	if (getenv("USER") != NULL)
+	{
+		get_data()->prompt = ft_strdup(getenv("USER"));
+		ft_strlcat(get_data()->prompt, " % ",
+			ft_strlen(get_data()->prompt) + 4);
+	}
+	else
 		get_data()->prompt = "USER % ";
 }
 
