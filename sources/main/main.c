@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/28 19:57:24 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 23:55:43 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ t_data	*get_data(void)
 	return (&all_t_data);
 }
 
+//err->envmem_end pointer to the end of the last used character of the
+//allocated memory
+//we use memory after it for created variables
 void errinit(t_errdata *err, char *envp[])
 {
 
@@ -33,8 +36,6 @@ void errinit(t_errdata *err, char *envp[])
 	err->envmem_end = *(envp - 1);
 	while (*err->envmem_end != '\0')
 		err->envmem_end++;
-	//printf("%p\n", err->envmem_end);
-	//pointer to "end of env"
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -42,9 +43,8 @@ int	main(int argc, char *argv[], char *envp[])
 	t_errdata	err;
 
 	errinit(&err, envp);
+	//printf("n %i\n", row->err->stop);
 	set_loc_env(envp);
-	//printenv(envp);
-	//exit(0);
 	terminal(envp, &err);
 	return (0);
 }

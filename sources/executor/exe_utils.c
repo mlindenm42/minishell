@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 16:39:16 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 23:47:53 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	exe_builtin(t_cmdtable *row, char *envp[], int id)
 	if (ft_strcmp(row->args[0], "echo") == 0)
 		echo(row->args);
 	else if (ft_strcmp(row->args[0], "pwd") == 0)
-		printf("%s", getenv("PWD"));
+		printf("%s", getenv1("PWD", envp));
 	else if (ft_strcmp(row->args[0], "env") == 0)
 		printenv(envp);
 	else if (ft_strcmp(row->args[0], "export") == 0)

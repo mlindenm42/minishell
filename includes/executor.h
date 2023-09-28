@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 16:32:26 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 23:38:32 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,16 @@ int		heredoc(t_cmdtable *tbl, t_exedata *data);
 void	redir_close(int fd, int stdfd, t_errdata *err);
 int		create_pipe(t_exedata *data, t_errdata *err);
 int		create_child(t_cmdtable *row, char *envp[], t_exedata *data);
-int		outopen(t_cmdtable *row, int *fd, int stop);
+int		outopen(t_cmdtable *row, int *fd, int stop, char *envp[]);
 void	inopen(t_cmdtable *row, int *fd, char *hdpath);
 void	wrtofile(int end, int filefd, char *cur, char *buf);
 char	*readbuf(char *buf, int size);
-void	midouts(t_cmdtable *row, t_exedata *data);
+void	midouts(t_cmdtable *row, t_exedata *data, char *envp[]);
 void	setnextin(t_cmdtable *row, t_exedata *data, int i);
 int		ft_strcmp(const char *s1, const char *s2);
-char	*varsubst(char **str, char *start, char *exit_stat);
-void	varscan(char **word, char *exit_stat);
-void	expand_word(char **word, char *exit_stat);
+char	*varsubst(char **str, char *start, char *exit_stat, char *env[]);
+void	varscan(char **word, char *exit_stat, char *env[]);
+void	expand_word(char **word, char *exit_stat, char *env[]);
 char	*skip_var(char *start);
 void	exe_builtin(t_cmdtable *row, char *env[], int id);
 void	arr_sort(char **arr, int n);

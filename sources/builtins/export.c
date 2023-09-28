@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 20:37:55 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 22:57:41 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	printexport(char **envp)
 		if (ft_strncmp(envsorted[i], "_=", 2) != 0 && end != NULL)
 		{
 			name = ft_substr(envsorted[i], 0, end - envsorted[i]);
-			printf("declare -x %s=\"%s\"\n", name, getenv(envsorted[i]));
+			printf("declare -x %s=\"%s\"\n", name, getenv1(name, envp));
 			free(name);
 		}
 		else if (ft_strncmp(envsorted[i], "_=", 2) != 0)
@@ -78,13 +78,13 @@ int	inenv(char *arg, char *envp[])
 	if (end != NULL)
 	{
 		name = ft_substr(arg, 0, end - arg);
-		val = getenv(name);
+		val = getenv1(name, envp);
 		free(name);
 		if (val == NULL)
 			return (FALSE);
 		return (TRUE);
 	}
-	else if (getenv(arg) != NULL)
+	else if (getenv1(arg, envp) != NULL)
 		return (TRUE);
 	else
 		return (inenv_nv(arg, envp));
@@ -129,7 +129,7 @@ void	export(t_cmdtable *row, char *envp[])
 		row->curr_a = &row->args[1];
 		i = 0;
 		n = arr_len(envp);
-		if (envp[n - 2] != NULL && envp[n - 2] == getenv("_") - 2)
+		if (envp[n - 2] != NULL && envp[n - 2] == getenv1("_", envp) - 2)
 		{
 			undsc = envp[n - 2];
 			n--;
@@ -138,11 +138,11 @@ void	export(t_cmdtable *row, char *envp[])
 		{
 			if (inenv(*row->curr_a, envp) == FALSE)
 			{
-				//ft_strlcpy(row->err->envmem_end + 1, *row->curr_a, ft_strlen(*row->curr_a) + 1);
-				//envp[n - 1 + i] = row->err->envmem_end + 1;
+				ft_strlcpy(row->err->envmem_end + 1, *row->curr_a, ft_strlen(*row->curr_a) + 1);
+				envp[n - 1 + i] = row->err->envmem_end + 1;
 				envp[n - 1 + i] = *row->curr_a;
-				//row->err->envmem_end = row->err->envmem_end + ft_strlen(*row->curr_a) + 1;
-				//printf("n %s\n", getenv("var1"));
+				row->err->envmem_end = row->err->envmem_end + ft_strlen(*row->curr_a) + 1;
+				//printf("n %s\n", getenv1("var1", envp));
 				i++;
 			}
 			row->curr_a++;

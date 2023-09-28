@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 16:41:06 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 23:31:40 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 
 //when the string is an invalid variable returns FALSE
 //in this case if it's not a in/out the token is ommited
-int	varvalid(char *str)
+int	varvalid(char *str, char *envp[])
 {
-	if (ft_strcmp(str, "$?") != 0 && *str == '$' && (getenv(str + 1) == NULL)
+	if (ft_strcmp(str, "$?") != 0 && *str == '$' && (getenv1(str + 1, envp) == NULL)
 		&& *skip_var(str) == '\0')
 		return (FALSE);
 	else

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 16:39:22 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/29 00:01:32 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	finish(t_cmdtable *tbl, t_exedata *data)
 //set output for the last command
 int	lastcmd(t_cmdtable *row, t_exedata *data, char *envp[])
 {
-	outopen(row, &data->outfd, NXT);
+	outopen(row, &data->outfd, NXT, envp);
 	if (row->nouts == 0)
 		data->outfd = dup(data->outtmpfd);
 	if (row->pipeid != 0 && data->pbreak != BR && (row - 1)->eflag != ERR)
@@ -143,7 +143,7 @@ int	executor(t_cmdtable *tbl, char *envp[], t_errdata *err)
 		if (i != 0 && data.pbreak != BR && tbl[i - 1].eflag != ERR)
 			redir_close(data.infd, 0, err);
 		data.pbreak = NB;
-		midouts(&tbl[i], &data);
+		midouts(&tbl[i], &data, envp);
 		if (create_pipe(&data, err) == STP)
 			return (1);
 		if (err->stop == CNT)

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/20 20:11:31 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/29 00:00:17 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ we calculate args + cmd which should be argument zero
 it calculates the first word token after the pipe
 and any word preceeded by (another) word
 */
-int	calcargs(t_tkn *tkns)
+int	calcargs(t_tkn *tkns, char *envp[])
 {
 	int		cnt;
 	t_tkn	*first;
@@ -79,10 +79,10 @@ int	calcargs(t_tkn *tkns)
 	while (tkns->type != END && tkns->type != PIPE)
 	while (tkns->type != END && tkns->type != PIPE)
 	{
-		if (tkns->type == WORD && tkns == first && varvalid(tkns->val))
+		if (tkns->type == WORD && tkns == first && varvalid(tkns->val, envp))
 			cnt++;
 		if (tkns->type == WORD && tkns != first && (tkns - 1)->type == WORD
-			&& varvalid(tkns->val))
+			&& varvalid(tkns->val, envp))
 			cnt++;
 		tkns++;
 	}
@@ -91,18 +91,17 @@ int	calcargs(t_tkn *tkns)
 }
 
 //we allocate arg array, ins and outs for a pipe
-void	rowalloc(t_cmdtable *tbl, t_tkn *tkns, int pipes, t_errdata *err)
+void	rowalloc(t_cmdtable *tbl, t_tkn *tkns, int pipes, char *envp[])
 {
-	tbl->err = err;
 	tbl->nrows = pipes;
 	tbl->nins = calcins(tkns);
 	tbl->nouts = calcouts(tkns);
-	tbl->nargs = calcargs(tkns);
+	tbl->nargs = calcargs(tkns, envp);
 	tbl->args = malloc((tbl->nargs + 1) * sizeof(char *));
 	tbl->infiles = malloc(tbl->nins * sizeof(t_iof));
 	tbl->outfiles = malloc(tbl->nouts * sizeof(t_iof));
 	if (tbl->args == NULL || tbl->infiles == NULL || tbl->outfiles == NULL)
-		errfree(err, tbl, free_rows, STP);
+		errfree(tbl->err, tbl, free_rows, STP);
 	tbl->curr_a = tbl->args;
 	tbl->curr_i = tbl->infiles;
 	tbl->curr_o = tbl->outfiles;

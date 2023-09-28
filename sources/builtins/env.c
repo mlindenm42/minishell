@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 19:59:14 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 22:47:39 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,26 @@ int	hasoldpwd(char *envp[])
 		i++;
 	}
 	return (oldpwd);
+}
+
+char	*getenv1(char *var, char *envp[])
+{
+	char	*value;
+	int		i;
+	int		len;
+
+	value = getenv(var);
+	if (value != NULL)
+		return (value);
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		len = ft_strlen(var);
+		if (ft_strncmp(envp[i], var, len) == 0 && envp[i][len] == '=')
+			value = ft_strchr(envp[i], '=') + 1;
+		i++;
+	}
+	return (value);
 }
 
 //edits or adds OLDPWD as in bash

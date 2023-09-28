@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/28 18:52:46 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 23:57:45 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	prompt(void)
 void	terminal(char *envp[], t_errdata *err)
 {
 	struct termios	settings;
+	char *input;
 
 	tcgetattr(STDIN_FILENO, &settings);
 	settings.c_lflag &= ~ECHOCTL;

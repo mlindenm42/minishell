@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 18:54:06 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 22:29:44 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include "executor.h"
 
 t_cmdtable	*parser (t_tkn *tkns, char *envp[], t_errdata *err);
-void	expander(t_cmdtable *tbl, t_errdata *err);
+void	expander(t_cmdtable *tbl, t_errdata *err, char *envp[]);
 int	executor (t_cmdtable *tbl, char *envp[], t_errdata *err);
 void	errfree(t_errdata *err, void *struc, void (*del)(void *), int stop);
 void	err_handler(t_errdata *err, char *str, int stop);
@@ -55,6 +55,7 @@ void		set_loc_env(char *envp[]);
 int			arr_len(char **arr);
 void		printexport(char **envp_loc);
 void	execute(char *input, char *envp[], t_errdata *err);
+char	*getenv1(char *var, char *envp[]);
 
 
 // check.c

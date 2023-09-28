@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 16:31:07 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/29 00:00:35 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes, char *envp[])
 {
 	t_tkn	*tkn0;
 
-	while (tkn->type == WORD && !varvalid(tkn->val))
+	while (tkn->type == WORD && !varvalid(tkn->val, envp))
 		tkn++;
 	tkn0 = tkn;
 	if (row->pipeid < npipes - 1)
@@ -64,11 +64,11 @@ t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes, char *envp[])
 		if (tkn->type == WORD)
 		{
 			if ((tkn == tkn0 || ((tkn - 2)->type >= GT
-						&& (tkn - 2)->type <= LLT)) && varvalid(tkn->val))
+						&& (tkn - 2)->type <= LLT)) && varvalid(tkn->val, envp))
 				cmdtotbl(tkn, row, envp);
 			else if ((tkn - 1)->type >= GT && (tkn - 1)->type <= LLT)
 				iototbl(tkn, row);
-			else if (varvalid(tkn->val))
+			else if (varvalid(tkn->val, envp))
 				argtotbl(tkn, row);
 		}
 		tkn++;
@@ -105,7 +105,8 @@ t_cmdtable	*parser(t_tkn *tkns, char *envp[], t_errdata *err)
 		tbl->pipeid = 0;
 	while (tkn->type != END && err->stop == CNT)
 	{
-		rowalloc(row, tkn, pipes, err);
+		tbl->err = err;
+		rowalloc(row, tkn, pipes, envp);
 		if (err->stop == CNT)
 			tkn = to_row(tkn, row, pipes, envp);
 		row++;
