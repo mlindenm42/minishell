@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 22:29:44 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/02 18:48:28 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ int			arr_len(char **arr);
 void		printexport(char **envp_loc);
 void	execute(char *input, char *envp[], t_errdata *err);
 char	*getenv1(char *var, char *envp[]);
+void replace_var(char *vname, char *val, char *envp[]);
+void unset_var(char *vname, char *envp[]);
+char *getenvmem_end(char *envp[]);
+void	movetoend(char *start, char *envp[]);
+void envappend(char *str, char *envp[]);
+int 	varlen(char *var);
 
 
 // check.c

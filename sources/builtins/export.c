@@ -6,14 +6,14 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 22:57:41 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/02 18:51:47 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 //prints all exported variables (this doesn't include _)
-//add error handling later
+//add error handling later malloc!!!
 //function shouldnt change env
 //OLDPWD is shown in export but not in env
 //and is generated each time minishell is run
@@ -85,17 +85,51 @@ int	inenv(char *arg, char *envp[])
 		return (TRUE);
 	}
 	else if (getenv1(arg, envp) != NULL)
-		return (TRUE);
+		{
+			//printf("var %s\n", getenv1(arg, envp));
+			return (TRUE);}
 	else
 		return (inenv_nv(arg, envp));
 }
 
-/* scans environment for variables and replaces them with arguments */
+//adds a string to env
+void envappend(char *str, char *envp[])
+{
+	char	*env_end;
+	int		n;
+
+	n = arr_len(envp);
+	env_end = getenvmem_end(envp);
+	ft_strlcpy(env_end + 1, str, ft_strlen(str) + 1);
+	envp[n - 1] = env_end + 1;
+	envp[n] = NULL;
+}
+
+//moves _ variable to the end of env
+/* void	movetoend(char *start, char *envp[])
+{
+	char	*str_end;
+	char	*env_end;
+	int		n;
+
+	n = arr_len(envp);
+	env_end = getenvmem_end(envp);
+	ft_strlcpy(env_end + 1, start, ft_strlen(start) + 1);
+	envp[n - 1] = env_end + 1;
+	envp[n] = NULL;
+	replace_var("_", NULL, envp, UNSET);
+} */
+
+/* scans environment for variables and replaces them with arguments 
+replaces only if new value isn't NULL
+*/
+//!!! malloc errors
 void	envscan(t_cmdtable *row, char *envp[])
 {
 	int		i;
 	int		len;
 	char	*end;
+	char*	vname;
 
 	i = 0;
 	while (i <= arr_len(envp) - 2)
@@ -107,7 +141,11 @@ void	envscan(t_cmdtable *row, char *envp[])
 			if (end != NULL)
 			{
 				if (ft_strncmp(envp[i], *row->curr_a, end - *row->curr_a) == 0)
-					envp[i] = *row->curr_a;
+				{
+					vname = ft_substr(*row->curr_a, 0, end - *row->curr_a);
+					replace_var(vname, end + 1, envp);
+					free(vname);
+				}
 			}
 			row->curr_a++;
 		}
@@ -115,7 +153,7 @@ void	envscan(t_cmdtable *row, char *envp[])
 	}
 }
 
-void	export(t_cmdtable *row, char *envp[])
+/* void	export(t_cmdtable *row, char *envp[])
 {
 	int		i;
 	int		n;
@@ -150,5 +188,68 @@ void	export(t_cmdtable *row, char *envp[])
 		envp[n - 1 + i] = undsc;
 		envp[n + i] = NULL;
 		//printf("n %s\n", getenv("var4"));
+	}
+} */
+//
+/* void	export(t_cmdtable *row, char *envp[])
+{
+	int		n;
+	char	*undsc;
+	char	*end;
+
+	if (row->nargs == 1)
+		printexport(envp);
+	else
+	{
+		envscan(row, envp);
+		row->curr_a = &row->args[1];
+		while (row->curr_a <= &row->args[row->nargs - 1])
+		{
+			if (inenv(*row->curr_a, envp) == FALSE)
+			{
+				//printf("var %s\n", *row->curr_a);
+				envappend(*row->curr_a, envp);
+				n = arr_len(envp);
+				end = getenvmem_end(envp);
+				ft_strlcpy(end + 1, *row->curr_a, ft_strlen(*row->curr_a) + 1);
+				envp[n - 1] = end + 1;
+				envp[n] = NULL;
+			}
+			row->curr_a++;
+		}
+	}
+} */
+
+void	export(t_cmdtable *row, char *envp[])
+{
+	int	i;
+	char	*end;
+	int		is_set;
+
+	if (row->nargs == 1)
+		printexport(envp);
+	else
+	{
+		row->curr_a = &row->args[1];
+		while (row->curr_a <= &row->args[row->nargs - 1])
+		{
+			is_set = FALSE;
+			end = ft_strchr(*row->curr_a, '=');
+			i = 0;
+			while (envp[i] != NULL)
+			{
+				if (ft_strncmp(envp[i], *row->curr_a, varlen(*row->curr_a)) == 0)
+				{
+					if (end != NULL)
+						replace_var(*row->curr_a, end + 1, envp);
+					is_set = TRUE;
+					break;
+				}
+				i++;
+			}
+			if (is_set == FALSE)
+				envappend(*row->curr_a, envp);
+			row->curr_a++;
+		}
 	}
 }

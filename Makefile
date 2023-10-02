@@ -6,7 +6,7 @@
 #    By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/10 17:13:37 by mlindenm          #+#    #+#              #
-#    Updated: 2023/09/28 16:47:10 by mrubina          ###   ########.fr        #
+#    Updated: 2023/10/01 20:30:47 by mrubina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ NAME		=	minishell
 CC			=	cc
 #CFLAGS		=	-Wall -Werror -Wextra
 #CFLAGS		=	-Wall -Werror -Wextra
+ASFLAG = -fsanitize=address
+#THSFLAG = -fsanitize=thread
 
 SRC_DIR		=	sources
 OBJ_DIR		=	$(SRC_DIR)/obj
@@ -35,7 +37,7 @@ LIBFT_D		=	libs/libft
 all: $(NAME)
 
 $(NAME): $(LIBFT_A) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -lreadline -L$(LIBFT_D) -lft -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -lreadline -L$(LIBFT_D) -lft -o $(NAME) $(ASFLAG) $(THSFLAG)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/*/%.c $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@

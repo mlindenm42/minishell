@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/29 00:00:35 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/01 21:01:50 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,17 @@ t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes, char *envp[])
 		tkn++;
 	tkn0 = tkn;
 	if (row->pipeid < npipes - 1)
+	{
 		(row + 1)->pipeid = row->pipeid + 1;
+		(row + 1)->err = row->err;
+	}
 	while (tkn->type != PIPE && tkn->type != END)
 	{
 		if (tkn->type == WORD)
 		{
-			if ((tkn == tkn0 || ((tkn - 2)->type >= GT
+			if ((tkn == tkn0 || (tkn - 2 >= tkn0 && (tkn - 2)->type >= GT
 						&& (tkn - 2)->type <= LLT)) && varvalid(tkn->val, envp))
-				cmdtotbl(tkn, row, envp);
+					cmdtotbl(tkn, row, envp);
 			else if ((tkn - 1)->type >= GT && (tkn - 1)->type <= LLT)
 				iototbl(tkn, row);
 			else if (varvalid(tkn->val, envp))
