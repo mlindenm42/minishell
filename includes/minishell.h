@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/02 18:48:28 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/09 14:45:30 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "structs.h"
 # include "parser.h"
 # include "executor.h"
+# include <sys/stat.h>
 
 t_cmdtable	*parser (t_tkn *tkns, char *envp[], t_errdata *err);
 void	expander(t_cmdtable *tbl, t_errdata *err, char *envp[]);
@@ -45,6 +46,8 @@ void		free_str(char *str);
 char		**copy_arr(char **newarr, char **arr);
 //void	cmderr(void *cmd);
 void		cmderr(t_errdata *err, void *cmd, int stop);
+void	cmderr1(t_errdata *err, void *cmd,char *env[], int stop);
+void	custom_err(char *pref, const char *txt);
 void		echo(char *argv[]);
 void		printenv(char *env[]);
 int			isbuiltin(char *cmd);

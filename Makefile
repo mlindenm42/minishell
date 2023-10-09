@@ -6,7 +6,7 @@
 #    By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/10 17:13:37 by mlindenm          #+#    #+#              #
-#    Updated: 2023/10/01 20:30:47 by mrubina          ###   ########.fr        #
+#    Updated: 2023/10/08 17:37:49 by mrubina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME		=	minishell
 CC			=	cc
 #CFLAGS		=	-Wall -Werror -Wextra
 #CFLAGS		=	-Wall -Werror -Wextra
-ASFLAG = -fsanitize=address
+#ASFLAG = -fsanitize=address
 #THSFLAG = -fsanitize=thread
 
 SRC_DIR		=	sources

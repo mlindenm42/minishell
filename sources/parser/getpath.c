@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 22:37:30 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/22 15:04:58 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/09 14:55:38 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*getpath(char *fpath, char *envp[])
 	int		i;
 	char	*path_str;
 
-	if (fpath[0] == '.' && fpath[1] == '/')
+	if (isbuiltin(fpath) || ft_strchr(fpath, '/') != NULL)
 		return (fpath);
 	if (fpath[0] == '\0')
 		return (fpath);
@@ -68,8 +68,14 @@ char	*getpath(char *fpath, char *envp[])
 			i++;
 	}
 	if (envp && envp[i] != NULL && n == 0)
+	{
 		path_str = extract_path(&((envp[i])[5]), fpath);
+		if (ft_strncmp(path_str, fpath, ft_strlen(fpath)) == 0)
+			path_str = NULL;
+	}
+	else if (access(fpath, X_OK) == 0)
+		path_str = fpath;
 	else
-		path_str = extract_path(NULL, fpath);
+		path_str = NULL;
 	return (path_str);
 }
