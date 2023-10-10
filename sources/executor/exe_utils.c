@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/09 14:11:21 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/10 20:26:25 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,6 @@ int	create_child(t_cmdtable *row, char *envp[], t_exedata *data)
 			exe_builtin(row, envp, 0);
 		if (row->cmd == NULL)
 			cmderr1(row->err, row->args[0], envp, CNT); //!!!
-	/* 	if (ft_strncmp(row->cmd, row->args[0], ft_strlen(row->cmd)) == 0
-		&& ft_strchr(row->cmd, '/') == NULL)
-			cmderr(row->err, row->cmd, CNT); */
-		/*{
-			custom_err(row->cmd, "command not found");
-			row->err->stat = 127;
-			exit(row->err->stat);
-			//row->err->stop = CNT;
-		} */
 		else if (execve(row->cmd, row->args, envp) == -1)
 			cmderr(row->err, row->cmd, CNT);
 	}
