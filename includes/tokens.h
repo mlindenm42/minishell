@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 16:35:03 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/29 16:31:51 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,8 @@
 # define END 7
 
 # define NOERR 0
+
+# define SET 20
+# define UNSET 21
 
 #endif

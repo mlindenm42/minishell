@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 16:39:33 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/09 16:52:52 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,50 @@ void	cmderr(t_errdata *err, void *cmd, int stop)
 {
 	char	*txt;
 	char	*tmp;
+	struct stat	stat;
 
 	err->stop = stop;
-	err->stat = 126;
+	if (errno == EACCES)
+		err->stat = 126;
+	else
+		err->stat = 127;
 	tmp = ft_strjoin("minishell: ", (char *)cmd);
-	if (ft_strchr(cmd, '/') == NULL)
+	if (lstat(cmd, &stat) == 0 && S_ISDIR(stat.st_mode))
+	{
+		err->stat = 126;
+		custom_err(tmp, "is a directory");
+	}
+	else if (ft_strchr(cmd, '/') == NULL)
 	{
 		custom_err(tmp, "command not found");
-		err->stat = 127;
 	}
 	else
 		perror(tmp);
+	free(tmp);
+	exit(err->stat);
+}
+
+void	cmderr1(t_errdata *err, void *cmd, char *envp[], int stop)
+{
+	char	*txt;
+	char	*tmp;
+	struct stat	stat;
+
+	err->stop = stop;
+	err->stat = 127;
+	tmp = ft_strjoin("minishell: ", (char *)cmd);
+	if	(getenv1("PATH", envp) == NULL)
+	{
+		if (lstat(cmd, &stat) == 0 && S_ISDIR(stat.st_mode))
+		{
+			err->stat = 126;
+			custom_err(tmp, "is a directory");
+		}
+		else
+			custom_err(tmp, strerror(2));
+	}
+	else
+		custom_err(tmp, "command not found");
 	free(tmp);
 	exit(err->stat);
 }

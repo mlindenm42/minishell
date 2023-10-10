@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/28 21:53:47 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/10 18:48:39 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ static void	prompt(void)
 
 // modifies terminal settings to disable echoing of control characters in the
 // terminal's input. prints terminal with the prompt and handles the signals
-void	terminal(char *envp[])
+void	terminal(char *envp[], t_errdata *err)
 {
 	struct termios	settings;
+	char *input;
 
 	tcgetattr(STDIN_FILENO, &settings);
 	settings.c_lflag &= ~ECHOCTL;

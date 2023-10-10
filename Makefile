@@ -6,7 +6,7 @@
 #    By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/10 17:13:37 by mlindenm          #+#    #+#              #
-#    Updated: 2023/09/28 16:47:10 by mrubina          ###   ########.fr        #
+#    Updated: 2023/10/10 14:39:05 by mrubina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME		=	minishell
 
 CC			=	cc
 #CFLAGS		=	-Wall -Werror -Wextra
-#CFLAGS		=	-Wall -Werror -Wextra
+#SANITIZE 	= 	-fsanitize=address
+#SANITIZE 	= 	-LLeakSanitizer -llsan -lc++
 
 SRC_DIR		=	sources
 OBJ_DIR		=	$(SRC_DIR)/obj
@@ -27,7 +28,7 @@ SRC_T		=	error.c init.c lexer.c terminal.c utils.c utils_ft_split.c
 
 SRC 		= 	$(SRC_P) $(SRC_M) $(SRC_E) $(SRC_B) $(SRC_T)
 
-OBJ			=	$(patsubst $(SRC_DIR/*)/%.c, $(OBJ_DIR)/%.o, $(addprefix $(SRC_DIR/*)/, $(SRC)))
+OBJ 		= 	$(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 LIBFT_A		=	libs/libft/libft.a
 LIBFT_D		=	libs/libft
@@ -35,9 +36,9 @@ LIBFT_D		=	libs/libft
 all: $(NAME)
 
 $(NAME): $(LIBFT_A) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -lreadline -L$(LIBFT_D) -lft -o $(NAME)
+	cc -o $(NAME) $(SANITIZE) $(OBJ) -lreadline -L$(LIBFT_D) -lft
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/*/%.c $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/*/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
@@ -49,7 +50,6 @@ make_libft:
 	make -C $(LIBFT_D)
 
 clean:
-	make fclean -C libs/libft
 	make fclean -C libs/libft
 	@rm -rf $(OBJ_DIR)
 

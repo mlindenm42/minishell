@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/20 14:34:57 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/01 20:44:58 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ opening fds one by one
 2) check if file exist and delete if not appended mode
 3) open file
  */
-int	outopen(t_cmdtable *row, int *fd, int stop)
+int	outopen(t_cmdtable *row, int *fd, int stop, char *envp[])
 {
 	int	i;
 
@@ -67,7 +67,7 @@ int	outopen(t_cmdtable *row, int *fd, int stop)
 	while (i <= row->nouts - 1)
 	{
 		if ((access(row->outfiles[i].file, W_OK) == -1 && errno == EACCES)
-			|| !varvalid(row->outfiles[i].file))
+			|| !varvalid(row->outfiles[i].file, envp))
 		{
 			seterr(row, i, stop);
 			return (1);
@@ -88,11 +88,11 @@ int	outopen(t_cmdtable *row, int *fd, int stop)
 }
 
 //handling output before executing cmd
-void	midouts(t_cmdtable *row, t_exedata *data)
+void	midouts(t_cmdtable *row, t_exedata *data, char *envp[])
 {
 	if (row->nouts != 0)
 	{
-		outopen(row, &data->outfd, NXT);
+		outopen(row, &data->outfd, NXT, envp);
 		data->pbreak = BR;
 		if (row->err->stop != NXT)
 		{

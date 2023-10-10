@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 21:44:06 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/10 18:49:31 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@
 # include "structs.h"
 # include "parser.h"
 # include "executor.h"
+# include <sys/stat.h>
 
 t_cmdtable	*parser (t_tkn *tkns, char *envp[], t_errdata *err);
-void	expander(t_cmdtable *tbl, t_errdata *err);
+void	expander(t_cmdtable *tbl, t_errdata *err, char *envp[]);
 int	executor (t_cmdtable *tbl, char *envp[], t_errdata *err);
 void	errfree(t_errdata *err, void *struc, void (*del)(void *), int stop);
 void	err_handler(t_errdata *err, char *str, int stop);
@@ -45,6 +46,8 @@ void		free_str(char *str);
 char		**copy_arr(char **newarr, char **arr);
 //void	cmderr(void *cmd);
 void		cmderr(t_errdata *err, void *cmd, int stop);
+void	cmderr1(t_errdata *err, void *cmd,char *env[], int stop);
+void	custom_err(char *pref, const char *txt);
 void		echo(char *argv[]);
 void		printenv(char *env[]);
 int			isbuiltin(char *cmd);
@@ -54,7 +57,14 @@ void		setstatstr(t_errdata *err);
 void		set_loc_env(char *envp[]);
 int			arr_len(char **arr);
 void		printexport(char **envp_loc);
-void	execute(char *input, char *envp[]);
+void	execute(char *input, char *envp[], t_errdata *err);
+char	*getenv1(char *var, char *envp[]);
+void replace_var(char *vname, char *val, char *envp[]);
+void unset_var(char *vname, char *envp[]);
+char *getenvmem_end(char *envp[]);
+void	movetoend(char *start, char *envp[]);
+void envappend(char *str, char *envp[]);
+int 	varlen(char *var);
 
 
 // check.c
