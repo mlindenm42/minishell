@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/10 18:48:39 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/10 20:09:50 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	terminal(char *envp[], t_errdata *err)
 			add_history(get_data()->input);
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
-		execute(get_data()->input, envp);
+		execute(get_data()->input, envp, err);
 		free(get_data()->input);
 	}
 	rl_clear_history();

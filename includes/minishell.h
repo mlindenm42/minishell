@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/10 18:49:31 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/10 20:10:23 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	lexer(char *input);
 t_data	*get_data(void);
 
 // terminal.c
-void	terminal(char *envp[]);
+void	terminal(char *envp[], t_errdata *err);
 void	handle_ctrl_c(int signal);
 void	handle_ctrl_d(void);
 void	handle_ctrl_backslash(int signal);
