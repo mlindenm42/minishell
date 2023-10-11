@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/28 23:57:45 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/11 20:52:34 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <termios.h> // tcgetattr(); tcsetattr(); ECHOCTL; TCSANOW;
 
 // handles ctrl-C. Displays a new prompt on a new line.
-static void	handle_ctrl_c(int signal)
+void	handle_ctrl_c(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -32,13 +32,15 @@ static void	handle_ctrl_c(int signal)
 }
 
 // handles ctrl-D. Exits the shell.
-static void	handle_ctrl_d(void)
+void	handle_ctrl_d(void)
 {
+	free(get_data()->prompt);
+	//free(get_data()->input);
 	printf("exit\n");
 }
 
 // handles ctrl-\. Does nothing.
-static void	handle_ctrl_backslash(int signal)
+void	handle_ctrl_backslash(int signal)
 {
 	if (signal == SIGQUIT)
 		rl_redisplay();
@@ -49,9 +51,10 @@ static void	prompt(void)
 {
 	if (getenv("USER") != NULL)
 	{
-		get_data()->prompt = getenv("USER");
+		get_data()->prompt = ft_strjoin(getenv("USER"), " % ");
+	/* 	get_data()->prompt = ft_strdup(getenv("USER"));
 		ft_strlcat(get_data()->prompt, " % ",
-			ft_strlen(get_data()->prompt) + 4);
+			ft_strlen(get_data()->prompt) + 4); */
 	}
 	else
 		get_data()->prompt = "USER % ";
@@ -81,6 +84,8 @@ void	terminal(char *envp[], t_errdata *err)
 		}
 		if (*get_data()->input)
 			add_history(get_data()->input);
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		execute(get_data()->input, envp, err);
 		free(get_data()->input);
 	}

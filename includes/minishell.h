@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/09 14:45:30 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/11 21:02:46 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	err_handler(t_errdata *err, char *str, int stop);
 //void	err_handler(t_errdata *err, void *struc, void (*f)(void *), int st);
 void		print_table(t_cmdtable *tbl, int size); //tester function
 void		free_row(void *row);
+void	free_tkns(t_tkn *tkns);
 void		free_rows(void *row);
 void		free_exedt(void *data);
 void		free_ptr(void *p);
@@ -83,7 +84,10 @@ void	lexer(char *input);
 t_data	*get_data(void);
 
 // terminal.c
-void terminal(char *envp[], t_errdata *err);
+void	terminal(char *envp[], t_errdata *err);
+void	handle_ctrl_c(int signal);
+void	handle_ctrl_d(void);
+void	handle_ctrl_backslash(int signal);
 
 // utils.c
 size_t	ft_strlen(const char *s);

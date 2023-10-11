@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/01 20:55:59 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/11 18:21:21 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,15 @@ void	rowalloc(t_cmdtable *tbl, t_tkn *tkns, int pipes, char *envp[])
 	tbl->nins = calcins(tkns);
 	tbl->nouts = calcouts(tkns);
 	tbl->nargs = calcargs(tkns, envp);
+	tbl->infiles = NULL;
+	tbl->outfiles = NULL;
 	tbl->args = malloc((tbl->nargs + 1) * sizeof(char *));
-	tbl->infiles = malloc(tbl->nins * sizeof(t_iof));
-	tbl->outfiles = malloc(tbl->nouts * sizeof(t_iof));
-	if (tbl->args == NULL || tbl->infiles == NULL || tbl->outfiles == NULL)
+	if (tbl->nins != 0)
+		tbl->infiles = malloc(tbl->nins * sizeof(t_iof));
+	if (tbl->nouts != 0)
+		tbl->outfiles = malloc(tbl->nouts * sizeof(t_iof));
+	if (tbl->args == NULL || (tbl->nins != 0 && tbl->infiles == NULL)
+		|| (tbl->nouts != 0 && tbl->outfiles == NULL))
 		errfree(tbl->err, tbl, free_rows, STP);
 	tbl->curr_a = tbl->args;
 	tbl->curr_i = tbl->infiles;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/28 18:03:41 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/09/28 23:24:37 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,16 @@ int	is_normal_char(char c)
 	return (0);
 }
 
+void	add_char_to_str(t_stringlist **string, char **c)
+{
+	(*string)->character = **c;
+	(*string)->next = (t_stringlist *)malloc(sizeof(t_stringlist));
+	(*string) = (*string)->next;
+	(*string)->next = NULL;
+	(*string)->character = '\0';
+	(*c)++;
+}
+
 t_tkn	*get_next_token(char **input)
 {
 	t_stringlist	*begin;
@@ -146,43 +156,28 @@ t_tkn	*get_next_token(char **input)
 					return (create_tokenword(WORD, begin));
 				if (**input == '"')
 				{
-					(*input)++;
+					add_char_to_str(&actual, input);
 					while (**input != '"')
 					{
 						if (**input == '\0')
 							error("wrong syntax!\n");
-						actual->character = **input;
-						actual->next = (t_stringlist *)malloc(sizeof(t_stringlist));
-						actual = actual->next;
-						actual->next = NULL;
-						actual->character = '\0';
-						(*input)++;
+						add_char_to_str(&actual, input);
 					}
+					add_char_to_str(&actual, input);
 				}
 				if (**input == '\'')
 				{
-					(*input)++;
+					add_char_to_str(&actual, input);
 					while (**input != '\'')
 					{
 						if (**input == '\0')
 							error("wrong syntax!\n");
-						actual->character = **input;
-						actual->next = (t_stringlist *)malloc(sizeof(t_stringlist));
-						actual = actual->next;
-						actual->next = NULL;
-						actual->character = '\0';
-						(*input)++;
+						add_char_to_str(&actual, input);
 					}
+					add_char_to_str(&actual, input);
 				}
-				if (**input != '"' && **input != '\'')
-				{
-					actual->character = **input;
-					actual->next = (t_stringlist *)malloc(sizeof(t_stringlist));
-					actual = actual->next;
-					actual->next = NULL;
-					actual->character = '\0';
-				}
-				(*input)++;
+				else
+					add_char_to_str(&actual, input);
 			}
 			return (create_tokenword(WORD, begin));
 		}
@@ -215,12 +210,7 @@ t_tkn	*get_next_token(char **input)
 				(*input)++;
 				return (create_token(PIPE, "|"));
 			}
-			actual->character = **input;
-			actual->next = (t_stringlist *)malloc(sizeof(t_stringlist));
-			actual = actual->next;
-			actual->next = NULL;
-			actual->character = '\0';
-			(*input)++;
+			add_char_to_str(&actual, input);
 			return (create_tokenword(WORD, begin));
 		}
 		(*input)++;
@@ -277,11 +267,11 @@ void	lexer(char *input)
 		actual->token = *create_token(END, "END4");
 	}
 	tokenlist_to_array(begin);
-/* 	int i = 0;
-	while (get_data()->tokens[i].type != END)
-	{
-		printf("Token type: %d, Value: %s\n", get_data()->tokens[i].type, get_data()->tokens[i].val);
-		i++;
-	}
-	printf("Token type: %d, Value: %s\n", get_data()->tokens[i].type, get_data()->tokens[i].val); */
+ 	// int i = 0;
+	// while (get_data()->tokens[i].type != END)
+	// {
+	// 	printf("Token type: %d, Value: %s\n", get_data()->tokens[i].type, get_data()->tokens[i].val);
+	// 	i++;
+	// }
+	// printf("Token type: %d, Value: %s\n", get_data()->tokens[i].type, get_data()->tokens[i].val);
 }

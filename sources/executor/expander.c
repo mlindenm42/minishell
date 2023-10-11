@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/09 01:22:00 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/10 22:58:30 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ static void	replace_arg(int last_ind, char **args, t_errdata *err, char *envp[])
 	j = 0;
 	while (j <= last_ind)
 	{
+		
 		expand_word(&args[j], err->statstr, envp);
+		//printf("arg in exp %p\n", args[1]);
 		j++;
 	}
 }
@@ -61,6 +63,8 @@ void	expand_word(char **word, char *exit_stat, char *envp[])
 {
 	char	*tmp;
 
+	//free(*word);
+	//exit(0);
 	if (*word != NULL && **word == '\'')
 		*word = ft_strtrim(*word, "\'");
 	else if (*word != NULL && **word == '"')
@@ -68,7 +72,7 @@ void	expand_word(char **word, char *exit_stat, char *envp[])
 		tmp = ft_strtrim(*word, "\"");
 		*word = tmp;
 		varscan(word, exit_stat, envp);
-		free(tmp);
+		//free(tmp);
 	}
 	else if (*word != NULL)
 		varscan(word, exit_stat, envp);

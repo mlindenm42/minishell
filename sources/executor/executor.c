@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/09 01:57:37 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/11 20:24:03 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int	lastcmd(t_cmdtable *row, t_exedata *data, char *envp[])
 		}
 		else
 			create_child(row, envp, data);
+		dprintf(2, "child row %p\n", row);
 	}
 	return (0);
 }
