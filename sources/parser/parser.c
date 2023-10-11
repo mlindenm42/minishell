@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/01 21:01:50 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/11 18:21:37 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,13 @@ t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes, char *envp[])
 	while (tkn->type == WORD && !varvalid(tkn->val, envp))
 		tkn++;
 	tkn0 = tkn;
+	//dprintf(2, "pipeid %i\n", row->pipeid);
 	if (row->pipeid < npipes - 1)
 	{
 		(row + 1)->pipeid = row->pipeid + 1;
 		(row + 1)->err = row->err;
 	}
+	//dprintf(2, "nextid %i\n", (row + 2)->pipeid);
 	while (tkn->type != PIPE && tkn->type != END)
 	{
 		if (tkn->type == WORD)

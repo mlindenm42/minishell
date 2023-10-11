@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/10 20:09:50 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/11 20:52:34 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	handle_ctrl_c(int signal)
 // handles ctrl-D. Exits the shell.
 void	handle_ctrl_d(void)
 {
+	free(get_data()->prompt);
+	//free(get_data()->input);
 	printf("exit\n");
 }
 
@@ -49,9 +51,10 @@ static void	prompt(void)
 {
 	if (getenv("USER") != NULL)
 	{
-		get_data()->prompt = ft_strdup(getenv("USER"));
+		get_data()->prompt = ft_strjoin(getenv("USER"), " % ");
+	/* 	get_data()->prompt = ft_strdup(getenv("USER"));
 		ft_strlcat(get_data()->prompt, " % ",
-			ft_strlen(get_data()->prompt) + 4);
+			ft_strlen(get_data()->prompt) + 4); */
 	}
 	else
 		get_data()->prompt = "USER % ";

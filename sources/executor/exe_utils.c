@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/10 18:50:04 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/11 20:37:20 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,25 +72,40 @@ void	exe_builtin(t_cmdtable *row, char *envp[], int id)
 	else if (ft_strcmp(row->args[0], "unset") == 0)
 		unset(row, envp);
 	if (id == 0)
+	{
+		//row + (row->nrows - 1 - row->pipeid);
+		dprintf(2, "d %i\n", row->nrows - 1 - row->pipeid);
+		dprintf(2, "row %p\n", row);
+		dprintf(2, "d %i\n", row->pipeid - 1);
+		free_rows(row);
+		free(row);
+		free(get_data()->prompt);
+		free(get_data()->input);
+		free(get_data()->tokens);
+		//free_rows(row + (row->nrows - 1 - row->pipeid));
+		//free(row - (row->pipeid - 1));
 		exit(0);
+	}
+		
 }
 
 /* redirects stdout to the pipe, creates child process and executes command */
 int	create_child(t_cmdtable *row, char *envp[], t_exedata *data)
 {
 	redir_close(data->outfd, 1, row->err);
+	//printf("arg12 %s\n", row->args[1]);
 	data->id[row->pipeid] = fork();
 	if (data->id[row->pipeid] == -1)
 		err_handler(row->err, NULL, NXT);
 	if (data->id[row->pipeid] == 0)
 	{
-		signal(SIGINT, handle_ctrl_c);
-		signal(SIGQUIT, handle_ctrl_backslash);
-		signal(SIGTSTP, SIG_IGN);
+		// signal(SIGINT, handle_ctrl_c);
+		// signal(SIGQUIT, handle_ctrl_backslash);
+		// signal(SIGTSTP, SIG_IGN);
 		data->status = 0;
 		if (isbuiltin(row->args[0]))
 			exe_builtin(row, envp, 0);
-		if (row->cmd == NULL)
+		else if (row->cmd == NULL)
 			cmderr1(row->err, row->args[0], envp, CNT); //!!!
 	/* 	if (ft_strncmp(row->cmd, row->args[0], ft_strlen(row->cmd)) == 0
 		&& ft_strchr(row->cmd, '/') == NULL)

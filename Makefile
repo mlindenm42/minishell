@@ -6,7 +6,7 @@
 #    By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/10 17:13:37 by mlindenm          #+#    #+#              #
-#    Updated: 2023/10/10 14:39:05 by mrubina          ###   ########.fr        #
+#    Updated: 2023/10/11 19:11:27 by mrubina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME		=	minishell
 CC			=	cc
 #CFLAGS		=	-Wall -Werror -Wextra
 #SANITIZE 	= 	-fsanitize=address
-#SANITIZE 	= 	-LLeakSanitizer -llsan -lc++
+SANITIZE 	= 	-LLeakSanitizer -llsan -lc++
 
 SRC_DIR		=	sources
 OBJ_DIR		=	$(SRC_DIR)/obj
