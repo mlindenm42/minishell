@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/01 20:42:29 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/12 16:56:59 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void errinit(t_errdata *err, char *envp[])
 	err->stat = 0;
 	err->stop = CNT;
 	err->statstr = NULL;
+	err->edata = NULL;
+	err->tbl = NULL;
 }
 
 int	main(int argc, char *argv[], char *envp[])

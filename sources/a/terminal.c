@@ -6,18 +6,11 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/11 20:52:34 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 01:08:21 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <stdio.h> // printf(); FILE;
-#include <readline/readline.h> // rl_replace_line(); rl_on_new_line();
-// rl_redisplay(); readline(); rl_clear_history();
-#include <readline/history.h> // add_history(input);
-#include <signal.h> // signal(); SIGINT; SIGQUIT; SIGSTP; SIG_IGN;
-#include <unistd.h> // write();
-#include <termios.h> // tcgetattr(); tcsetattr(); ECHOCTL; TCSANOW;
 
 // handles ctrl-C. Displays a new prompt on a new line.
 void	handle_ctrl_c(int signal)
@@ -32,10 +25,18 @@ void	handle_ctrl_c(int signal)
 }
 
 // handles ctrl-D. Exits the shell.
-void	handle_ctrl_d(void)
+void	handle_ctrl_d(t_errdata *err)
 {
 	free(get_data()->prompt);
-	//free(get_data()->input);
+	if (err->statstr != NULL)
+	 	free(err->statstr);
+	// if (err->edata != NULL && err->edata->id != NULL)
+	// 	free(err->edata->id);
+	if (get_data()->tokens != NULL)
+		free(get_data()->tokens);
+/* 	if (err->tbl != NULL)
+	{free_rows(&(err->tbl[err->tbl->nrows - 1]));
+	free(err->tbl);} */
 	printf("exit\n");
 }
 
@@ -79,7 +80,7 @@ void	terminal(char *envp[], t_errdata *err)
 		get_data()->input = readline(get_data()->prompt);
 		if (get_data()->input == NULL)
 		{
-			handle_ctrl_d();
+			handle_ctrl_d(err);
 			break ;
 		}
 		if (*get_data()->input)

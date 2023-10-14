@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 19:32:26 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/12 17:04:34 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,19 @@ typedef struct s_iof
 	char	*file;
 }	t_iof;
 
-typedef struct s_errdata
+typedef struct s_exedata
 {
-	int		stop;
-	int		stat;
-	char	*statstr;
-	char	**envp_loc;
-	char	*envmem_end;
-}	t_errdata;
+	int		infd;
+	int		outfd;
+	int		intmpfd;
+	int		outtmpfd;
+	int		status;
+	int		pbreak;
+	pid_t	*id;
+	char	**path;
+}	t_exedata;
+
+typedef struct s_errdata t_errdata;
 
 typedef struct s_cmdtable
 {
@@ -53,6 +58,15 @@ typedef struct s_cmdtable
 	int			eflag;
 	t_errdata	*err;
 }	t_cmdtable;
+
+typedef struct s_errdata
+{
+	int		stop;
+	int		stat;
+	char	*statstr;
+	t_cmdtable	*tbl;
+	t_exedata	*edata;
+}	t_errdata;
 
 typedef struct s_data {
 	char	*prompt;

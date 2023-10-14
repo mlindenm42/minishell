@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/09/28 23:24:37 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/12 22:19:26 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,7 @@ void	lexer(char *input)
 		actual->token = *create_token(END, "END4");
 	}
 	tokenlist_to_array(begin);
+	free_tokenlist(begin);
  	// int i = 0;
 	// while (get_data()->tokens[i].type != END)
 	// {

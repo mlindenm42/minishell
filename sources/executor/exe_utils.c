@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/11 21:29:40 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 02:23:06 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ int	ft_strcmp(const char *s1, const char *s2)
 		cd(argv);
 	else if(ft_strcmp(argv[0], "exit") == 0)
 		changedir(argv); */
-void	exe_builtin(t_cmdtable *row, char *envp[], int id)
+void	exe_builtin(t_cmdtable *row, char *envp[], t_exedata *data, int id)
 {
+	t_cmdtable *tbl;
+	
 	if (ft_strcmp(row->args[0], "echo") == 0)
 		echo(row->args);
 	else if (ft_strcmp(row->args[0], "pwd") == 0)
@@ -73,12 +75,11 @@ void	exe_builtin(t_cmdtable *row, char *envp[], int id)
 		unset(row, envp);
 	if (id == 0)
 	{
-		//row + (row->nrows - 1 - row->pipeid);
-		dprintf(2, "d %i\n", row->nrows - 1 - row->pipeid);
-		dprintf(2, "row %p\n", row);
-		dprintf(2, "d %i\n", row->pipeid - 1);
-		free_rows(row);
-		free(row);
+		free_str(&(row->err->statstr));
+		free_exedt(data);
+		//free_rows(row + (row->nrows - 1 - row->pipeid));
+		tbl = row - row->pipeid;
+		free_tbl(&tbl);
 		free(get_data()->prompt);
 		free(get_data()->input);
 		free(get_data()->tokens);
@@ -86,7 +87,6 @@ void	exe_builtin(t_cmdtable *row, char *envp[], int id)
 		//free(row - (row->pipeid - 1));
 		exit(0);
 	}
-		
 }
 
 /* redirects stdout to the pipe, creates child process and executes command */
@@ -104,7 +104,7 @@ int	create_child(t_cmdtable *row, char *envp[], t_exedata *data)
 		// signal(SIGTSTP, SIG_IGN);
 		data->status = 0;
 		if (isbuiltin(row->args[0]))
-			exe_builtin(row, envp, 0);
+			exe_builtin(row, envp, data, 0);
 		else if (row->cmd == NULL)
 			cmderr1(row->err, row->args[0], envp, CNT); //!!!
 		else if (execve(row->cmd, row->args, envp) == -1)

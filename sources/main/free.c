@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/11 21:02:12 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/13 13:13:32 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	free_row(void *row)
 			free(((t_cmdtable *)row)->infiles);
 		if (((t_cmdtable *)row)->outfiles != NULL)
 			free(((t_cmdtable *)row)->outfiles);
+		if (((t_cmdtable *)row)->cmd != NULL)
+			free_str(&((t_cmdtable *)row)->cmd);
 		((t_cmdtable *)row)->args = NULL;
 		((t_cmdtable *)row)->infiles = NULL;
 		((t_cmdtable *)row)->outfiles = NULL;
@@ -35,48 +37,41 @@ void	free_rows(void *row)
 {
 	while (((t_cmdtable *)row)->pipeid > 0)
 	{
-		// dprintf(2, "id%i\n", ((t_cmdtable *)row)->pipeid);
-		// dprintf(2, "rowp%p\n", ((t_cmdtable *)row));
-		// dprintf(2, "nextrowp%p\n", ((t_cmdtable *)row - 1));
 		free_row(row);
-		//dprintf(2, "my id%i\n", ((t_cmdtable *)row - 1)->pipeid);
-		
-		//if (((t_cmdtable *)row)->pipeid > 0)
-			row = ((t_cmdtable *)row - 1);
-		//else
-		//	break;
-		// dprintf(2, "rowp%p\n", row);
-		//dprintf(2, "this is next row id%i\n", ((t_cmdtable *)row)->pipeid);
+		row = ((t_cmdtable *)row - 1);
 	}
-	// dprintf(2, "lastrowp%p\n", row);
-	// dprintf(2, "last id%i\n", ((t_cmdtable *)row)->pipeid);
 	free_row(row);
 }
 
-/* void	free_rows(t_cmdtable *row)
+void	free_tbl(t_cmdtable **tbl)
 {
-	while (row->pipeid >= 0)
+	t_cmdtable *row;
+
+	row = *tbl;
+	while (row->pipeid < row->nrows - 1)
 	{
-		//dprintf(2, "my id%i\n", ((t_cmdtable *)row)->pipeid);
-		//dprintf(2, "my id%i\n", ((t_cmdtable *)row - 1)->pipeid);
+		if (row->nins != 0)
+			free_iof(row->infiles, row->nins);
+		if (row->nouts != 0)
+			free_iof(row->outfiles, row->nouts);
 		free_row(row);
-		//dprintf(2, "my id%i\n", ((t_cmdtable *)row - 1)->pipeid);
-		//dprintf(2, "rowp%p\n", ((t_cmdtable *)row));
-		//dprintf(2, "nextrowp%p\n", ((t_cmdtable *)row - 1));
-		row--;
-		//dprintf(2, "rowp%p\n", row);
-		//dprintf(2, "my id%i\n", ((t_cmdtable *)row)->pipeid);
+		row++;
 	}
-} */
+	if (row->nins != 0)
+		free_iof(row->infiles, row->nins);
+	if (row->nouts != 0)
+		free_iof(row->outfiles, row->nouts);
+	free_row(*tbl);
+	free(*tbl);
+	*tbl = NULL;
+}
 
 void	free_exedt(void *data)
 {
 	if (((t_exedata *)data)->id != NULL)
 		free(((t_exedata *)data)->id);
 	((t_exedata *)data)->id = NULL;
-	if (((t_exedata *)data)->path != NULL)
-		free(((t_exedata *)data)->path);
-	((t_exedata *)data)->path = NULL;
+	free_arr(((t_exedata *)data)->path);
 }
 
 void	free_ptr(void *p)
@@ -98,4 +93,20 @@ void	free_tkns(t_tkn *tkns)
 		token++;
 	}
 	free (tkns);
+}
+
+void	free_iof(t_iof *arr, int n)
+{
+	int i;
+
+	//dprintf(2, "in f %p\n", arr);
+
+	i = 0;
+	while (i < n)
+	{
+		free_str(&arr->file);
+		free(arr->file);
+		arr++;
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 22:37:30 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/09 14:55:38 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/12 18:59:14 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,14 @@ char	*extract_path(char *path_str, char *cmd)
 		access_given = access(path_cand, X_OK);
 		i++;
 		if (path_cand != NULL && access_given == -1)
-			free_str(path_cand);
+			free_str(&path_cand);
 	}
-	free_str(slash_cmd);
+	free_str(&slash_cmd);
 	free_arr(path_arr);
 	if (access_given == 0)
 		return (path_cand);
+	if (path_cand != NULL)
+		free_str(&path_cand);
 	return (cmd);
 }
 
@@ -71,11 +73,11 @@ char	*getpath(char *fpath, char *envp[])
 	{
 		path_str = extract_path(&((envp[i])[5]), fpath);
 		if (ft_strncmp(path_str, fpath, ft_strlen(fpath)) == 0)
-			path_str = NULL;
+			free_str(&path_str);
 	}
 	else if (access(fpath, X_OK) == 0)
 		path_str = fpath;
 	else
-		path_str = NULL;
+		free_str(&path_str);
 	return (path_str);
 }

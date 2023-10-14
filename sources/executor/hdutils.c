@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/11 20:47:34 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/13 14:32:20 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ char	*readbuf(char *buf, int size)
 	char	*cur;
 
 	cur = buf;
-	ft_bzero(buf, size);
-	while (cur != (buf + size) && *cur != '\n')
+	ft_bzero(buf, size + 1);
+	while (cur <= (buf + size - 1) && *cur != '\n')
 	{
 		read(0, cur, 1);
 		if (*cur != '\n')

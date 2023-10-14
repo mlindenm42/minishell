@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/11 20:28:49 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/13 20:20:16 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 void	execute(char *input, char *envp[], t_errdata *err)
 {
 	t_cmdtable	*tbl;
+	char *test;
 
+	tbl = NULL;
 	lexer(input);
 	if (get_data()->tokens->type != END)
 	{
 		tbl = parser(get_data()->tokens, envp, err);
-		dprintf(2, "tbl %p\n", tbl);
 		//print_table(tbl, tbl->nrows);
 		expander(tbl, err, envp);
 		//print_table(tbl, tbl->nrows);
@@ -29,8 +30,14 @@ void	execute(char *input, char *envp[], t_errdata *err)
 		// dprintf(2, "pipe2 %i\n", (tbl + 2)->pipeid);
 		if (err->stop == CNT)
 			executor(tbl, envp, err);
+		//printf("p: %p,\n", tbl);
 	}
-	//dprintf(2, "pipe2 %i\n", (tbl[tbl->nrows - 2]).pipeid);
-	free_rows(&tbl[tbl->nrows - 1]);
-	free(tbl);
+	if (tbl != NULL)
+	{
+		free_tbl(&tbl);
+		//dprintf(2, "in f %p\n", tbl->infiles);
+		//free_rows(&tbl[tbl->nrows - 1]);
+		//free(tbl);
+	}
+	err->tbl = NULL;
 }

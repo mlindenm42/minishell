@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/11 20:24:03 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/13 23:54:01 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ setting first input
  */
 int	data_init(t_cmdtable *tbl, t_exedata *data, int *i)
 {
+	int hd;
+
 	data->pbreak = NB;
+	data->path = NULL;
 	data->id = malloc(sizeof(pid_t) * tbl->nrows);
 	if (data->id == NULL)
 	{
@@ -66,8 +69,11 @@ int	data_init(t_cmdtable *tbl, t_exedata *data, int *i)
 	data->outtmpfd = dup(1);
 	if (data->outtmpfd < 0)
 		err_handler(tbl->err, NULL, CNT);
-	if (heredoc(tbl, data) == 1)
+	hd = heredoc(tbl, data);
+	if (hd == 1)
 		return (1);
+	if (hd == SIGINT)
+		return (SIGINT);
 	setin(tbl, data, i);
 	return (0);
 }
@@ -121,25 +127,27 @@ int	lastcmd(t_cmdtable *row, t_exedata *data, char *envp[])
 	{
 		if (row->cmd != NULL && env_change(row->cmd, row->nrows))
 		{
-			exe_builtin(row, envp, 1);
+			exe_builtin(row, envp, data, 1);
 			row->eflag = ERR;
 		}
 		else
 			create_child(row, envp, data);
-		dprintf(2, "child row %p\n", row);
+		//dprintf(2, "child row %p\n", row);
 	}
 	return (0);
 }
 
 int	executor(t_cmdtable *tbl, char *envp[], t_errdata *err)
 {
-	t_cmdtable	*row;
 	t_exedata	data;
 	int			i;
+	int			rtn;
 
 	i = 0;
-	if (data_init(tbl, &data, &i) == 1)
-		return (1);
+	rtn = data_init(tbl, &data, &i);
+	if (rtn == 1 || rtn == SIGINT)
+		return (rtn);
+	err->edata = &data;
 	while (i <= tbl->nrows - 2)
 	{
 		if (i != 0 && data.pbreak != BR && tbl[i - 1].eflag != ERR)
@@ -155,5 +163,6 @@ int	executor(t_cmdtable *tbl, char *envp[], t_errdata *err)
 	}
 	lastcmd(&tbl[i], &data, envp);
 	finish(tbl, &data);
+	err->edata = NULL;
 	return (0);
 }

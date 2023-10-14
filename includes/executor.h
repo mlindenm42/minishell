@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 23:38:32 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/12 21:29:12 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,6 @@ in this file we have functions used only in the executor
 */
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
-
-typedef struct s_exedata
-{
-	int		infd;
-	int		outfd;
-	int		intmpfd;
-	int		outtmpfd;
-	int		status;
-	int		pbreak;
-	pid_t	*id;
-	char	**path;
-}	t_exedata;
 
 //constants showing how ins/outs in the middle pipes break the stream
 # define NB 1
@@ -56,7 +44,7 @@ char	*varsubst(char **str, char *start, char *exit_stat, char *env[]);
 void	varscan(char **word, char *exit_stat, char *env[]);
 void	expand_word(char **word, char *exit_stat, char *env[]);
 char	*skip_var(char *start);
-void	exe_builtin(t_cmdtable *row, char *env[], int id);
+void	exe_builtin(t_cmdtable *row, char *env[], t_exedata *data, int id);
 void	arr_sort(char **arr, int n);
 int		env_change(char *cmd, int nrows);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/27 19:45:53 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/12 18:47:25 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,14 @@ char	**copy_arr(char **newarr, char **arr)
 }
 
 //frees a string
-void	free_str(char *s)
+void	free_str(char **s)
 {
-	if (s != NULL)
+	if (*s != NULL)
 	{
-		free(s);
-		s = NULL;
+		//dprintf(2, "s %p\n", s);
+		free(*s);
+		*s = NULL;
+		//dprintf(2, "s %p\n", s);
 	}
 }
 

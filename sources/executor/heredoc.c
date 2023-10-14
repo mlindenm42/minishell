@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/16 20:01:44 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 01:50:03 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,26 @@ static char	*genpath(int i)
 	return (fpath);
 }
 
-static int	nlupdate(char *cur, int isdlm, int prevnl, int flag)
+void	handle_c(int signal)
 {
-	if (flag == 1 && *cur == '\n' && isdlm == TRUE)
-		return (TRUE);
-	else if (flag == 0)
+	int i;
+	if (signal == SIGINT)
 	{
-		if (*cur != '\n')
-			return (FALSE);
-		if (*cur == '\n' && isdlm == FALSE)
-			return (TRUE);
+		ioctl(0, TIOCSTI, "\n");
+		rl_replace_line("", 0);
+		//rl_on_new_line();
+		//rl_redisplay();
+		//ioctl(0, FIONREAD, &i);
+		//dprintf(2, "n %i\n", i);
+		
 	}
-	return (prevnl);
 }
 
 /*
 reads from stdin untill delimiter and writes into a file
 prevnl is TRUE if previous buffer ended with newline
  */
-static int	stdintofd(char *dlm, int filefd)
+/* static int	stdintofd(char *dlm, int filefd)
 {
 	char	*buf;
 	char	*cur;
@@ -65,7 +66,7 @@ static int	stdintofd(char *dlm, int filefd)
 	prevnl = TRUE;
 	isdlm = FALSE;
 	size = ft_strlen(dlm) + 1;
-	buf = malloc(size * sizeof(char));
+	buf = malloc((size + 1) * sizeof(char));
 	if (buf == NULL)
 		return (1);
 	cur = buf;
@@ -75,21 +76,50 @@ static int	stdintofd(char *dlm, int filefd)
 		prevnl = nlupdate(cur, isdlm, prevnl, 1);
 		cur = readbuf(buf, size);
 		isdlm = (ft_strncmp(buf, dlm, size - 1) == 0);
+		signal(SIGINT, handle_c);
 		wrtofile((isdlm == TRUE && prevnl == TRUE), filefd, cur, buf);
 		prevnl = nlupdate(cur, isdlm, prevnl, 0);
 	}
 	free(buf);
 	buf = NULL;
 	return (0);
+} */
+
+static int	stdintofd(char *dlm, int filefd)
+{
+	char	*input;
+	int		sig;
+	char	*buf;
+
+	sig = 0;
+	while (input != NULL)
+	{
+		input = readline("> ");
+		if (ft_strcmp(input, dlm) == 0)
+			break;
+		signal(SIGINT, handle_c);
+		// signal(SIGQUIT, handle_ctrl_backslash);
+		// signal(SIGTSTP, SIG_IGN);
+		if (*input == '\0')
+		{
+			return (SIGINT);
+		}
+		//signal(SIGINT, handle_ctrl_c);
+		ft_putendl_fd(input, filefd);
+		free(input);
+	}
+	return (0);
 }
 
 //scanning inputs for here_docs
-static void	inputscan(t_exedata *data, t_cmdtable *row, int i)
+static int	inputscan(t_exedata *data, t_cmdtable *row, int i)
 {
 	int	k;
 	int	fd;
+	int	rtn;
 
 	k = 0;
+	rtn = 0;
 	while (k <= row->nins - 1)
 	{
 		if (row->infiles[k].io == LLT)
@@ -103,7 +133,8 @@ static void	inputscan(t_exedata *data, t_cmdtable *row, int i)
 				fd = open(data->path[i], O_CREAT | O_RDWR, 0644);
 				if (fd >= 0)
 				{
-					if (stdintofd(row->infiles[k].file, fd) == 1)
+					rtn = stdintofd(row->infiles[k].file, fd);
+					if (rtn == 1)
 						err_handler(row->err, "here_document", CNT);
 					close(fd);
 				}
@@ -111,6 +142,7 @@ static void	inputscan(t_exedata *data, t_cmdtable *row, int i)
 		}
 		k++;
 	}
+	return (rtn);
 }
 
 int	heredoc(t_cmdtable *tbl, t_exedata *data)
@@ -118,16 +150,18 @@ int	heredoc(t_cmdtable *tbl, t_exedata *data)
 	int	i;
 
 	i = 0;
-	data->path = malloc(sizeof(char *) * tbl->nrows);
+	data->path = malloc(sizeof(char *) * tbl->nrows + 1);
 	if (data->path == NULL)
 	{
 		errfree(tbl->err, &data, &free_exedt, CNT);
 		return (1);
 	}
+	data->path[tbl->nrows] = NULL;
 	while (i <= tbl->nrows - 1)
 	{
 		data->path[i] = NULL;
-		inputscan(data, &tbl[i], i);
+		if (inputscan(data, &tbl[i], i) == SIGINT)
+			return (SIGINT);
 		i++;
 	}
 	return (0);

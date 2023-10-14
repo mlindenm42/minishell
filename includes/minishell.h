@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/11 21:02:46 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 01:09:54 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include <unistd.h>
-# include <stdio.h>
+# include <stdio.h> // printf(); FILE;
 # include <stdlib.h>
 # include <fcntl.h>
 # include <errno.h>
@@ -22,14 +22,18 @@
 # include <malloc/malloc.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+# include <readline/readline.h> // rl_replace_line(); rl_on_new_line();
+// rl_redisplay(); readline(); rl_clear_history();
+# include <readline/history.h> // add_history(input);
 # include "../libs/libft/libft.h"
 # include "tokens.h"
 # include "structs.h"
 # include "parser.h"
 # include "executor.h"
 # include <sys/stat.h>
+# include <sys/ioctl.h>
+# include <signal.h> // signal(); SIGINT; SIGQUIT; SIGSTP; SIG_IGN;
+# include <termios.h> // tcgetattr(); tcsetattr(); ECHOCTL; TCSANOW;
 
 t_cmdtable	*parser (t_tkn *tkns, char *envp[], t_errdata *err);
 void	expander(t_cmdtable *tbl, t_errdata *err, char *envp[]);
@@ -41,9 +45,11 @@ void		print_table(t_cmdtable *tbl, int size); //tester function
 void		free_row(void *row);
 void	free_tkns(t_tkn *tkns);
 void		free_rows(void *row);
+void	free_tbl(t_cmdtable **tbl);
+void	free_iof(t_iof *arr, int n);
 void		free_exedt(void *data);
 void		free_ptr(void *p);
-void		free_str(char *str);
+void		free_str(char **str);
 char		**copy_arr(char **newarr, char **arr);
 //void	cmderr(void *cmd);
 void		cmderr(t_errdata *err, void *cmd, int stop);
@@ -86,7 +92,7 @@ t_data	*get_data(void);
 // terminal.c
 void	terminal(char *envp[], t_errdata *err);
 void	handle_ctrl_c(int signal);
-void	handle_ctrl_d(void);
+void	handle_ctrl_d(t_errdata *err);
 void	handle_ctrl_backslash(int signal);
 
 // utils.c
