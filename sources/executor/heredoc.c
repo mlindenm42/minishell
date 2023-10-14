@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 06:52:00 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/14 16:01:26 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,16 @@ static char	*genpath(int i)
 
 void	handle_c(int signal)
 {
-	// int i;
+	int i;
+	i=0;
 	if (signal == SIGINT)
 	{
-		ioctl(0, TIOCSTI, "\n");
-		rl_replace_line("", 0);
+		ioctl(0, TIOCSTI, 4);
+		//rl_replace_line("", 0);
 		//rl_on_new_line();
 		//rl_redisplay();
-		//ioctl(0, FIONREAD, &i);
-		//dprintf(2, "n %i\n", i);
+		// ioctl(0, FIONREAD, &i);
+		// dprintf(2, "n sig %i\n", i);
 
 	}
 }
@@ -89,25 +90,34 @@ static int	stdintofd(char *dlm, int filefd)
 {
 	char	*input;
 	// int		sig;
-	// char	*buf;
+	//char	buf[1];
+	//int i;
 
 	// sig = 0;
+	//i = 0;
 	input = NULL;
-	while (input != NULL)
+	while (1)
 	{
+		signal(SIGINT, handle_c);
+		signal(SIGTSTP, SIG_IGN);
+		//dprintf(2, "input after signal %s\n", input);
+		if (input != NULL)
+			return (SIGINT);
 		input = readline("> ");
+		//dprintf(2, "input after reading %s\n", input);
+	
 		if (ft_strcmp(input, dlm) == 0)
 			break;
-		signal(SIGINT, handle_c);
 		// signal(SIGQUIT, handle_ctrl_backslash);
 		// signal(SIGTSTP, SIG_IGN);
-		if (*input == '\0')
+	/* 	if (read(0, buf, 1) == '\n')
 		{
 			return (SIGINT);
-		}
+		} */
 		//signal(SIGINT, handle_ctrl_c);
 		ft_putendl_fd(input, filefd);
 		free(input);
+		input = NULL;
 	}
 	return (0);
 }
