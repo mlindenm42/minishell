@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/14 16:04:34 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/14 20:55:13 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_tkn	*create_tokenword(int type, t_stringlist *string)
 		actual = actual->next;
 	}
 	actual = string;
-	token->val = (char *)malloc(counter * sizeof(char));
+	token->val = (char *)malloc((counter + 1) * sizeof(char));
 	i = 0;
 	while (i < counter)
 	{
