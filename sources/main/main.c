@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/12 16:56:59 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 06:51:11 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ t_data	*get_data(void)
 //we use memory after it for created variables
 void errinit(t_errdata *err, char *envp[])
 {
+	char	**test;
 
+	test = envp;
+	test = NULL;
+	if (test)
+		printf("STOP\n");
 	err->stat = 0;
 	err->stop = CNT;
 	err->statstr = NULL;
@@ -39,7 +44,15 @@ void errinit(t_errdata *err, char *envp[])
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_errdata	err;
+	int			test1;
+	char		**test2;
 
+	test1 = argc;
+	test2 = argv;
+	test1 = 0;
+	test2 = NULL;
+	if (test1 || test2)
+		printf("STOP\n");
 	//replace_var("var1", "new", envp, SET);
 	//replace_var("var1", NULL, envp, UNSET);
 	//replace_var("OLDPWD", NULL, envp, SET);

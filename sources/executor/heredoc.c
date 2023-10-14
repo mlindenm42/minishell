@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 01:50:03 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 06:52:00 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*genpath(int i)
 
 void	handle_c(int signal)
 {
-	int i;
+	// int i;
 	if (signal == SIGINT)
 	{
 		ioctl(0, TIOCSTI, "\n");
@@ -47,7 +47,7 @@ void	handle_c(int signal)
 		//rl_redisplay();
 		//ioctl(0, FIONREAD, &i);
 		//dprintf(2, "n %i\n", i);
-		
+
 	}
 }
 
@@ -88,10 +88,11 @@ prevnl is TRUE if previous buffer ended with newline
 static int	stdintofd(char *dlm, int filefd)
 {
 	char	*input;
-	int		sig;
-	char	*buf;
+	// int		sig;
+	// char	*buf;
 
-	sig = 0;
+	// sig = 0;
+	input = NULL;
 	while (input != NULL)
 	{
 		input = readline("> ");

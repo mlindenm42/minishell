@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 23:31:40 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 06:48:51 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	varvalid(char *str, char *envp[])
 {
 	if (ft_strcmp(str, "$?") != 0 && *str == '$' && (getenv1(str + 1, envp) == NULL)
 		&& *skip_var(str) == '\0')
-		return (FALSE);
+		return (0);
 	else
-		return (TRUE);
+		return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/02 19:24:16 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 06:53:50 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,12 +185,12 @@ int	hasoldpwd(char *envp[])
 	int	oldpwd;
 
 	i = 0;
-	oldpwd = FALSE;
+	oldpwd = 0;
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "OLDPWD", 6) == 0)
 		{
-			oldpwd = TRUE;
+			oldpwd = 1;
 		}
 		i++;
 	}
@@ -223,12 +223,12 @@ char	*getenv1(char *var, char *envp[])
 //malloc!!!
 void	set_loc_env(char *envp[])
 {
-	int	n;
-	char *undsc;
+	// int	n;
+	// char *undsc;
 	char	*shlvl;
 
-	n = arr_len(envp);
-	if (hasoldpwd(envp) == TRUE)
+	// n = arr_len(envp);
+	if (hasoldpwd(envp) == 1)
 		replace_var("OLDPWD", NULL, envp);
 	else
 		envappend("OLDPWD", envp);

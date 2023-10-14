@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 01:09:54 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 06:48:32 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>
-# include <malloc/malloc.h>
+// # include <malloc/malloc.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <readline/readline.h> // rl_replace_line(); rl_on_new_line();

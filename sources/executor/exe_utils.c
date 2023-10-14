@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 02:23:06 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 06:51:48 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int	create_pipe(t_exedata *data, t_errdata *err)
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
-	size_t	i;
+	// size_t	i;
 	size_t	n1;
 	size_t	n2;
 
-	i = 0;
+	// i = 0;
 	n1 = ft_strlen(s1);
 	n2 = ft_strlen(s2);
 	if (n1 != n2)
@@ -62,7 +62,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 void	exe_builtin(t_cmdtable *row, char *envp[], t_exedata *data, int id)
 {
 	t_cmdtable *tbl;
-	
+
 	if (ft_strcmp(row->args[0], "echo") == 0)
 		echo(row->args);
 	else if (ft_strcmp(row->args[0], "pwd") == 0)

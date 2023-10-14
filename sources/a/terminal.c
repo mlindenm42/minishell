@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/14 01:08:21 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 06:47:38 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	prompt(void)
 void	terminal(char *envp[], t_errdata *err)
 {
 	struct termios	settings;
-	char *input;
+	// char *input;
 
 	tcgetattr(STDIN_FILENO, &settings);
 	settings.c_lflag &= ~ECHOCTL;

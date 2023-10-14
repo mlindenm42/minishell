@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/09 16:52:52 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 06:45:29 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 // free structure and output error
 void	errfree(t_errdata *err, void *struc, void (*del)(void *), int stop)
 {
-	char	*pref;
+	// char	*pref;
 
 	err->stop = stop;
 	err->stat = 1;
@@ -50,7 +50,7 @@ void	custom_err(char *pref, const char *txt)
 void	err_handler(t_errdata *err, char *str, int stop)
 {
 	char	*pref;
-	char	*txt;
+	// char	*txt;
 
 	err->stop = stop;
 	err->stat = 1;
@@ -70,7 +70,7 @@ void	err_handler(t_errdata *err, char *str, int stop)
 
 void	cmderr(t_errdata *err, void *cmd, int stop)
 {
-	char	*txt;
+	// char	*txt;
 	char	*tmp;
 	struct stat	stat;
 
@@ -97,7 +97,7 @@ void	cmderr(t_errdata *err, void *cmd, int stop)
 
 void	cmderr1(t_errdata *err, void *cmd, char *envp[], int stop)
 {
-	char	*txt;
+	// char	*txt;
 	char	*tmp;
 	struct stat	stat;
 

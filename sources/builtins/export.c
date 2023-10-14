@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/02 18:51:47 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 06:53:11 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ int	inenv_nv(char *var, char *envp[])
 	while (envp[i] != NULL)
 	{
 		if (ft_strcmp(envp[i], var) != 1)
-			return (TRUE);
+			return (1);
 		i++;
 	}
-	return (FALSE);
+	return (0);
 }
 
 /* checks if a variable is present in env - 3 cases
@@ -81,13 +81,13 @@ int	inenv(char *arg, char *envp[])
 		val = getenv1(name, envp);
 		free(name);
 		if (val == NULL)
-			return (FALSE);
-		return (TRUE);
+			return (0);
+		return (1);
 	}
 	else if (getenv1(arg, envp) != NULL)
 		{
 			//printf("var %s\n", getenv1(arg, envp));
-			return (TRUE);}
+			return (1);}
 	else
 		return (inenv_nv(arg, envp));
 }
@@ -120,14 +120,14 @@ void envappend(char *str, char *envp[])
 	replace_var("_", NULL, envp, UNSET);
 } */
 
-/* scans environment for variables and replaces them with arguments 
+/* scans environment for variables and replaces them with arguments
 replaces only if new value isn't NULL
 */
 //!!! malloc errors
 void	envscan(t_cmdtable *row, char *envp[])
 {
 	int		i;
-	int		len;
+	// int		len;
 	char	*end;
 	char*	vname;
 
@@ -233,7 +233,7 @@ void	export(t_cmdtable *row, char *envp[])
 		row->curr_a = &row->args[1];
 		while (row->curr_a <= &row->args[row->nargs - 1])
 		{
-			is_set = FALSE;
+			is_set = 0;
 			end = ft_strchr(*row->curr_a, '=');
 			i = 0;
 			while (envp[i] != NULL)
@@ -242,12 +242,12 @@ void	export(t_cmdtable *row, char *envp[])
 				{
 					if (end != NULL)
 						replace_var(*row->curr_a, end + 1, envp);
-					is_set = TRUE;
+					is_set = 1;
 					break;
 				}
 				i++;
 			}
-			if (is_set == FALSE)
+			if (is_set == 0)
 				envappend(*row->curr_a, envp);
 			row->curr_a++;
 		}

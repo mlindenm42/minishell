@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/28 23:30:03 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 06:47:06 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*skip_var(char *start)
 //given variable start ($) and end, returns its value
 static char	*get_value(char *start, char *end, char *exit_stat, char *envp[])
 {
-	char	*cur;
+	// char	*cur;
 	char	*var;
 	char	*value;
 
@@ -92,7 +92,7 @@ char	*varsubst(char **str, char *start, char *exit_stat, char *envp[])
 void	varscan(char **word, char *exit_stat, char *envp[])
 {
 	char	*cur;
-	int		i;
+	// int		i;
 
 	cur = *word;
 	while (cur != NULL && *cur != '\0')
