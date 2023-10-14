@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 00:58:55 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 01:05:38 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-
-// void	free_tokenlist(t_tokenlist *tokenlist)
-// {
-// 	t_tokenlist	*actual;
-// 	t_tokenlist	*copy;
-
-// 	actual = tokenlist;
-// 	while (actual->next != NULL)
-// 	{
-// 		copy = actual;
-// 		actual = actual->next;
-// 		free(copy);
-// 	}
-// 	free(actual);
-// }
 
 void	free_stringlist(t_stringlist *string)
 {
@@ -224,14 +209,14 @@ t_tkn	*get_next_token(char **input)
 	return (get_next_token2(input, begin, actual));
 }
 
-void	tokenlist_to_array(t_tokenlist *token_list)
+void	tokenlist_to_array(void)
 {
 	int			counter;
 	t_tokenlist	*actual;
 	int			i;
 
 	counter = 0;
-	actual = token_list;
+	actual = get_data()->tlist;
 	while (actual != NULL)
 	{
 		counter++;
@@ -239,7 +224,7 @@ void	tokenlist_to_array(t_tokenlist *token_list)
 	}
 	get_data()->tokens = (t_tkn *) malloc(counter * sizeof(t_tkn));
 	i = 0;
-	actual = token_list;
+	actual = get_data()->tlist;
 	while (i < counter)
 	{
 		get_data()->tokens[i].type = actual->token.type;
@@ -299,51 +284,7 @@ void	lexer(char *input)
 		get_data()->tlistend->next = NULL;
 		get_data()->tlistend->token = *create_token(END, "END4");
 	}
-	tokenlist_to_array(get_data()->tlist);
+	tokenlist_to_array();
 	free_tokenlist();
 	// print_tokens();
 }
-
-// void	lexer(char *input)
-// {
-// 	t_tokenlist	*begin;
-// 	t_tokenlist	*actual;
-// 	t_tokenlist	*copy;
-
-// 	begin = NULL;
-// 	begin = (t_tokenlist *)malloc(sizeof(t_tokenlist));
-// 	actual = begin;
-// 	actual->next = NULL;
-// 	actual->token = *get_next_token(&input);
-// 	while (*input != '\0')
-// 	{
-// 		actual->next = (t_tokenlist *)malloc(sizeof(t_tokenlist));
-// 		actual = actual->next;
-// 		actual->next = NULL;
-// 		actual->token = *get_next_token(&input);
-// 	}
-// 	if (actual->token.type != END)
-// 	{
-// 		actual->next = (t_tokenlist *)malloc(sizeof(t_tokenlist));
-// 		actual = actual->next;
-// 		actual->next = NULL;
-// 		actual->token = *create_token(END, "END4");
-// 	}
-// 	actual = begin;
-// 	tokenlist_to_array(actual);
-// 	actual = begin;
-// 	while (actual->token.type != END)
-// 	{
-// 		copy = actual;
-// 		actual = actual->next;
-// 		free(copy);
-// 	}
-// 	free(actual);
-// 	int i = 0;
-// 	while (get_data()->tokens[i].type != END)
-// 	{
-// 		printf("Token type: %d, Value: %s\n", get_data()->tokens[i].type, get_data()->tokens[i].val);
-// 		i++;
-// 	}
-// 	printf("Token type: %d, Value: %s\n", get_data()->tokens[i].type, get_data()->tokens[i].val);
-// }
