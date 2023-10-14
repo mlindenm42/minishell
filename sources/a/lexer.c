@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/14 07:27:12 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/14 16:04:34 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_tkn	*create_tokenword(int type, t_stringlist *string)
 		error("malloc");
 	token->type = type;
 	actual = string;
-	counter = 1;
+	counter = 0;
 	while (actual->next != NULL)
 	{
 		counter++;
