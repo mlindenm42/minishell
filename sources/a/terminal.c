@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/14 23:01:01 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 02:11:36 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	handle_ctrl_d(t_errdata *err)
 	// if (err->edata != NULL && err->edata->id != NULL)
 	// 	free(err->edata->id);
 	// if (get_data()->tokens != NULL)
-	// free(get_data()->tokens);
+		// free(get_data()->tokens);
 /* 	if (err->tbl != NULL)
 	{free_rows(&(err->tbl[err->tbl->nrows - 1]));
 	free(err->tbl);} */
@@ -91,6 +91,10 @@ void	terminal(char *envp[], t_errdata *err)
 		lexer(get_data()->input);
 		// execute(get_data()->input, envp, err);
 		free(get_data()->input);
+		free(get_data()->tokens[0].val);
+		free(get_data()->tokens[1].val);
+		// t_tkn *my_tokens = get_data()->tokens;
+		// free(&my_tokens[0]);
 		free(get_data()->tokens);
 	}
 	rl_clear_history();
