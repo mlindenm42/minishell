@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/14 06:45:42 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 02:16:55 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,14 @@ void	execute(char *input, char *envp[], t_errdata *err)
 
 	tbl = NULL;
 	lexer(input);
+	// dprintf(2, "token val %s\n", tkns->val);
+	// free(tkns->val);
 	if (get_data()->tokens->type != END)
 	{
-		tbl = parser(get_data()->tokens, envp, err);
+		tbl = parser(get_data()->tokens, err);
 		//print_table(tbl, tbl->nrows);
 		expander(tbl, err, envp);
 		//print_table(tbl, tbl->nrows);
-		// dprintf(2, "pipe0 %i\n", tbl->pipeid);
-		// dprintf(2, "pipe1 %i\n", (tbl + 1)->pipeid);
-		// dprintf(2, "pipe2 %i\n", (tbl + 2)->pipeid);
 		if (err->stop == CNT)
 			executor(tbl, envp, err);
 		//printf("p: %p,\n", tbl);

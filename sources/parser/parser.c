@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/12 17:27:44 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 02:15:21 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,38 +42,44 @@ static void	argtotbl(t_tkn *tkn, t_cmdtable *row)
 //writing args to a row
 static void	cmdtotbl(t_tkn *tkn, t_cmdtable *row, char *envp[])
 {
+	//dprintf(2, "ttt %s\n", tkn->val);
 	row->cmd = getpath(tkn->val, envp);
+	//dprintf(2, "tt %s\n", row->cmd);
 	*row->args = tkn->val;
+	//dprintf(2, "args %s\n", *row->args);
+	//free(row->args[0]);
 	(row->curr_a)++;
 }
 
 //fills a row of the table (one pipe)
 //returns either the token that should go to the next row
 //or the last token in the token array
-t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes, char *envp[])
+t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes,  t_errdata *err)
 {
 	t_tkn	*tkn0;
 
-	while (tkn->type == WORD && !varvalid(tkn->val, envp))
+	//free(tkn);
+	//dprintf(2, " %s\n", tkn->val);
+	while (tkn->type == WORD && !varvalid(tkn->val, err->envp))
 		tkn++;
 	tkn0 = tkn;
+	//dprintf(2, "pointer to tkn0 %p\n", tkn0);
+	//dprintf(2, "pointer to tkns %p\n", tkn);
 	//dprintf(2, "pipeid %i\n", row->pipeid);
 	if (row->pipeid < npipes - 1)
-	{
 		(row + 1)->pipeid = row->pipeid + 1;
-		(row + 1)->err = row->err;
-	}
-	//dprintf(2, "nextid %i\n", (row + 2)->pipeid);
 	while (tkn->type != PIPE && tkn->type != END)
 	{
 		if (tkn->type == WORD)
 		{
+			//dprintf(2, "pointer to tkns %p\n", tkn);
+			//dprintf(2, "tt %s\n", tkn0->val);
 			if ((tkn == tkn0 || (tkn - 2 >= tkn0 && (tkn - 2)->type >= GT
-						&& (tkn - 2)->type <= LLT)) && varvalid(tkn->val, envp))
-					cmdtotbl(tkn, row, envp);
+						&& (tkn - 2)->type <= LLT)) && varvalid(tkn->val, err->envp))
+					cmdtotbl(tkn, row, err->envp);
 			else if ((tkn - 1)->type >= GT && (tkn - 1)->type <= LLT)
 				iototbl(tkn, row);
-			else if (varvalid(tkn->val, envp))
+			else if (varvalid(tkn->val, err->envp))
 				argtotbl(tkn, row);
 		}
 		tkn++;
@@ -85,9 +91,8 @@ t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes, char *envp[])
 }
 
 //takes an array of tokens and outputs the command table
-t_cmdtable	*parser(t_tkn *tkns, char *envp[], t_errdata *err)
+t_cmdtable	*parser(t_tkn *tkns, t_errdata *err)
 {
-	t_cmdtable	*tbl;
 	t_cmdtable	*row;
 	int			pipes;
 	t_tkn		*tkn;
@@ -97,26 +102,20 @@ t_cmdtable	*parser(t_tkn *tkns, char *envp[], t_errdata *err)
 	// printf("id %i Token type: %d, Value: %s\n", 2, get_data()->tokens[2]->type, get_data()->tokens[2]->val);
 	// printf("id %i Token type: %d, Value: %s\n", 0, tkns[0].type, tkns[0].val);
 	// printf("id %i Token type: %d, Value: %s\n", 0, tkns[1].type, tkns[1].val);
-
-	//printf("pointer to tkns: %p,\n", *get_data()->tokens);
-	//exit(0);
 	tkn = tkns;
 	pipes = calcpipes(tkns);
-	tbl = malloc(pipes * sizeof(t_cmdtable));
-	//printf("p: %p,\n", tbl);
-	row = tbl;
-	if (tbl == NULL)
+	err->tbl = malloc(pipes * sizeof(t_cmdtable));
+	row = err->tbl;
+	if (err->tbl == NULL)
 		errfree(err, NULL, NULL, STP);
 	else
-		tbl->pipeid = 0;
-	err->tbl = tbl;
+		err->tbl->pipeid = 0;
 	while (tkn->type != END && err->stop == CNT)
 	{
-		tbl->err = err;
-		rowalloc(row, tkn, pipes, envp);
+		rowalloc(row, tkn, pipes, err);
 		if (err->stop == CNT)
-			tkn = to_row(tkn, row, pipes, envp);
+			tkn = to_row(tkn, row, pipes, err);
 		row++;
 	}
-	return (tbl);
+	return (err->tbl);
 }

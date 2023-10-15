@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 06:53:50 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/14 20:45:01 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ void	set_loc_env(char *envp[])
 	// int	n;
 	// char *undsc;
 	char	*shlvl;
-
+	//add pwd!!!
 	// n = arr_len(envp);
 	if (hasoldpwd(envp) == 1)
 		replace_var("OLDPWD", NULL, envp);

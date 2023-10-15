@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 06:51:48 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 02:27:53 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,10 @@ int	ft_strcmp(const char *s1, const char *s2)
 		return (ft_strncmp(s1, s2, n1));
 }
 
-/* 	else if(ft_strcmp(argv[0], "cd") == 0)
-		cd(argv);
+/* 	
 	else if(ft_strcmp(argv[0], "exit") == 0)
 		changedir(argv); */
-void	exe_builtin(t_cmdtable *row, char *envp[], t_exedata *data, int id)
+void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int id)
 {
 	t_cmdtable *tbl;
 
@@ -73,10 +72,12 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_exedata *data, int id)
 		export(row, envp);
 	else if (ft_strcmp(row->args[0], "unset") == 0)
 		unset(row, envp);
+	else if(ft_strcmp(row->args[0], "cd") == 0)
+		cd(row->args, err);
 	if (id == 0)
 	{
-		free_str(&(row->err->statstr));
-		free_exedt(data);
+		free_str(&(err->statstr));
+		free_exedt(err->edata);
 		//free_rows(row + (row->nrows - 1 - row->pipeid));
 		tbl = row - row->pipeid;
 		free_tbl(&tbl);
@@ -90,25 +91,27 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_exedata *data, int id)
 }
 
 /* redirects stdout to the pipe, creates child process and executes command */
-int	create_child(t_cmdtable *row, char *envp[], t_exedata *data)
+int	create_child(t_cmdtable *row, char *envp[], t_errdata *err)
 {
-	redir_close(data->outfd, 1, row->err);
+	redir_close(err->edata->outfd, 1, err);
 	//printf("arg12 %s\n", row->args[1]);
-	data->id[row->pipeid] = fork();
-	if (data->id[row->pipeid] == -1)
-		err_handler(row->err, NULL, NXT);
-	if (data->id[row->pipeid] == 0)
+	err->edata->id[row->pipeid] = fork();
+	if (err->edata->id[row->pipeid] == -1)
+		err_handler(err, NULL, NXT);
+	if (err->edata->id[row->pipeid] == 0)
 	{
 		// signal(SIGINT, handle_ctrl_c);
 		// signal(SIGQUIT, handle_ctrl_backslash);
 		// signal(SIGTSTP, SIG_IGN);
-		data->status = 0;
+		err->edata->status = 0;
 		if (isbuiltin(row->args[0]))
-			exe_builtin(row, envp, data, 0);
+			exe_builtin(row, envp, err, 0);
 		else if (row->cmd == NULL)
-			cmderr1(row->err, row->args[0], envp, CNT); //!!!
+			{cmderr1(err, row->args[0], envp, CNT); //!!!
+			//free_tbl(&err->tbl);
+			}
 		else if (execve(row->cmd, row->args, envp) == -1)
-			cmderr(row->err, row->cmd, CNT);
+			cmderr(err, row->cmd, CNT);
 	}
-	return (row->err->stop);
+	return (err->stop);
 }

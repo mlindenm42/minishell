@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 06:48:32 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/14 20:59:00 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # include <signal.h> // signal(); SIGINT; SIGQUIT; SIGSTP; SIG_IGN;
 # include <termios.h> // tcgetattr(); tcsetattr(); ECHOCTL; TCSANOW;
 
-t_cmdtable	*parser (t_tkn *tkns, char *envp[], t_errdata *err);
+t_cmdtable	*parser (t_tkn *tkns, t_errdata *err);
 void	expander(t_cmdtable *tbl, t_errdata *err, char *envp[]);
 int	executor (t_cmdtable *tbl, char *envp[], t_errdata *err);
 void	errfree(t_errdata *err, void *struc, void (*del)(void *), int stop);
@@ -60,6 +60,7 @@ void		printenv(char *env[]);
 int			isbuiltin(char *cmd);
 void		export(t_cmdtable *row, char *envp[]);
 void		unset(t_cmdtable *row, char *envp[]);
+int	cd (char *argv[], t_errdata *err);
 void		setstatstr(t_errdata *err);
 void		set_loc_env(char *envp[]);
 int			arr_len(char **arr);

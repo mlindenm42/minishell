@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 16:28:35 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 18:06:12 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	stdintofd(char *dlm, int filefd)
 }
 
 //scanning inputs for here_docs
-static void	inputscan(t_exedata *data, t_cmdtable *row, int i)
+static void	inputscan(t_exedata *data, t_cmdtable *row, t_errdata *err, int i)
 {
 	int	k;
 	int	fd;
@@ -74,7 +74,7 @@ static void	inputscan(t_exedata *data, t_cmdtable *row, int i)
 				if (fd >= 0)
 				{
 					if (stdintofd(row->infiles[k].file, fd) == 1)
-						err_handler(row->err, "here_document", CNT);
+						err_handler(err, "here_document", CNT);
 					close(fd);
 				}
 			}
@@ -83,7 +83,7 @@ static void	inputscan(t_exedata *data, t_cmdtable *row, int i)
 	}
 }
 
-int	heredoc(t_cmdtable *tbl, t_exedata *data)
+int	heredoc(t_cmdtable *tbl, t_exedata *data, t_errdata *err)
 {
 	int	i;
 
@@ -91,14 +91,14 @@ int	heredoc(t_cmdtable *tbl, t_exedata *data)
 	data->path = malloc(sizeof(char *) * tbl->nrows + 1);
 	if (data->path == NULL)
 	{
-		errfree(tbl->err, &data, &free_exedt, CNT);
+		errfree(err, &data, &free_exedt, CNT);
 		return (1);
 	}
 	data->path[tbl->nrows] = NULL;
 	while (i <= tbl->nrows - 1)
 	{
 		data->path[i] = NULL;
-		inputscan(data, &tbl[i], i);
+		inputscan(data, &tbl[i], err, i);
 		i++;
 	}
 	return (0);

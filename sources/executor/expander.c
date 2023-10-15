@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/10 22:58:30 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 23:49:59 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	replace_arg(int last_ind, char **args, t_errdata *err, char *envp[])
 	j = 0;
 	while (j <= last_ind)
 	{
-		
 		expand_word(&args[j], err->statstr, envp);
 		//printf("arg in exp %p\n", args[1]);
 		j++;
@@ -45,7 +44,10 @@ void	expander(t_cmdtable *tbl, t_errdata *err, char *envp[])
 	int		i;
 
 	i = 0;
+	//dprintf(2, "args in exp err %s\n", err->tbl->args[0]);
 	setstatstr(err);
+	//dprintf(2, "args in exp err %s\n", err->tbl->args[0]);
+	//dprintf(2, "args in exp %s\n", tbl->args[0]);
 	while (i <= tbl->nrows - 1)
 	{
 		expand_word(&tbl[i].cmd, err->statstr, envp);

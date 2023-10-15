@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/11 18:21:21 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 17:40:51 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,12 @@ int	calcargs(t_tkn *tkns, char *envp[])
 }
 
 //we allocate arg array, ins and outs for a pipe
-void	rowalloc(t_cmdtable *tbl, t_tkn *tkns, int pipes, char *envp[])
+void	rowalloc(t_cmdtable *tbl, t_tkn *tkns, int pipes, t_errdata *err)
 {
 	tbl->nrows = pipes;
 	tbl->nins = calcins(tkns);
 	tbl->nouts = calcouts(tkns);
-	tbl->nargs = calcargs(tkns, envp);
+	tbl->nargs = calcargs(tkns, err->envp);
 	tbl->infiles = NULL;
 	tbl->outfiles = NULL;
 	tbl->args = malloc((tbl->nargs + 1) * sizeof(char *));
@@ -106,7 +106,7 @@ void	rowalloc(t_cmdtable *tbl, t_tkn *tkns, int pipes, char *envp[])
 		tbl->outfiles = malloc(tbl->nouts * sizeof(t_iof));
 	if (tbl->args == NULL || (tbl->nins != 0 && tbl->infiles == NULL)
 		|| (tbl->nouts != 0 && tbl->outfiles == NULL))
-		errfree(tbl->err, tbl, free_rows, STP);
+		errfree(err, tbl, free_rows, STP);
 	tbl->curr_a = tbl->args;
 	tbl->curr_i = tbl->infiles;
 	tbl->curr_o = tbl->outfiles;

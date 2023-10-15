@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/01 20:44:58 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/14 18:16:58 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 	for each pipe explicit input of that pipe overrides output
 	from the previous pipe
 */
-void	inopen(t_cmdtable *row, int *fd, char *hdpath)
+void	inopen(t_cmdtable *row, int *fd, char *hdpath, t_errdata *err)
 {
 	int		i;
 	char	*errstr;
@@ -39,17 +39,17 @@ void	inopen(t_cmdtable *row, int *fd, char *hdpath)
 			*fd = open("/dev/null", O_RDONLY);
 			if (row->infiles[i].io == LLT)
 				errstr = "here-document";
-			err_handler(row->err, errstr, CNT);
+			err_handler(err, errstr, CNT);
 		}
 		i++;
 	}
 }
 
 //sets error flag for the pipeline and prints out error
-static void	seterr(t_cmdtable *row, int i, int stop)
+static void	seterr(t_cmdtable *row, int i, t_errdata *err, int stop)
 {
 	row->eflag = ERR;
-	err_handler(row->err, row->outfiles[i].file, stop);
+	err_handler(err, row->outfiles[i].file, stop);
 }
 
 /*
@@ -59,7 +59,7 @@ opening fds one by one
 2) check if file exist and delete if not appended mode
 3) open file
  */
-int	outopen(t_cmdtable *row, int *fd, int stop, char *envp[])
+int	outopen(t_cmdtable *row, int *fd, int stop, t_errdata *err)
 {
 	int	i;
 
@@ -67,9 +67,9 @@ int	outopen(t_cmdtable *row, int *fd, int stop, char *envp[])
 	while (i <= row->nouts - 1)
 	{
 		if ((access(row->outfiles[i].file, W_OK) == -1 && errno == EACCES)
-			|| !varvalid(row->outfiles[i].file, envp))
+			|| !varvalid(row->outfiles[i].file, err->envp))
 		{
-			seterr(row, i, stop);
+			seterr(row, i, err, stop);
 			return (1);
 		}
 		if (access(row->outfiles[i].file, F_OK) == 0
@@ -81,25 +81,25 @@ int	outopen(t_cmdtable *row, int *fd, int stop, char *envp[])
 		else
 			*fd = open(row->outfiles[i].file, O_CREAT | O_WRONLY, 0644);
 		if (*fd < 0)
-			seterr(row, i, stop);
+			seterr(row, i, err, stop);
 		i++;
 	}
 	return (0);
 }
 
 //handling output before executing cmd
-void	midouts(t_cmdtable *row, t_exedata *data, char *envp[])
+void	midouts(t_cmdtable *row, t_exedata *data, t_errdata *err)
 {
 	if (row->nouts != 0)
 	{
-		outopen(row, &data->outfd, NXT, envp);
+		outopen(row, &data->outfd, NXT, err);
 		data->pbreak = BR;
-		if (row->err->stop != NXT)
+		if (err->stop != NXT)
 		{
 			if (access(row->cmd, F_OK) == -1 || access(row->cmd, X_OK) == -1)
 				data->pbreak = NB;
 		}
-		if (row->err->stop == NXT)
+		if (err->stop == NXT)
 			close(0);
 	}
 }
@@ -107,15 +107,15 @@ void	midouts(t_cmdtable *row, t_exedata *data, char *envp[])
 /*
 	setting input for next command
  */
-void	setnextin(t_cmdtable *row, t_exedata *data, int i)
+void	setnextin(t_cmdtable *row, t_exedata *data, t_errdata *err, int i)
 {
-	if (row->err->stop == NXT && row->nins == 0)
+	if (err->stop == NXT && row->nins == 0)
 		data->infd = open("/dev/null", O_RDONLY);
 	if (row->nins != 0)
 	{
-		inopen(row, &data->infd, data->path[i]);
+		inopen(row, &data->infd, data->path[i], err);
 		data->pbreak = NB;
 	}
-	if (row->err->stop == NXT)
-		row->err->stop = CNT;
+	if (err->stop == NXT)
+		err->stop = CNT;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 06:45:29 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 02:17:40 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	errfree(t_errdata *err, void *struc, void (*del)(void *), int stop)
 void	setstatstr(t_errdata *err)
 {
 	if (err->statstr != NULL)
-		free(err->statstr);
+		free_str(&err->statstr);
 	err->statstr = ft_itoa(err->stat);
 }
 
@@ -97,7 +97,6 @@ void	cmderr(t_errdata *err, void *cmd, int stop)
 
 void	cmderr1(t_errdata *err, void *cmd, char *envp[], int stop)
 {
-	// char	*txt;
 	char	*tmp;
 	struct stat	stat;
 
