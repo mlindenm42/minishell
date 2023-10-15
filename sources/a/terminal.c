@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 03:04:25 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 03:30:49 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	free_tokens(void)
 			free(get_data()->tokens[i].val);
 		i++;
 	}
-	free(get_data()->tokens);
+	if (get_data()->tokens != NULL)
+		free(get_data()->tokens);
 }
 
 // gets the username(if available) and saves it in data->prompt
