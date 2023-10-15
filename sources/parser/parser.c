@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 02:15:21 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 14:13:51 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,13 @@ static void	argtotbl(t_tkn *tkn, t_cmdtable *row)
 }
 
 //writing args to a row
-static void	cmdtotbl(t_tkn *tkn, t_cmdtable *row, char *envp[])
+//path_flag means that cmd should be freed separately from tokens
+static void	cmdtotbl(t_tkn *tkn, t_cmdtable *row, char *envp[], t_errdata *err)
 {
-	//dprintf(2, "ttt %s\n", tkn->val);
 	row->cmd = getpath(tkn->val, envp);
-	//dprintf(2, "tt %s\n", row->cmd);
 	*row->args = tkn->val;
-	//dprintf(2, "args %s\n", *row->args);
-	//free(row->args[0]);
+	if (ft_strcmp(row->cmd, tkn->val) != 0)
+		err->path_flag = 1;
 	(row->curr_a)++;
 }
 
@@ -75,8 +74,9 @@ t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes,  t_errdata *err)
 			//dprintf(2, "pointer to tkns %p\n", tkn);
 			//dprintf(2, "tt %s\n", tkn0->val);
 			if ((tkn == tkn0 || (tkn - 2 >= tkn0 && (tkn - 2)->type >= GT
-						&& (tkn - 2)->type <= LLT)) && varvalid(tkn->val, err->envp))
-					cmdtotbl(tkn, row, err->envp);
+						&& (tkn - 2)->type <= LLT))
+						&& varvalid(tkn->val, err->envp))
+					cmdtotbl(tkn, row, err->envp, err);
 			else if ((tkn - 1)->type >= GT && (tkn - 1)->type <= LLT)
 				iototbl(tkn, row);
 			else if (varvalid(tkn->val, err->envp))
@@ -91,17 +91,13 @@ t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes,  t_errdata *err)
 }
 
 //takes an array of tokens and outputs the command table
+//in the loop to_row function returns the first token of the next row
 t_cmdtable	*parser(t_tkn *tkns, t_errdata *err)
 {
 	t_cmdtable	*row;
 	int			pipes;
 	t_tkn		*tkn;
 
-		// printf("id %i Token type: %d, Value: %s\n", 0, get_data()->tokens[0]->type, get_data()->tokens[0]->val);
-	// printf("id %i Token type: %d, Value: %s\n", 1, get_data()->tokens[1]->type, get_data()->tokens[1]->val);
-	// printf("id %i Token type: %d, Value: %s\n", 2, get_data()->tokens[2]->type, get_data()->tokens[2]->val);
-	// printf("id %i Token type: %d, Value: %s\n", 0, tkns[0].type, tkns[0].val);
-	// printf("id %i Token type: %d, Value: %s\n", 0, tkns[1].type, tkns[1].val);
 	tkn = tkns;
 	pipes = calcpipes(tkns);
 	err->tbl = malloc(pipes * sizeof(t_cmdtable));

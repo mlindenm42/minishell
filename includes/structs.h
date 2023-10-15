@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 16:59:38 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 20:06:35 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ typedef struct s_errdata
 	t_cmdtable	*tbl;
 	t_exedata	*edata;
 	char **envp;
+	t_tkn **tkn_arr;
+	int	path_flag;
 }	t_errdata;
 
 typedef struct s_data {

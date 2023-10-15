@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 14:10:04 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 20:07:20 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,17 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int id)
 	if (ft_strcmp(row->args[0], "echo") == 0)
 		echo(row->args);
 	else if (ft_strcmp(row->args[0], "pwd") == 0)
-		printf("%s", getenv1("PWD", envp));
+		pwd();
 	else if (ft_strcmp(row->args[0], "env") == 0)
 		printenv(envp);
 	else if (ft_strcmp(row->args[0], "export") == 0)
 		export(row, envp);
 	else if (ft_strcmp(row->args[0], "unset") == 0)
 		unset(row, envp);
-	// else if(ft_strcmp(row->args[0], "cd") == 0)
-	// 	cd(row->args, err);
+	else if(ft_strcmp(row->args[0], "cd") == 0)
+		cd(row->args, err);
 	else if(ft_strcmp(row->args[0], "exit") == 0)
-		exit(0);
-		//free mallocs!!!
+		exitbuiltin(row->args, err);
 	if (id == 0)
 	{
 		free_str(&(err->statstr));

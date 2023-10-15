@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 18:18:37 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 16:19:29 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ static int	data_init(t_cmdtable *tbl, t_exedata *data, int *i, t_errdata *err)
  delete temporary files
  free what was allocated
  */
-//add WNOHANG for last!!!
 void	finish(t_cmdtable *tbl, t_exedata *data, t_errdata *err)
 {
 	int		i;
@@ -127,7 +126,6 @@ int	lastcmd(t_cmdtable *row, t_exedata *data, char *envp[], t_errdata *err)
 		}
 		else
 			create_child(row, envp, err);
-		//dprintf(2, "child row %p\n", row);
 	}
 	return (0);
 }

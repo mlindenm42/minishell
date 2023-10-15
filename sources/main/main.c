@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/14 18:22:49 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 15:43:35 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void	errinit(t_errdata *err, char *envp[])
 	err->edata = NULL;
 	err->tbl = NULL;
 	err->envp = envp;
+	err->path_flag = 0;
+	err->tkn_arr = NULL;
 }
 
 int	main(int argc, char *argv[], char *envp[])

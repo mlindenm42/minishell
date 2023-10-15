@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 03:58:00 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 15:49:17 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	execute(char *envp[], t_errdata *err)
 	t_cmdtable	*tbl;
 	// char *test;
 
+	err->tkn_arr = &get_data()->tokens;
 	tbl = NULL;
 	// lexer(input);
 	// dprintf(2, "token val %s\n", tkns->val);
