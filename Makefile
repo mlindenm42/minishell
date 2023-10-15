@@ -6,7 +6,7 @@
 #    By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 15:23:37 by mrubina           #+#    #+#              #
-#    Updated: 2023/10/15 14:30:31 by mlindenm         ###   ########.fr        #
+#    Updated: 2023/10/15 16:44:00 by mlindenm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME		=	minishell
 
 CC			=	cc
 # CFLAGS		=	-Wall -Werror -Wextra
-# SANITIZE 	= 	-fsanitize=address
-# SANITIZE 	= 	-LLeakSanitizer -llsan -lc++
+# SANITIZE 	= 	-g -fsanitize=address
+SANITIZE 	= 	-LLeakSanitizer -llsan -lc++
 # valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./minishell
 
 SRC_DIR		=	sources
@@ -37,10 +37,10 @@ LIBFT_D		=	libs/libft
 all: $(NAME)
 
 $(NAME): $(LIBFT_A) $(OBJ)
-	cc -o $(NAME) $(SANITIZE) $(OBJ) -lreadline -L$(LIBFT_D) -lft
+	cc -o $(NAME) -g $(SANITIZE) $(OBJ) -lreadline -L$(LIBFT_D) -lft
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/*/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) -g $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)

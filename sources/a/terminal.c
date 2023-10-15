@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 05:11:44 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 16:46:14 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,23 @@ void	free_tokens(void)
 	int	i;
 
 	i = 0;
-	while (get_data()->tokens[i].type != END)
-	{
-		if (get_data()->tokens[i].type != END)
-			free(get_data()->tokens[i].val);
-		i++;
-	}
 	if (get_data()->tokens != NULL)
-		free(get_data()->tokens);
+	{
+		while (get_data()->tokens[i].type != END)
+		{
+			if (get_data()->tokens[i].val != NULL)
+			{
+				free(get_data()->tokens[i].val);
+				get_data()->tokens[i].val = NULL;
+			}
+			i++;
+		}
+		if (get_data()->tokens != NULL)
+		{
+			free(get_data()->tokens);
+			get_data()->tokens = NULL;
+		}
+	}
 }
 
 // gets the username(if available) and saves it in data->prompt

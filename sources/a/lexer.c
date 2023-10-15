@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 14:30:34 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 16:44:09 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,9 @@ void	free_tokenlist(void)
 
 void	create_token(int type, const char *val)
 {
-	// get_data()->tlistend->token = NULL;
-	// get_data()->tlistend->token = *(t_tkn *)malloc(sizeof(t_tkn));
-	// if (get_data()->tlistend->token == NULL)
-	// 	error("token malloc failure");
+	get_data()->tlistend->token.type = NOTOKEN;
 	get_data()->tlistend->token.type = type;
+	get_data()->tlistend->token.val = NULL;
 	if (type != END)
 		get_data()->tlistend->token.val = ft_strdup(val);
 }
@@ -81,12 +79,10 @@ void	create_tokenword(int type)
 	t_stringlist	*actual;
 	int				i;
 
-	// get_data()->tlistend->token = NULL;
-	// get_data()->tlistend->token = *(t_tkn *)malloc(sizeof(t_tkn));
-	// if (get_data()->tlistend->token == NULL)
-	// 	error("token malloc failure");
+	get_data()->tlistend->token.type = NOTOKEN;
 	get_data()->tlistend->token.type = type;
 	actual = get_data()->slist;
+	get_data()->tlistend->token.val = NULL;
 	get_data()->tlistend->token.val = (char *)malloc(get_slist_length() * sizeof(char));
 	i = 0;
 	while (actual->next != NULL)
@@ -100,7 +96,8 @@ void	create_tokenword(int type)
 
 int	is_normal_char(char c)
 {
-	if ((c >= 33 && c <= 39) || (c >= 43 && c <= 58) || c == 61 || (c >= 63 && c <= 90) || (c >= 94 && c <= 122))
+	if ((c >= 33 && c <= 39) || (c >= 43 && c <= 58) || c == 61
+		|| (c >= 63 && c <= 90) || (c >= 94 && c <= 122))
 		return (1);
 	return (0);
 }
@@ -115,6 +112,30 @@ void	add_char_to_str(char **c)
 	(*c)++;
 }
 
+void	free_tokens1(void)
+{
+	int	i;
+
+	i = 0;
+	if (get_data()->tokens != NULL)
+	{
+		while (get_data()->tokens[i].type != END)
+		{
+			if (get_data()->tokens[i].val != NULL)
+			{
+				free(get_data()->tokens[i].val);
+				get_data()->tokens[i].val = NULL;
+			}
+			i++;
+		}
+		if (get_data()->tokens != NULL)
+		{
+			free(get_data()->tokens);
+			get_data()->tokens = NULL;
+		}
+	}
+}
+
 void	get_next_token3(char **input)
 {
 	while (is_normal_char(**input))
@@ -127,7 +148,24 @@ void	get_next_token3(char **input)
 			while (**input != '"')
 			{
 				if (**input == '\0')
-					error("wrong syntax!\n");
+				{
+					free_stringlist();
+					free_tokenlist();
+					free_tokens1();
+					if (get_data()->tokens != NULL)
+					{
+						free(get_data()->tokens);
+						get_data()->tokens = NULL;
+					}
+					write(2, "quotation not closed\n", 21);
+					get_data()->input[0] = '\0';
+					get_data()->tlist = NULL;
+					get_data()->tlist = (t_tokenlist *)malloc(sizeof(t_tokenlist));
+					get_data()->tlistend = get_data()->tlist;
+					get_data()->tlistend->next = NULL;
+					create_token(END, "END5");
+					return ;
+				}
 				add_char_to_str(input);
 			}
 			add_char_to_str(input);
@@ -138,7 +176,19 @@ void	get_next_token3(char **input)
 			while (**input != '\'')
 			{
 				if (**input == '\0')
-					error("wrong syntax!\n");
+				{
+					free_stringlist();
+					free_tokenlist();
+					free_tokens1();
+					write(2, "quotation not closed\n", 21);
+					get_data()->input[0] = '\0';
+					get_data()->tlist = NULL;
+					get_data()->tlist = (t_tokenlist *)malloc(sizeof(t_tokenlist));
+					get_data()->tlistend = get_data()->tlist;
+					get_data()->tlistend->next = NULL;
+					create_token(END, "END5");
+					return ;
+				}
 				add_char_to_str(input);
 			}
 			add_char_to_str(input);
@@ -223,6 +273,7 @@ void	tokenlist_to_array(void)
 		counter++;
 		actual = actual->next;
 	}
+	get_data()->tokens = NULL;
 	get_data()->tokens = (t_tkn *) malloc(counter * sizeof(t_tkn));
 	i = 0;
 	actual = get_data()->tlist;
