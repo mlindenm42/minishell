@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 23:49:49 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 01:03:28 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ void	handle_ctrl_c(int signal)
 void	handle_ctrl_d(t_errdata *err)
 {
 	if (err->statstr != NULL)
-		free(err->statstr);
+	 	free(err->statstr);
+	// if (err->edata != NULL && err->edata->id != NULL)
+	// 	free(err->edata->id);
+/* 	if (err->tbl != NULL)
+	{free_rows(&(err->tbl[err->tbl->nrows - 1]));
+	free(err->tbl);} */
 	printf("exit\n");
 	exit(EXIT_FAILURE);
 }
@@ -40,24 +45,46 @@ void	handle_ctrl_backslash(int signal)
 		rl_redisplay();
 }
 
-// This function configures the terminal settings to hide the control characters
-// and sets the prompt for a program called "MINISHELL."
-static void	setup_terminal(void)
+void	free_tokens(void)
+{
+	int	i;
+
+	i = 0;
+	while (get_data()->tokens[i].type != END)
+	{
+		if (get_data()->tokens[i].type != END)
+			free(get_data()->tokens[i].val);
+		i++;
+	}
+	if (get_data()->tokens != NULL)
+		free(get_data()->tokens);
+}
+
+// gets the username(if available) and saves it in data->prompt
+static void	prompt(void)
+{
+	// if (getenv("USER") != NULL)
+	// {
+	// 	get_data()->prompt = ft_strjoin(getenv("USER"), " % ");
+	// /* 	get_data()->prompt = ft_strdup(getenv("USER"));
+	// 	ft_strlcat(get_data()->prompt, " % ",
+	// 		ft_strlen(get_data()->prompt) + 4); */
+	// }
+	// else
+		get_data()->prompt = "USER % ";
+}
+
+// modifies terminal settings to disable echoing of control characters in the
+// terminal's input. prints terminal with the prompt and handles the signals
+void	terminal(char *envp[], t_errdata *err)
 {
 	struct termios	settings;
+	// char *input;
 
 	tcgetattr(STDIN_FILENO, &settings);
 	settings.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &settings);
-	get_data()->prompt = "MINISHELL : ";
-}
-
-// This function sets up a terminal, processes user input in a loop, and handles
-// signals, including Ctrl+C and Ctrl+\, while maintaining a history of input
-// and executing commands.
-void	terminal(char *envp[], t_errdata *err)
-{
-	setup_terminal();
+	prompt();
 	while (1)
 	{
 		signal(SIGINT, handle_ctrl_c);
@@ -77,7 +104,7 @@ void	terminal(char *envp[], t_errdata *err)
 		execute(envp, err);
 		free(get_data()->input);
 		get_data()->input = NULL;
-		free_tokens();
+		// free_tokens();
 	}
 	rl_clear_history();
 }

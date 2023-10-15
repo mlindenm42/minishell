@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 17:40:51 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 21:27:54 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	rowalloc(t_cmdtable *tbl, t_tkn *tkns, int pipes, t_errdata *err)
 	tbl->nargs = calcargs(tkns, err->envp);
 	tbl->infiles = NULL;
 	tbl->outfiles = NULL;
+	tbl->path_flag = 0;
 	tbl->args = malloc((tbl->nargs + 1) * sizeof(char *));
 	if (tbl->nins != 0)
 		tbl->infiles = malloc(tbl->nins * sizeof(t_iof));
