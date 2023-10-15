@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 01:57:37 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 02:27:40 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ void	free_tokenlist(void)
 void	create_token(int type, const char *val)
 {
 	// get_data()->tlistend->token = NULL;
-	get_data()->tlistend->token = *(t_tkn *)malloc(sizeof(t_tkn));
+	// get_data()->tlistend->token = *(t_tkn *)malloc(sizeof(t_tkn));
 	// if (get_data()->tlistend->token == NULL)
 	// 	error("token malloc failure");
 	get_data()->tlistend->token.type = type;
-	get_data()->tlistend->token.val = ft_strdup(val);
+	if (type != END)
+		get_data()->tlistend->token.val = ft_strdup(val);
 }
 
 int	get_slist_length(void)
@@ -81,7 +82,7 @@ void	create_tokenword(int type)
 	int				i;
 
 	// get_data()->tlistend->token = NULL;
-	get_data()->tlistend->token = *(t_tkn *)malloc(sizeof(t_tkn));
+	// get_data()->tlistend->token = *(t_tkn *)malloc(sizeof(t_tkn));
 	// if (get_data()->tlistend->token == NULL)
 	// 	error("token malloc failure");
 	get_data()->tlistend->token.type = type;
@@ -264,9 +265,10 @@ void	lexer(char *input)
 		get_data()->tlistend->next = (t_tokenlist *)malloc(sizeof(t_tokenlist));
 		get_data()->tlistend = get_data()->tlistend->next;
 		get_data()->tlistend->next = NULL;
-		create_token(END, "END4");
+		create_token(END, "4");
 	}
 	tokenlist_to_array();
+	free_stringlist();
 	free_tokenlist();
 	print_tokens();
 }
