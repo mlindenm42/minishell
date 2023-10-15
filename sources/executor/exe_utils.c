@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 20:00:39 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 00:26:51 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int ch_flag)
 	else if (ft_strcmp(row->args[0], "unset") == 0)
 		unset(row, envp);
 	else if(ft_strcmp(row->args[0], "cd") == 0)
-		cd(row->args, err);
+		cd(row->args);
 	else if(ft_strcmp(row->args[0], "exit") == 0)
 		exitbuiltin(row->args, err);
 	if (ch_flag == 0)
@@ -99,8 +99,9 @@ int	create_child(t_cmdtable *row, char *envp[], t_errdata *err)
 	err->edata->id[row->pipeid] = fork();
 	if (err->edata->id[row->pipeid] == -1)
 		err_handler(err, NULL, NXT);
-	if (err->edata->id[row->pipeid] == 0)
+	else if (err->edata->id[row->pipeid] == 0)
 	{
+		close(err->edata->infd);
 		signal(SIGINT, handle_ctrl_c);
 		signal(SIGQUIT, handle_ctrl_backslash);
 		signal(SIGTSTP, SIG_IGN);
@@ -112,5 +113,7 @@ int	create_child(t_cmdtable *row, char *envp[], t_errdata *err)
 		else if (execve(row->cmd, row->args, envp) == -1)
 			cmderr(err, row->cmd, CNT);
 	}
+	else
+		close(err->edata->outfd);
 	return (err->stop);
 }

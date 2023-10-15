@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 20:03:20 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 22:43:50 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	execute(char *envp[], t_errdata *err)
 			executor(tbl, envp, err);
 		//printf("p: %p,\n", tbl);
 	}
-	// if (tbl != NULL)
-	// 	freeall(err);
+	 //if (tbl != NULL)
+	freecycle(err);
 //	{
 		//free_tbl(err);
 		//dprintf(2, "in f %p\n", tbl->infiles);

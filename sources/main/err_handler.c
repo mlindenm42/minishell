@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 20:01:02 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 20:57:43 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	cmderr(t_errdata *err, void *cmd, int stop)
 	}
 	else if (ft_strchr(cmd, '/') == NULL)
 	{
+		//dprintf(2, " %i\n", err->edata->id[0]);
 		custom_err(tmp, "command not found");
 	}
 	else

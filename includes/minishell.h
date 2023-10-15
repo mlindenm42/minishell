@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 19:24:05 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 21:38:12 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	errfree(t_errdata *err, void *struc, void (*del)(void *), int stop);
 void	err_handler(t_errdata *err, char *str, int stop);
 //void	err_handler(t_errdata *err, void *struc, void (*f)(void *), int st);
 void		print_table(t_cmdtable *tbl, int size); //tester function
-void	free_row(void *row, int path_flag);
+void	free_row(void *row);
 void	free_tokens(void);
 void		free_rows(void *row);
 void	free_tbl(t_errdata *err);
@@ -60,7 +60,7 @@ void		printenv(char *env[]);
 int			isbuiltin(char *cmd);
 void		export(t_cmdtable *row, char *envp[]);
 void		unset(t_cmdtable *row, char *envp[]);
-int	cd (char *argv[], t_errdata *err);
+int	cd (char *argv[]);
 void	pwd(void);
 void	exitbuiltin(char *argv[], t_errdata *err);
 void		setstatstr(t_errdata *err);
@@ -76,6 +76,7 @@ void	movetoend(char *start, char *envp[]);
 void envappend(char *str, char *envp[]);
 int 	varlen(char *var);
 void freeall(t_errdata *err);
+void freecycle(t_errdata *err);
 
 
 // check.c

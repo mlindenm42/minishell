@@ -6,15 +6,15 @@
 #    By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 15:23:37 by mrubina           #+#    #+#              #
-#    Updated: 2023/10/15 19:44:26 by mrubina          ###   ########.fr        #
+#    Updated: 2023/10/15 22:56:14 by mrubina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
 CC			=	cc
-# CFLAGS		=	-Wall -Werror -Wextra
-# SANITIZE 	= 	-fsanitize=address
+CFLAGS		=	-Wall -Werror -Wextra
+#SANITIZE 	= 	-fsanitize=address
 #SANITIZE 	= 	-LLeakSanitizer -llsan -lc++
 # valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./minishell
 
@@ -40,7 +40,7 @@ $(NAME): $(LIBFT_A) $(OBJ)
 	cc -o $(NAME) $(SANITIZE) $(OBJ) -lreadline -L$(LIBFT_D) -lft
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/*/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c -g $< -o $@
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
