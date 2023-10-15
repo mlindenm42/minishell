@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 15:49:17 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 20:03:20 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	execute(char *envp[], t_errdata *err)
 	t_cmdtable	*tbl;
 	// char *test;
 
-	err->tkn_arr = &get_data()->tokens;
 	tbl = NULL;
 	// lexer(input);
 	// dprintf(2, "token val %s\n", tkns->val);
@@ -32,12 +31,12 @@ void	execute(char *envp[], t_errdata *err)
 			executor(tbl, envp, err);
 		//printf("p: %p,\n", tbl);
 	}
-	if (tbl != NULL)
-	{
-		free_tbl(&tbl);
+	// if (tbl != NULL)
+	// 	freeall(err);
+//	{
+		//free_tbl(err);
 		//dprintf(2, "in f %p\n", tbl->infiles);
 		//free_rows(&tbl[tbl->nrows - 1]);
 		//free(tbl);
-	}
-	err->tbl = NULL;
+	//}
 }

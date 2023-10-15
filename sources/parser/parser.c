@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 14:13:51 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 17:23:06 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	cmdtotbl(t_tkn *tkn, t_cmdtable *row, char *envp[], t_errdata *err)
 {
 	row->cmd = getpath(tkn->val, envp);
 	*row->args = tkn->val;
-	if (ft_strcmp(row->cmd, tkn->val) != 0)
+	if (row->cmd != tkn->val)
 		err->path_flag = 1;
 	(row->curr_a)++;
 }

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 17:03:51 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 20:01:02 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	cmderr(t_errdata *err, void *cmd, int stop)
 	else
 		perror(tmp);
 	free(tmp);
+	freeall(err);
 	exit(err->stat);
 }
 
@@ -114,5 +115,6 @@ void	cmderr1(t_errdata *err, void *cmd, char *envp[], int stop)
 	else
 		custom_err(tmp, "command not found");
 	free(tmp);
+	freeall(err);
 	exit(err->stat);
 }

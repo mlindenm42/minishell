@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 17:03:10 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 18:14:52 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,19 @@ void	exitbuiltin(char *argv[], t_errdata *err)
 	int	stat;
 	char *tmp;
 
+	stat = 0;
 	if (argv[1] != NULL && argv[2] == NULL)
 	{
 		stat = ft_atoi(argv[1]);
-		//free
 		if (stat == 0)
 		{
 			tmp = ft_strjoin(argv[1], ": numeric argument required");
 			custom_err("bash: exit", tmp);
+			stat = 255;
 			free(tmp);
-			exit(255);
 		}
-		else
-			exit(stat);
 	}
-	else
-	{
-		//free
-		exit(0);
-	}
+	freeall(err);
+	printf("exit\n");
+	exit(stat);
 }

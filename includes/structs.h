@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 15:42:34 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 17:20:06 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ typedef struct s_errdata
 	t_cmdtable	*tbl;
 	t_exedata	*edata;
 	char **envp;
-	t_tkn **tkn_arr;
 	int	path_flag;
 }	t_errdata;
 
