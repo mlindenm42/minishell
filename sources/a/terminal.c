@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/14 18:23:21 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 03:33:46 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,15 @@ void	handle_ctrl_c(int signal)
 // handles ctrl-D. Exits the shell.
 void	handle_ctrl_d(t_errdata *err)
 {
-	free(get_data()->prompt);
 	if (err->statstr != NULL)
 	 	free(err->statstr);
 	// if (err->edata != NULL && err->edata->id != NULL)
 	// 	free(err->edata->id);
-	if (get_data()->tokens != NULL)
-		free(get_data()->tokens);
 /* 	if (err->tbl != NULL)
 	{free_rows(&(err->tbl[err->tbl->nrows - 1]));
 	free(err->tbl);} */
 	printf("exit\n");
+	exit(EXIT_FAILURE);
 }
 
 // handles ctrl-\. Does nothing.
@@ -47,17 +45,32 @@ void	handle_ctrl_backslash(int signal)
 		rl_redisplay();
 }
 
+void	free_tokens(void)
+{
+	int	i;
+
+	i = 0;
+	while (get_data()->tokens[i].type != END)
+	{
+		if (get_data()->tokens[i].type != END)
+			free(get_data()->tokens[i].val);
+		i++;
+	}
+	if (get_data()->tokens != NULL)
+		free(get_data()->tokens);
+}
+
 // gets the username(if available) and saves it in data->prompt
 static void	prompt(void)
 {
-	if (getenv("USER") != NULL)
-	{
-		get_data()->prompt = ft_strjoin(getenv("USER"), " % ");
-	/* 	get_data()->prompt = ft_strdup(getenv("USER"));
-		ft_strlcat(get_data()->prompt, " % ",
-			ft_strlen(get_data()->prompt) + 4); */
-	}
-	else
+	// if (getenv("USER") != NULL)
+	// {
+	// 	get_data()->prompt = ft_strjoin(getenv("USER"), " % ");
+	// /* 	get_data()->prompt = ft_strdup(getenv("USER"));
+	// 	ft_strlcat(get_data()->prompt, " % ",
+	// 		ft_strlen(get_data()->prompt) + 4); */
+	// }
+	// else
 		get_data()->prompt = "USER % ";
 }
 
@@ -87,8 +100,10 @@ void	terminal(char *envp[], t_errdata *err)
 			add_history(get_data()->input);
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
+		// lexer(get_data()->input);
 		execute(get_data()->input, envp, err);
 		free(get_data()->input);
+		free_tokens();
 	}
 	rl_clear_history();
 }

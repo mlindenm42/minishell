@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/13 13:13:32 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 02:53:09 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,19 @@ void	free_ptr(void *p)
 	p = NULL;
 }
 
-void	free_tkns(t_tkn *tkns)
-{
-	t_tkn *token;
+// void	free_tkns(t_tkn *tkns)
+// {
+// 	t_tkn *token;
 
-	token = tkns;
-	while (token->type != END)
-	{
-		if (token->type == WORD)
-			free_ptr(token->val);
-		token++;
-	}
-	free (tkns);
-}
+// 	token = tkns;
+// 	while (token->type != END)
+// 	{
+// 		if (token->type == WORD)
+// 			free_ptr(token->val);
+// 		token++;
+// 	}
+// 	free (tkns);
+// }
 
 void	free_iof(t_iof *arr, int n)
 {
