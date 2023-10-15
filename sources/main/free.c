@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 02:53:09 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 19:55:28 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 //frees a row of a cmd table pointed by the argument
-void	free_row(void *row)
+void	free_row(void *row, int path_flag)
 {
 	if (row != NULL)
 	{
@@ -24,7 +24,7 @@ void	free_row(void *row)
 			free(((t_cmdtable *)row)->infiles);
 		if (((t_cmdtable *)row)->outfiles != NULL)
 			free(((t_cmdtable *)row)->outfiles);
-		if (((t_cmdtable *)row)->cmd != NULL)
+		if (((t_cmdtable *)row)->cmd != NULL && path_flag == 1)
 			free_str(&((t_cmdtable *)row)->cmd);
 		((t_cmdtable *)row)->args = NULL;
 		((t_cmdtable *)row)->infiles = NULL;
@@ -37,41 +37,84 @@ void	free_rows(void *row)
 {
 	while (((t_cmdtable *)row)->pipeid > 0)
 	{
-		free_row(row);
+		free_row(row, 0);
 		row = ((t_cmdtable *)row - 1);
 	}
-	free_row(row);
+	free_row(row, 0);
 }
 
-void	free_tbl(t_cmdtable **tbl)
+
+void	free_tbl(t_errdata *err)
 {
 	t_cmdtable *row;
 
-	row = *tbl;
+	row = err->tbl;
 	while (row->pipeid < row->nrows - 1)
 	{
 		if (row->nins != 0)
 			free_iof(row->infiles, row->nins);
 		if (row->nouts != 0)
 			free_iof(row->outfiles, row->nouts);
-		free_row(row);
+		free_row(row, err->path_flag);
 		row++;
 	}
 	if (row->nins != 0)
 		free_iof(row->infiles, row->nins);
 	if (row->nouts != 0)
 		free_iof(row->outfiles, row->nouts);
-	free_row(*tbl);
-	free(*tbl);
-	*tbl = NULL;
+	free_row(err->tbl, err->path_flag);
+	free(err->tbl);
+	err->tbl = NULL;
 }
+
+void	free_patharr(char **arr)
+{
+	char	**str;
+
+	if (arr != NULL)
+	{
+		str = arr;
+		while (str != NULL && *str != NULL)
+		{
+			dprintf(2, "arr in %s\n", *str);
+			if (*str != NULL)
+				free(*str);
+			else
+				break;
+			dprintf(2, "arr in fghfh %s\n", *str);
+			*str = NULL;
+			str++;
+		}
+		//dprintf(2, "arr inl %p\n", arr);
+		//exit(0);
+		free(arr);
+	}
+}
+
+
 
 void	free_exedt(void *data)
 {
 	if (((t_exedata *)data)->id != NULL)
 		free(((t_exedata *)data)->id);
 	((t_exedata *)data)->id = NULL;
-	free_arr(((t_exedata *)data)->path);
+	dprintf(2, "arr %p\n", ((t_exedata *)data)->path);
+	if (((t_exedata *)data)->path != NULL)
+		free_patharr(((t_exedata *)data)->path);
+	((t_exedata *)data)->path = NULL;
+}
+
+void	free_exedt1(t_exedata *data)
+{
+	//if (data->id != NULL)
+		dprintf(2, "test %p\n", data);
+	// 	free(data->id);
+	//data->id = NULL;
+	//if (data->path != NULL)
+		//dprintf(2, "test\n");
+		//free_exedt
+		//free_arr(data->path);
+	//data->path = NULL;
 }
 
 void	free_ptr(void *p)
@@ -81,32 +124,23 @@ void	free_ptr(void *p)
 	p = NULL;
 }
 
-// void	free_tkns(t_tkn *tkns)
-// {
-// 	t_tkn *token;
-
-// 	token = tkns;
-// 	while (token->type != END)
-// 	{
-// 		if (token->type == WORD)
-// 			free_ptr(token->val);
-// 		token++;
-// 	}
-// 	free (tkns);
-// }
-
 void	free_iof(t_iof *arr, int n)
 {
 	int i;
 
-	//dprintf(2, "in f %p\n", arr);
-
 	i = 0;
 	while (i < n)
 	{
-		free_str(&arr->file);
 		free(arr->file);
 		arr++;
 		i++;
 	}
+}
+
+void freeall(t_errdata *err)
+{
+	free_exedt(err->edata);
+	free_str(&(err->statstr));
+	free_tokens();
+	free_tbl(err);
 }

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 16:19:29 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 19:25:30 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 //ft_putnbr_fd(flag, 2);
 //ft_putchar_fd('\n', 2);
 //dprintf(2, "my id%i\n", data.id[i]);
+//dprintf(2, " %p\n", p);
 
 //takes command table and executes commmand
 /* int		pipe;
@@ -106,7 +107,7 @@ void	finish(t_cmdtable *tbl, t_exedata *data, t_errdata *err)
 			unlink(data->path[i]);
 		i++;
 	}
-	free_exedt(data);
+	//free_exedt(data);
 }
 
 //set output for the last command
@@ -154,6 +155,5 @@ int	executor(t_cmdtable *tbl, char *envp[], t_errdata *err)
 	}
 	lastcmd(&tbl[i], &data, envp, err);
 	finish(tbl, &data, err);
-	err->edata = NULL;
 	return (0);
 }

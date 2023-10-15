@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 16:36:01 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 19:24:05 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ void	errfree(t_errdata *err, void *struc, void (*del)(void *), int stop);
 void	err_handler(t_errdata *err, char *str, int stop);
 //void	err_handler(t_errdata *err, void *struc, void (*f)(void *), int st);
 void		print_table(t_cmdtable *tbl, int size); //tester function
-void		free_row(void *row);
-void	free_tkns(t_tkn *tkns);
+void	free_row(void *row, int path_flag);
+void	free_tokens(void);
 void		free_rows(void *row);
-void	free_tbl(t_cmdtable **tbl);
+void	free_tbl(t_errdata *err);
 void	free_iof(t_iof *arr, int n);
 void		free_exedt(void *data);
 void		free_ptr(void *p);
@@ -75,6 +75,7 @@ char *getenvmem_end(char *envp[]);
 void	movetoend(char *start, char *envp[]);
 void envappend(char *str, char *envp[]);
 int 	varlen(char *var);
+void freeall(t_errdata *err);
 
 
 // check.c

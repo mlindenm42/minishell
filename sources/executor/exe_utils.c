@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 20:07:20 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 20:10:18 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,8 @@ int	ft_strcmp(const char *s1, const char *s2)
 }
 
 /*
-	else if(ft_strcmp(argv[0], "exit") == 0)
-		changedir(argv); */
-void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int id)
+ */
+void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int ch_flag)
 {
 	t_cmdtable *tbl;
 
@@ -76,13 +75,13 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int id)
 		cd(row->args, err);
 	else if(ft_strcmp(row->args[0], "exit") == 0)
 		exitbuiltin(row->args, err);
-	if (id == 0)
+	if (ch_flag == 0)
 	{
-		free_str(&(err->statstr));
-		free_exedt(err->edata);
+		//!!!
+		//free_exedt(err->edata);//!!!
 		//free_rows(row + (row->nrows - 1 - row->pipeid));
 		tbl = row - row->pipeid;
-		free_tbl(&tbl);
+		freeall(err);
 		// free(get_data()->prompt);
 		// free(get_data()->input);
 		// free(get_data()->tokens);
@@ -109,9 +108,7 @@ int	create_child(t_cmdtable *row, char *envp[], t_errdata *err)
 		if (isbuiltin(row->args[0]))
 			exe_builtin(row, envp, err, 0);
 		else if (row->cmd == NULL)
-			{cmderr1(err, row->args[0], envp, CNT); //!!!
-			//free_tbl(&err->tbl);
-			}
+			cmderr1(err, row->args[0], envp, CNT); //!!!
 		else if (execve(row->cmd, row->args, envp) == -1)
 			cmderr(err, row->cmd, CNT);
 	}
