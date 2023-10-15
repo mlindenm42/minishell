@@ -6,7 +6,7 @@
 #    By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 15:23:37 by mrubina           #+#    #+#              #
-#    Updated: 2023/10/15 21:05:26 by mlindenm         ###   ########.fr        #
+#    Updated: 2023/10/15 23:48:28 by mlindenm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC_M		=	main.c err_handler.c free.c array_utils.c execute.c
 SRC_P		= 	parser.c parser_utils.c testfunc.c getpath.c var_check.c
 SRC_E		= 	executor.c exe_utils.c heredoc.c hdutils.c ins_outs.c expander.c vars.c
 SRC_B		=	echo.c cd.c builtin_utils.c export.c env.c unset.c export_sort.c
-SRC_T		=	error.c init.c lexer.c terminal.c utils.c utils_ft_split.c
+SRC_T		=	lexer.c terminal.c token.c
 
 SRC 		= 	$(SRC_P) $(SRC_M) $(SRC_E) $(SRC_B) $(SRC_T)
 

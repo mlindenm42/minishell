@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 19:24:05 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 23:48:01 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,6 @@ int 	varlen(char *var);
 void freeall(t_errdata *err);
 
 
-// check.c
-// void	check_arg(int argc, char *argv[]);
-
-// init.c
-
-// error.c
-void	error(char *reason);
-// void	free_all(void);
-
 // lexer.c
 void	lexer(char *input);
 
@@ -99,12 +90,7 @@ void	handle_ctrl_c(int signal);
 void	handle_ctrl_d(t_errdata *err);
 void	handle_ctrl_backslash(int signal);
 
-// utils.c
-size_t	ft_strlen(const char *s);
-size_t	ft_strlcat(char *dst, const char *src, size_t n);
-char	*ft_strtrim(char const *s1, char const *set);
-
-//utils_ft_split.c
-char	**ft_split(char const *s, char c);
+// token.c
+void	free_tokens(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 21:00:05 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 23:49:49 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,7 @@ void	handle_ctrl_c(int signal)
 void	handle_ctrl_d(t_errdata *err)
 {
 	if (err->statstr != NULL)
-	 	free(err->statstr);
-	// if (err->edata != NULL && err->edata->id != NULL)
-	// 	free(err->edata->id);
-/* 	if (err->tbl != NULL)
-	{free_rows(&(err->tbl[err->tbl->nrows - 1]));
-	free(err->tbl);} */
+		free(err->statstr);
 	printf("exit\n");
 	exit(EXIT_FAILURE);
 }
@@ -45,55 +40,24 @@ void	handle_ctrl_backslash(int signal)
 		rl_redisplay();
 }
 
-void	free_tokens(void)
-{
-	int	i;
-
-	i = 0;
-	if (get_data()->tokens != NULL)
-	{
-		while (i < get_data()->tokenslength)
-		{
-			if (get_data()->tokens[i].val != NULL)
-			{
-				free(get_data()->tokens[i].val);
-				get_data()->tokens[i].val = NULL;
-			}
-			i++;
-		}
-		if (get_data()->tokens != NULL)
-		{
-			free(get_data()->tokens);
-			get_data()->tokens = NULL;
-		}
-	}
-}
-
-// gets the username(if available) and saves it in data->prompt
-static void	prompt(void)
-{
-	// if (getenv("USER") != NULL)
-	// {
-	// 	get_data()->prompt = ft_strjoin(getenv("USER"), " % ");
-	// /* 	get_data()->prompt = ft_strdup(getenv("USER"));
-	// 	ft_strlcat(get_data()->prompt, " % ",
-	// 		ft_strlen(get_data()->prompt) + 4); */
-	// }
-	// else
-		get_data()->prompt = "USER % ";
-}
-
-// modifies terminal settings to disable echoing of control characters in the
-// terminal's input. prints terminal with the prompt and handles the signals
-void	terminal(char *envp[], t_errdata *err)
+// This function configures the terminal settings to hide the control characters
+// and sets the prompt for a program called "MINISHELL."
+static void	setup_terminal(void)
 {
 	struct termios	settings;
-	// char *input;
 
 	tcgetattr(STDIN_FILENO, &settings);
 	settings.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &settings);
-	prompt();
+	get_data()->prompt = "MINISHELL : ";
+}
+
+// This function sets up a terminal, processes user input in a loop, and handles
+// signals, including Ctrl+C and Ctrl+\, while maintaining a history of input
+// and executing commands.
+void	terminal(char *envp[], t_errdata *err)
+{
+	setup_terminal();
 	while (1)
 	{
 		signal(SIGINT, handle_ctrl_c);
