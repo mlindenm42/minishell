@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 01:25:34 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 01:38:41 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,6 @@ void	handle_ctrl_backslash(int signal)
 {
 	if (signal == SIGQUIT)
 		rl_redisplay();
-}
-
-void	free_tokens(void)
-{
-	int	i;
-
-	i = 0;
-	while (get_data()->tokens[i].type != END)
-	{
-		if (get_data()->tokens[i].type != END)
-			free(get_data()->tokens[i].val);
-		i++;
-	}
-	if (get_data()->tokens != NULL)
-		free(get_data()->tokens);
 }
 
 // gets the username(if available) and saves it in data->prompt

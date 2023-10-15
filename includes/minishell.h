@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 01:28:50 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 01:30:24 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,19 +77,6 @@ void envappend(char *str, char *envp[]);
 int 	varlen(char *var);
 void freeall(t_errdata *err);
 void freecycle(t_errdata *err);
-
-
-// check.c
-// void	check_arg(int argc, char *argv[]);
-
-// init.c
-
-// error.c
-void	error(char *reason);
-// void	free_all(void);
-
-// lexer.c
-void	lexer(char *input);
 
 // main.c
 t_data	*get_data(void);
