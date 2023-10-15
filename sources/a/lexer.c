@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 02:27:40 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 02:46:02 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,11 +246,10 @@ void	print_tokens(void)
 
 void	lexer(char *input)
 {
-	t_tokenlist	*copy;
-
 	get_data()->tlist = NULL;
 	get_data()->tlist = (t_tokenlist *)malloc(sizeof(t_tokenlist));
 	get_data()->tlistend = get_data()->tlist;
+	get_data()->tlistend->token.type = NOTOKEN;
 	get_data()->tlistend->next = NULL;
 	get_next_token(&input);
 	while (*input != '\0')
@@ -260,12 +259,12 @@ void	lexer(char *input)
 		get_data()->tlistend->next = NULL;
 		get_next_token(&input);
 	}
-	if (get_data()->tlistend->token.type != END)
+	if (get_data()->tlistend->token.type != END || get_data()->tlistend->token.type != NOTOKEN)
 	{
 		get_data()->tlistend->next = (t_tokenlist *)malloc(sizeof(t_tokenlist));
 		get_data()->tlistend = get_data()->tlistend->next;
 		get_data()->tlistend->next = NULL;
-		create_token(END, "4");
+		create_token(END, "END4");
 	}
 	tokenlist_to_array();
 	free_stringlist();
