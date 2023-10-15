@@ -6,7 +6,7 @@
 #    By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 15:23:37 by mrubina           #+#    #+#              #
-#    Updated: 2023/10/15 20:10:54 by mlindenm         ###   ########.fr        #
+#    Updated: 2023/10/15 21:05:26 by mlindenm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME		=	minishell
 
 CC			=	cc
 # CFLAGS		=	-Wall -Werror -Wextra
-# SANITIZE 	= 	-g -fsanitize=address
-SANITIZE 	= 	-LLeakSanitizer -llsan -lc++
+SANITIZE 	= 	-g -fsanitize=address
+# SANITIZE 	= 	-LLeakSanitizer -llsan -lc++
 # valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./minishell
 
 SRC_DIR		=	sources
