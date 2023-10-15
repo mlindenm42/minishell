@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 16:46:14 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 18:55:22 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	free_tokens(void)
 	i = 0;
 	if (get_data()->tokens != NULL)
 	{
-		while (get_data()->tokens[i].type != END)
+		while (i < get_data()->tokenslength)
 		{
 			if (get_data()->tokens[i].val != NULL)
 			{
@@ -110,10 +110,10 @@ void	terminal(char *envp[], t_errdata *err)
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 		lexer(get_data()->input);
-		execute(envp, err);
+		// execute(envp, err);
 		free(get_data()->input);
 		get_data()->input = NULL;
-		// free_tokens();
+		free_tokens();
 	}
 	rl_clear_history();
 }

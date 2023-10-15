@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 03:33:37 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 16:59:38 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_data {
 	char			*prompt;
 	char			*input;
 	t_tkn			*tokens;
+	int				tokenslength;
 	t_stringlist	*slist;
 	t_stringlist	*slistend;
 	t_tokenlist		*tlist;

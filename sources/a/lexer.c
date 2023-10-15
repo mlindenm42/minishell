@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 16:44:09 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 19:05:15 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-void	free_stringlist()
+void	free_stringlist(void)
 {
 	t_stringlist	*actual;
 	t_stringlist	*copy;
@@ -83,7 +83,8 @@ void	create_tokenword(int type)
 	get_data()->tlistend->token.type = type;
 	actual = get_data()->slist;
 	get_data()->tlistend->token.val = NULL;
-	get_data()->tlistend->token.val = (char *)malloc(get_slist_length() * sizeof(char));
+	get_data()->tlistend->token.val
+	= (char *)malloc(get_slist_length() * sizeof(char));
 	i = 0;
 	while (actual->next != NULL)
 	{
@@ -119,7 +120,7 @@ void	free_tokens1(void)
 	i = 0;
 	if (get_data()->tokens != NULL)
 	{
-		while (get_data()->tokens[i].type != END)
+		while (i < get_data()->tokenslength)
 		{
 			if (get_data()->tokens[i].val != NULL)
 			{
@@ -136,6 +137,60 @@ void	free_tokens1(void)
 	}
 }
 
+int	dquotationcheck(char **input)
+{
+	while (**input != '"')
+	{
+		if (**input == '\0')
+		{
+			free_stringlist();
+			free_tokenlist();
+			free_tokens1();
+			if (get_data()->tokens != NULL)
+			{
+				free(get_data()->tokens);
+				get_data()->tokens = NULL;
+			}
+			write(2, "quotation not closed\n", 21);
+			get_data()->input[0] = '\0';
+			get_data()->tlist = NULL;
+			get_data()->tlist = (t_tokenlist *)malloc(sizeof(t_tokenlist));
+			get_data()->tlistend = get_data()->tlist;
+			get_data()->tlistend->next = NULL;
+			return (1);
+		}
+		add_char_to_str(input);
+	}
+	return (0);
+}
+
+int	quotationcheck(char **input)
+{
+	while (**input != '\'')
+	{
+		if (**input == '\0')
+		{
+			free_stringlist();
+			free_tokenlist();
+			free_tokens1();
+			if (get_data()->tokens != NULL)
+			{
+				free(get_data()->tokens);
+				get_data()->tokens = NULL;
+			}
+			write(2, "quotation not closed\n", 21);
+			get_data()->input[0] = '\0';
+			get_data()->tlist = NULL;
+			get_data()->tlist = (t_tokenlist *)malloc(sizeof(t_tokenlist));
+			get_data()->tlistend = get_data()->tlist;
+			get_data()->tlistend->next = NULL;
+			return (1);
+		}
+		add_char_to_str(input);
+	}
+	return (0);
+}
+
 void	get_next_token3(char **input)
 {
 	while (is_normal_char(**input))
@@ -145,52 +200,15 @@ void	get_next_token3(char **input)
 		if (**input == '"')
 		{
 			add_char_to_str(input);
-			while (**input != '"')
-			{
-				if (**input == '\0')
-				{
-					free_stringlist();
-					free_tokenlist();
-					free_tokens1();
-					if (get_data()->tokens != NULL)
-					{
-						free(get_data()->tokens);
-						get_data()->tokens = NULL;
-					}
-					write(2, "quotation not closed\n", 21);
-					get_data()->input[0] = '\0';
-					get_data()->tlist = NULL;
-					get_data()->tlist = (t_tokenlist *)malloc(sizeof(t_tokenlist));
-					get_data()->tlistend = get_data()->tlist;
-					get_data()->tlistend->next = NULL;
-					create_token(END, "END5");
-					return ;
-				}
-				add_char_to_str(input);
-			}
+			if (dquotationcheck(input))
+				return (create_token(END, "END5"));
 			add_char_to_str(input);
 		}
 		if (**input == '\'')
 		{
 			add_char_to_str(input);
-			while (**input != '\'')
-			{
-				if (**input == '\0')
-				{
-					free_stringlist();
-					free_tokenlist();
-					free_tokens1();
-					write(2, "quotation not closed\n", 21);
-					get_data()->input[0] = '\0';
-					get_data()->tlist = NULL;
-					get_data()->tlist = (t_tokenlist *)malloc(sizeof(t_tokenlist));
-					get_data()->tlistend = get_data()->tlist;
-					get_data()->tlistend->next = NULL;
-					create_token(END, "END5");
-					return ;
-				}
-				add_char_to_str(input);
-			}
+			if (quotationcheck(input))
+				return (create_token(END, "END6"));
 			add_char_to_str(input);
 		}
 		else
@@ -239,10 +257,11 @@ void	get_next_token2(char **input)
 			(*input)++;
 		}
 		if (**input == '\0')
-				return (create_token(END, "END2"));
+			return (create_token(END, "END2"));
 		if (is_normal_char(**input))
 			return (get_next_token3(input));
-		if (**input == '\n' || **input == '|' || **input == '(' || **input == ')' || **input == '<' || **input == '>')
+		if (**input == '\n' || **input == '|' || **input == '('
+			|| **input == ')' || **input == '<' || **input == '>')
 			return (get_next_token4(input));
 		(*input)++;
 	}
@@ -262,22 +281,22 @@ void	get_next_token(char **input)
 
 void	tokenlist_to_array(void)
 {
-	int			counter;
 	t_tokenlist	*actual;
 	int			i;
 
-	counter = 0;
+	get_data()->tokenslength = 0;
 	actual = get_data()->tlist;
 	while (actual != NULL)
 	{
-		counter++;
+		get_data()->tokenslength++;
 		actual = actual->next;
 	}
 	get_data()->tokens = NULL;
-	get_data()->tokens = (t_tkn *) malloc(counter * sizeof(t_tkn));
+	get_data()->tokens
+	= (t_tkn *) malloc(get_data()->tokenslength * sizeof(t_tkn));
 	i = 0;
 	actual = get_data()->tlist;
-	while (i < counter)
+	while (i < get_data()->tokenslength)
 	{
 		get_data()->tokens[i].type = actual->token.type;
 		get_data()->tokens[i].val = actual->token.val;
@@ -288,10 +307,13 @@ void	tokenlist_to_array(void)
 
 void	print_tokens(void)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (get_data()->tokens[i].type != END)
 	{
-		printf("Token type: %d, Value: %s\n", get_data()->tokens[i].type, get_data()->tokens[i].val);
+		printf("Token type: %d, Value: %s\n",
+			get_data()->tokens[i].type, get_data()->tokens[i].val);
 		i++;
 	}
 	printf("Token type: %d\n", get_data()->tokens[i].type);
@@ -312,7 +334,7 @@ void	lexer(char *input)
 		get_data()->tlistend->next = NULL;
 		get_next_token(&input);
 	}
-	if (get_data()->tlistend->token.type != END || get_data()->tlistend->token.type != NOTOKEN)
+	if (get_data()->tlistend->token.type != END)
 	{
 		get_data()->tlistend->next = (t_tokenlist *)malloc(sizeof(t_tokenlist));
 		get_data()->tlistend = get_data()->tlistend->next;
