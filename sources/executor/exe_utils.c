@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 04:02:54 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 14:10:04 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ int	create_child(t_cmdtable *row, char *envp[], t_errdata *err)
 		err_handler(err, NULL, NXT);
 	if (err->edata->id[row->pipeid] == 0)
 	{
-		// signal(SIGINT, handle_ctrl_c);
-		// signal(SIGQUIT, handle_ctrl_backslash);
-		// signal(SIGTSTP, SIG_IGN);
+		signal(SIGINT, handle_ctrl_c);
+		signal(SIGQUIT, handle_ctrl_backslash);
+		signal(SIGTSTP, SIG_IGN);
 		err->edata->status = 0;
 		if (isbuiltin(row->args[0]))
 			exe_builtin(row, envp, err, 0);

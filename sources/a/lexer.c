@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 05:10:53 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 14:30:34 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,5 +271,5 @@ void	lexer(char *input)
 	tokenlist_to_array();
 	free_stringlist();
 	free_tokenlist();
-	print_tokens();
+	// print_tokens();
 }
