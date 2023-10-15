@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 02:46:02 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 03:00:14 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ void	print_tokens(void)
 		printf("Token type: %d, Value: %s\n", get_data()->tokens[i].type, get_data()->tokens[i].val);
 		i++;
 	}
-	printf("Token type: %d, Value: %s\n", get_data()->tokens[i].type, get_data()->tokens[i].val);
+	printf("Token type: %d\n", get_data()->tokens[i].type);
 }
 
 void	lexer(char *input)
@@ -269,5 +269,5 @@ void	lexer(char *input)
 	tokenlist_to_array();
 	free_stringlist();
 	free_tokenlist();
-	print_tokens();
+	// print_tokens();
 }

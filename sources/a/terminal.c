@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 02:32:57 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 03:04:25 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,10 @@ void	handle_ctrl_c(int signal)
 // handles ctrl-D. Exits the shell.
 void	handle_ctrl_d(t_errdata *err)
 {
-	// free(get_data()->prompt);
-	// if (err->statstr != NULL)
-	//  	free(err->statstr);
+	if (err->statstr != NULL)
+	 	free(err->statstr);
 	// if (err->edata != NULL && err->edata->id != NULL)
 	// 	free(err->edata->id);
-	// if (get_data()->tokens != NULL)
-		// free(get_data()->tokens);
 /* 	if (err->tbl != NULL)
 	{free_rows(&(err->tbl[err->tbl->nrows - 1]));
 	free(err->tbl);} */
@@ -46,6 +43,20 @@ void	handle_ctrl_backslash(int signal)
 {
 	if (signal == SIGQUIT)
 		rl_redisplay();
+}
+
+void	free_tokens(void)
+{
+	int	i;
+
+	i = 0;
+	while (get_data()->tokens[i].type != END)
+	{
+		if (get_data()->tokens[i].type != END)
+			free(get_data()->tokens[i].val);
+		i++;
+	}
+	free(get_data()->tokens);
 }
 
 // gets the username(if available) and saves it in data->prompt
@@ -88,17 +99,10 @@ void	terminal(char *envp[], t_errdata *err)
 			add_history(get_data()->input);
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
-		lexer(get_data()->input);
-		// execute(get_data()->input, envp, err);
+		// lexer(get_data()->input);
+		execute(get_data()->input, envp, err);
 		free(get_data()->input);
-		int i = 0;
-		while (get_data()->tokens[i].type != END)
-		{
-			if (get_data()->tokens[i].type != END)
-				free(get_data()->tokens[i].val);
-			i++;
-		}
-		free(get_data()->tokens);
+		free_tokens();
 	}
 	rl_clear_history();
 }
