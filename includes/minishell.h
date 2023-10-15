@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 23:48:01 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 00:18:04 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,25 @@ void envappend(char *str, char *envp[]);
 int 	varlen(char *var);
 void freeall(t_errdata *err);
 
-
-// lexer.c
-void	lexer(char *input);
-
 // main.c
 t_data	*get_data(void);
+
+// Directory
+// /minishell/sources/terminal
+
+// free_terminal.c
+void	free_stringlist(void);
+void	free_tokenlist(void);
+void	free_tokens(void);
+
+// get_next_token.c
+void	get_next_token(char **input);
+
+// lexer.c
+void	add_char_to_str(char **c);
+int		dquotationcheck(char **input);
+int		quotationcheck(char **input);
+void	lexer(char *input);
 
 // terminal.c
 void	terminal(char *envp[], t_errdata *err);
@@ -91,6 +104,8 @@ void	handle_ctrl_d(t_errdata *err);
 void	handle_ctrl_backslash(int signal);
 
 // token.c
-void	free_tokens(void);
+void	create_tokenword(int type);
+void	create_token(int type, const char *val);
+void	tokenlist_to_array(void);
 
 #endif

@@ -1,16 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   free_terminal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/15 23:45:47 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 23:47:15 by mlindenm         ###   ########.fr       */
+/*   Created: 2023/10/16 00:06:03 by mlindenm          #+#    #+#             */
+/*   Updated: 2023/10/16 00:07:37 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	free_stringlist(void)
+{
+	t_stringlist	*actual;
+	t_stringlist	*copy;
+
+	actual = get_data()->slist;
+	while (actual != NULL && actual->next != NULL)
+	{
+		copy = actual;
+		actual = actual->next;
+		free(copy);
+	}
+	free(actual);
+	get_data()->slist = NULL;
+	get_data()->slistend = NULL;
+}
+
+void	free_tokenlist(void)
+{
+	t_tokenlist	*actual;
+	t_tokenlist	*copy;
+
+	actual = get_data()->tlist;
+	while (actual != NULL && actual->token.type != END)
+	{
+		copy = actual;
+		actual = actual->next;
+		free(copy);
+	}
+	free(actual);
+	get_data()->tlist = NULL;
+	get_data()->tlistend = NULL;
+}
 
 void	free_tokens(void)
 {
