@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 04:02:54 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 12:25:29 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int id)
 		export(row, envp);
 	else if (ft_strcmp(row->args[0], "unset") == 0)
 		unset(row, envp);
-	// else if(ft_strcmp(row->args[0], "cd") == 0)
-	// 	cd(row->args, err);
+	else if(ft_strcmp(row->args[0], "cd") == 0)
+		cd(row->args, err);
 	else if(ft_strcmp(row->args[0], "exit") == 0)
 		exit(0);
 		//free mallocs!!!
