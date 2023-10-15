@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 20:59:00 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 03:58:14 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		setstatstr(t_errdata *err);
 void		set_loc_env(char *envp[]);
 int			arr_len(char **arr);
 void		printexport(char **envp_loc);
-void	execute(char *input, char *envp[], t_errdata *err);
+void	execute(char *envp[], t_errdata *err);
 char	*getenv1(char *var, char *envp[]);
 void replace_var(char *vname, char *val, char *envp[]);
 void unset_var(char *vname, char *envp[]);

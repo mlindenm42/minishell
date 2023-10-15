@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 03:03:09 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 04:02:54 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 		return (ft_strncmp(s1, s2, n1));
 }
 
-/* 	
+/*
 	else if(ft_strcmp(argv[0], "exit") == 0)
 		changedir(argv); */
 void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int id)
@@ -72,8 +72,8 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int id)
 		export(row, envp);
 	else if (ft_strcmp(row->args[0], "unset") == 0)
 		unset(row, envp);
-	else if(ft_strcmp(row->args[0], "cd") == 0)
-		cd(row->args, err);
+	// else if(ft_strcmp(row->args[0], "cd") == 0)
+	// 	cd(row->args, err);
 	else if(ft_strcmp(row->args[0], "exit") == 0)
 		exit(0);
 		//free mallocs!!!
@@ -84,9 +84,9 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int id)
 		//free_rows(row + (row->nrows - 1 - row->pipeid));
 		tbl = row - row->pipeid;
 		free_tbl(&tbl);
-		free(get_data()->prompt);
-		free(get_data()->input);
-		free(get_data()->tokens);
+		// free(get_data()->prompt);
+		// free(get_data()->input);
+		// free(get_data()->tokens);
 		//free_rows(row + (row->nrows - 1 - row->pipeid));
 		//free(row - (row->pipeid - 1));
 		exit(0);

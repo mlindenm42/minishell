@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 03:37:39 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 05:10:53 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,8 @@ void	get_next_token2(char **input)
 				return (create_token(END, "END2"));
 			(*input)++;
 		}
+		if (**input == '\0')
+				return (create_token(END, "END2"));
 		if (is_normal_char(**input))
 			return (get_next_token3(input));
 		if (**input == '\n' || **input == '|' || **input == '(' || **input == ')' || **input == '<' || **input == '>')
@@ -269,5 +271,5 @@ void	lexer(char *input)
 	tokenlist_to_array();
 	free_stringlist();
 	free_tokenlist();
-	// print_tokens();
+	print_tokens();
 }

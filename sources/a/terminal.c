@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 03:33:46 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 05:11:44 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,11 @@ void	terminal(char *envp[], t_errdata *err)
 			add_history(get_data()->input);
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
-		// lexer(get_data()->input);
-		execute(get_data()->input, envp, err);
+		lexer(get_data()->input);
+		execute(envp, err);
 		free(get_data()->input);
-		free_tokens();
+		get_data()->input = NULL;
+		// free_tokens();
 	}
 	rl_clear_history();
 }

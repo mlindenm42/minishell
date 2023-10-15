@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 02:16:55 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 03:58:00 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	execute(char *input, char *envp[], t_errdata *err)
+void	execute(char *envp[], t_errdata *err)
 {
 	t_cmdtable	*tbl;
 	// char *test;
 
 	tbl = NULL;
-	lexer(input);
+	// lexer(input);
 	// dprintf(2, "token val %s\n", tkns->val);
 	// free(tkns->val);
 	if (get_data()->tokens->type != END)

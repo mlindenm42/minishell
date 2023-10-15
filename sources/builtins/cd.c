@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 03:25:17 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 03:59:56 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* 
+/*
 .. level up
 ../ level up and start from it
 ~/ cur user
@@ -21,41 +21,41 @@
 / -abs path
 
  */
-int	cd(char *argv[], t_errdata *err)
-{
-	int	i;
-	char *curdir;
-	char *newdir;
-	char *upperdir;
+// int	cd(char *argv[], t_errdata *err)
+// {
+// 	// int	i;
+// 	char *curdir;
+// 	char *newdir;
+// 	char *upperdir;
 
-	curdir = getcwd(NULL, 0);
-//dprintf(2, "my id%s\n", curdir );
-	if (argv[1] != NULL && argv[1][0] == '/')
-		newdir = argv[1];
-	else if (argv[1] != NULL && argv[1][0] == '.' && argv[1][1] == '.')
-	{
-		upperdir = ft_substr(curdir, 0, ft_strrchr(curdir, '/') - curdir);
-		newdir = ft_strjoin(upperdir, &argv[1][2]);
-		free_str(&upperdir);
-	}
-	else if (argv[1] != NULL && argv[1][0] == '.' && argv[1][1] != '.')
-		newdir = ft_strjoin(curdir, &argv[1][1]);
-	else if (ft_strchr(argv[1], '/') == NULL)
-	{
-		upperdir = ft_strjoin("/", argv[1]);
-		newdir = ft_strjoin(curdir, upperdir);
-		free(upperdir);
-	}
-	dprintf(2, "%s\n", newdir);
-	if (chdir(newdir) == -1)
-		return (1);
-	if (argv[1] != NULL && argv[1][0] != '/')
-		free_str(&newdir);
-	
-	//change PWD and OLDPW
-	//./.. doesn't work correctly
-	return (0);
-}
+// 	curdir = getcwd(NULL, 0);
+// //dprintf(2, "my id%s\n", curdir );
+// 	if (argv[1] != NULL && argv[1][0] == '/')
+// 		newdir = argv[1];
+// 	else if (argv[1] != NULL && argv[1][0] == '.' && argv[1][1] == '.')
+// 	{
+// 		upperdir = ft_substr(curdir, 0, ft_strrchr(curdir, '/') - curdir);
+// 		newdir = ft_strjoin(upperdir, &argv[1][2]);
+// 		free_str(&upperdir);
+// 	}
+// 	else if (argv[1] != NULL && argv[1][0] == '.' && argv[1][1] != '.')
+// 		newdir = ft_strjoin(curdir, &argv[1][1]);
+// 	else if (ft_strchr(argv[1], '/') == NULL)
+// 	{
+// 		upperdir = ft_strjoin("/", argv[1]);
+// 		newdir = ft_strjoin(curdir, upperdir);
+// 		free(upperdir);
+// 	}
+// 	dprintf(2, "%s\n", newdir);
+// 	if (chdir(newdir) == -1)
+// 		return (1);
+// 	if (argv[1] != NULL && argv[1][0] != '/')
+// 		free_str(&newdir);
+
+// 	//change PWD and OLDPW
+// 	//./.. doesn't work correctly
+// 	return (0);
+// }
 
 //char *getenv(const char *name)
 
