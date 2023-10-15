@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+         #
+#    By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 15:23:37 by mrubina           #+#    #+#              #
-#    Updated: 2023/10/16 00:13:47 by mlindenm         ###   ########.fr        #
+#    Updated: 2023/10/16 01:25:15 by mrubina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

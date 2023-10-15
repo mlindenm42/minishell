@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 19:25:30 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 23:05:18 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static int	data_init(t_cmdtable *tbl, t_exedata *data, int *i, t_errdata *err)
 {
 	data->pbreak = NB;
 	data->path = NULL;
+	data->nrows = tbl->nrows;
 	data->id = malloc(sizeof(pid_t) * tbl->nrows);
 	if (data->id == NULL)
 	{
@@ -96,6 +97,7 @@ void	finish(t_cmdtable *tbl, t_exedata *data, t_errdata *err)
 			free(errstr);
 		i++;
 	}
+	i++;
 	if (tbl[tbl->nrows - 1].eflag != ERR)
 		err->stat = WEXITSTATUS(data->status);
 	redir_close(data->intmpfd, 0, err);
@@ -107,7 +109,6 @@ void	finish(t_cmdtable *tbl, t_exedata *data, t_errdata *err)
 			unlink(data->path[i]);
 		i++;
 	}
-	//free_exedt(data);
 }
 
 //set output for the last command

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 17:23:06 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 21:32:05 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ static void	argtotbl(t_tkn *tkn, t_cmdtable *row)
 
 //writing args to a row
 //path_flag means that cmd should be freed separately from tokens
-static void	cmdtotbl(t_tkn *tkn, t_cmdtable *row, char *envp[], t_errdata *err)
+static void	cmdtotbl(t_tkn *tkn, t_cmdtable *row, char *envp[])
 {
 	row->cmd = getpath(tkn->val, envp);
 	*row->args = tkn->val;
 	if (row->cmd != tkn->val)
-		err->path_flag = 1;
+		row->path_flag = 1;
 	(row->curr_a)++;
 }
 
@@ -76,7 +76,7 @@ t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes,  t_errdata *err)
 			if ((tkn == tkn0 || (tkn - 2 >= tkn0 && (tkn - 2)->type >= GT
 						&& (tkn - 2)->type <= LLT))
 						&& varvalid(tkn->val, err->envp))
-					cmdtotbl(tkn, row, err->envp, err);
+					cmdtotbl(tkn, row, err->envp);
 			else if ((tkn - 1)->type >= GT && (tkn - 1)->type <= LLT)
 				iototbl(tkn, row);
 			else if (varvalid(tkn->val, err->envp))

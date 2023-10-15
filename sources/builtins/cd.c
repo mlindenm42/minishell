@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 18:14:52 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 22:41:19 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 / -abs path
 
  */
-int	cd(char *argv[], t_errdata *err)
+int	cd(char *argv[])
 {
 	// int	i;
 	char *curdir;
@@ -38,7 +38,7 @@ int	cd(char *argv[], t_errdata *err)
 	}
 	else if (argv[1] != NULL && argv[1][0] == '.' && argv[1][1] != '.')
 		newdir = ft_strjoin(curdir, &argv[1][1]);
-	else if (ft_strchr(argv[1], '/') == NULL)
+	else if (argv[1] != NULL && ft_strchr(argv[1], '/') == NULL)
 	{
 		upperdir = ft_strjoin("/", argv[1]);
 		newdir = ft_strjoin(curdir, upperdir);
