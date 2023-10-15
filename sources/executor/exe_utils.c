@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 12:25:29 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 16:34:18 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int id)
 	if (ft_strcmp(row->args[0], "echo") == 0)
 		echo(row->args);
 	else if (ft_strcmp(row->args[0], "pwd") == 0)
-		printf("%s", getenv1("PWD", envp));
+		pwd();
 	else if (ft_strcmp(row->args[0], "env") == 0)
 		printenv(envp);
 	else if (ft_strcmp(row->args[0], "export") == 0)
@@ -75,8 +75,7 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int id)
 	else if(ft_strcmp(row->args[0], "cd") == 0)
 		cd(row->args, err);
 	else if(ft_strcmp(row->args[0], "exit") == 0)
-		exit(0);
-		//free mallocs!!!
+		exitbuiltin(row->args, err);
 	if (id == 0)
 	{
 		free_str(&(err->statstr));
@@ -103,9 +102,9 @@ int	create_child(t_cmdtable *row, char *envp[], t_errdata *err)
 		err_handler(err, NULL, NXT);
 	if (err->edata->id[row->pipeid] == 0)
 	{
-		// signal(SIGINT, handle_ctrl_c);
-		// signal(SIGQUIT, handle_ctrl_backslash);
-		// signal(SIGTSTP, SIG_IGN);
+		signal(SIGINT, handle_ctrl_c);
+		signal(SIGQUIT, handle_ctrl_backslash);
+		signal(SIGTSTP, SIG_IGN);
 		err->edata->status = 0;
 		if (isbuiltin(row->args[0]))
 			exe_builtin(row, envp, err, 0);

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 02:17:40 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 17:03:51 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	custom_err(char *pref, const char *txt)
 void	err_handler(t_errdata *err, char *str, int stop)
 {
 	char	*pref;
-	// char	*txt;
 
 	err->stop = stop;
 	err->stat = 1;
@@ -70,7 +69,6 @@ void	err_handler(t_errdata *err, char *str, int stop)
 
 void	cmderr(t_errdata *err, void *cmd, int stop)
 {
-	// char	*txt;
 	char	*tmp;
 	struct stat	stat;
 

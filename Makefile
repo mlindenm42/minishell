@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+         #
+#    By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 15:23:37 by mrubina           #+#    #+#              #
-#    Updated: 2023/10/15 04:10:15 by mlindenm         ###   ########.fr        #
+#    Updated: 2023/10/15 14:46:13 by mrubina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME		=	minishell
 CC			=	cc
 # CFLAGS		=	-Wall -Werror -Wextra
 # SANITIZE 	= 	-fsanitize=address
-SANITIZE 	= 	-LLeakSanitizer -llsan -lc++
+#SANITIZE 	= 	-LLeakSanitizer -llsan -lc++
 # valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./minishell
 
 SRC_DIR		=	sources

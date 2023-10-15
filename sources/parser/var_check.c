@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   var_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 06:48:51 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 12:42:24 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-//if a word is nonexisting variable
-/* int	varvalid(char *str)
-{
-	if (ft_strcmp(str, "$?") != 0 && *str == '$' && (getenv(str + 1) == NULL))
-		return (FALSE);
-	else
-		return (TRUE);
-} */
 
 //when the string is an invalid variable returns FALSE
 //in this case if it's not a in/out the token is ommited

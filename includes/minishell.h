@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 03:58:14 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/15 16:36:01 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int			isbuiltin(char *cmd);
 void		export(t_cmdtable *row, char *envp[]);
 void		unset(t_cmdtable *row, char *envp[]);
 int	cd (char *argv[], t_errdata *err);
+void	pwd(void);
+void	exitbuiltin(char *argv[], t_errdata *err);
 void		setstatstr(t_errdata *err);
 void		set_loc_env(char *envp[]);
 int			arr_len(char **arr);

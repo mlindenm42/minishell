@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 22:37:30 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 02:28:56 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 13:38:39 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,7 @@ char	*getpath(char *fpath, char *envp[])
 			i++;
 	}
 	if (envp && envp[i] != NULL && n == 0)
-	{
 		path_str = extract_path(&((envp[i])[5]), fpath);
-		//if (ft_strncmp(path_str, fpath, ft_strlen(fpath)) == 0)
-		//	free_str(&path_str);
-	}
 	else if (access(fpath, X_OK) == 0)
 		path_str = fpath;
 	else
