@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 02:27:53 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/15 03:03:09 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int id)
 		unset(row, envp);
 	else if(ft_strcmp(row->args[0], "cd") == 0)
 		cd(row->args, err);
+	else if(ft_strcmp(row->args[0], "exit") == 0)
+		exit(0);
+		//free mallocs!!!
 	if (id == 0)
 	{
 		free_str(&(err->statstr));
