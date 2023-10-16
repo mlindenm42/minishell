@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:24:19 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 22:46:42 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 //expander edits table according to some rules
-static void	replace_filename(int last_ind, t_iof *file, t_errdata *err, char *envp[])
+static void	replace_filename(int last_ind, t_iof *file,
+t_errdata *err, char *envp[])
 {
 	int		j;
 
@@ -21,7 +22,7 @@ static void	replace_filename(int last_ind, t_iof *file, t_errdata *err, char *en
 	while (j <= last_ind)
 	{
 		if (file[j].io != LLT)
-			expand_word(&file[j].file, err->statstr, envp, err);
+			expand_word(&file[j].file, envp, err);
 		j++;
 	}
 }
@@ -33,7 +34,7 @@ static void	replace_arg(int last_ind, char **args, t_errdata *err, char *envp[])
 	j = 0;
 	while (j <= last_ind)
 	{
-		expand_word(&args[j], err->statstr, envp, err);
+		expand_word(&args[j], envp, err);
 		j++;
 	}
 }
@@ -46,7 +47,7 @@ void	expander(t_cmdtable *tbl, t_errdata *err, char *envp[])
 	setstatstr(err);
 	while (i <= tbl->nrows - 1)
 	{
-		expand_word(&tbl[i].cmd, err->statstr, envp, err);
+		expand_word(&tbl[i].cmd, envp, err);
 		replace_arg(tbl[i].nargs - 1, tbl[i].args, err, envp);
 		replace_filename(tbl[i].nins - 1, tbl[i].infiles, err, envp);
 		replace_filename(tbl[i].nouts - 1, tbl[i].outfiles, err, envp);
@@ -57,7 +58,7 @@ void	expander(t_cmdtable *tbl, t_errdata *err, char *envp[])
 //if single quotes remove them
 //if double quotes expand variables and remove quotes
 //if no quotes expand vars
-void	expand_word(char **word, char *exit_stat, char *envp[], t_errdata *err)
+void	expand_word(char **word, char *envp[], t_errdata *err)
 {
 	char	*tmp;
 
@@ -70,8 +71,8 @@ void	expand_word(char **word, char *exit_stat, char *envp[], t_errdata *err)
 	{
 		tmp = ft_strtrim(*word, "\"", err);
 		*word = tmp;
-		varscan(word, exit_stat, envp, err);
+		varscan(word, envp, err);
 	}
 	else if (*word != NULL)
-		varscan(word, exit_stat, envp, err);
+		varscan(word, envp, err);
 }
