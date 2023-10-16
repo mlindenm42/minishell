@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 19:28:42 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 19:53:37 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,10 @@ static void	argtotbl(t_tkn *tkn, t_cmdtable *row)
 }
 
 //writing args to a row
-//path_flag means that cmd should be freed separately from tokens
 static void	cmdtotbl(t_tkn *tkn, t_cmdtable *row, char *envp[])
 {
 	row->cmd = getpath(tkn->val, envp); //allocated
 	*row->args = ft_strdup(tkn->val);
-	// if (row->cmd != tkn->val)
-	// 	row->path_flag = 1;
 	(row->curr_a)++;
 }
 

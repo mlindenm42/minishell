@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:11:52 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 08:19:29 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 19:53:06 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ typedef struct s_cmdtable
 	int			nins;
 	int			nouts;
 	int			eflag;
-	int			path_flag;
 }	t_cmdtable;
 
 typedef struct s_errdata
