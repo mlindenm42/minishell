@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 15:13:06 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 18:56:45 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	exitbuiltin(char *argv[], t_errdata *err)
 			free(tmp);
 		}
 	}
-	// freeall(err);
+	freeall(err, 1);
 	printf("exit\n");
 	exit(stat);
 }

@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 17:27:31 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 18:34:02 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	expander(t_cmdtable *tbl, t_errdata *err, char *envp[])
 	setstatstr(err);
 	while (i <= tbl->nrows - 1)
 	{
-		dprintf(2, "cmd %s\n", tbl[i].cmd);
 		expand_word(&tbl[i].cmd, err->statstr, envp);
 		replace_arg(tbl[i].nargs - 1, tbl[i].args, err, envp);
 		replace_filename(tbl[i].nins - 1, tbl[i].infiles, err, envp);

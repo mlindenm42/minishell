@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 18:01:11 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 19:09:33 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,11 @@ void	free_row(void *row)
 			free(((t_cmdtable *)row)->infiles);
 		if (((t_cmdtable *)row)->outfiles != NULL)
 			free(((t_cmdtable *)row)->outfiles);
-		if (((t_cmdtable *)row)->cmd != NULL
-			&& ((t_cmdtable *)row)->path_flag == 1)
+		if (((t_cmdtable *)row)->cmd != NULL)
 			free_str(&((t_cmdtable *)row)->cmd);
 		((t_cmdtable *)row)->args = NULL;
 		((t_cmdtable *)row)->infiles = NULL;
 		((t_cmdtable *)row)->outfiles = NULL;
-		free(row);
 	}
 }
 
@@ -51,28 +49,23 @@ void	free_tbl(t_errdata *err)
 	t_cmdtable *row;
 
 	row = err->tbl;
-	while (row->pipeid < row->nrows - 1)
+	while (row->pipeid <= row->nrows - 1)
 	{
 		if (row->nins != 0)
 			free_iof(row->infiles, row->nins);
 		if (row->nouts != 0)
 			free_iof(row->outfiles, row->nouts);
-		row->infiles = NULL;
-		row->outfiles = NULL;
-		dprintf(2, "row before freeing %p\n", row);
+		row->curr_a = row->args;
+		while (row->curr_a <= &row->args[row->nargs - 1])
+		{
+			free(*row->curr_a);
+			row->curr_a++;
+		}
+	//dprintf(2, "row before freeing %p\n", row);
 		free_row(row);
 		row++;
 	}
-	dprintf(2, "last row %p\n", row);
-	if (row->nins != 0)
-		free(row->infiles);
-		//free_iof(row->infiles, row->nins);
-	if (row->nouts != 0)
-		free(row->outfiles);
-		free_iof(row->outfiles, row->nouts);
-	dprintf(2, "tbl %p\n", err->tbl);
-	free_row(err->tbl);
-	//free(err->tbl);
+	free(err->tbl);
 	err->tbl = NULL;
 }
 
@@ -133,23 +126,17 @@ void	free_iof(t_iof *arr, int n)
 	while (i < n)
 	{
 		free(arr[i].file);
-		//arr++;
+		arr[i].file = NULL;
 		i++;
 	}
-	free(arr);
 }
 
-void freeall(t_errdata *err)
+//if we exit exit_flag = 1
+void freeall(t_errdata *err, int exit_flag)
 {
 	free_exedt(err->edata);
-	free_str(&(err->statstr));
-	// free_tokens();
-	// free_tbl(err);
-}
-
-void freecycle(t_errdata *err)
-{
-	free_exedt(err->edata);
+	if (exit_flag == 1)
+		free_str(&(err->statstr));
 	free_tokens();
 	free_tbl(err);
 }

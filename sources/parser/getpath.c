@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 22:37:30 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 18:01:54 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 19:28:22 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char	*extract_path(char *path_str, char *cmd)
 	int		i;
 
 	i = 0;
-	//dprintf(2, "cmd%s\n", cmd);
 	slash_cmd = ft_strjoin("/", cmd);
 	//dprintf(2, "s cmd%s\n", slash_cmd);
 	//dprintf(2, "cmd%p\n", cmd);
@@ -61,9 +60,9 @@ char	*getpath(char *fpath, char *envp[])
 	char	*path_str;
 
 	if (isbuiltin(fpath) || ft_strchr(fpath, '/') != NULL)
-		return (fpath);
+		return (ft_strdup(fpath));
 	if (fpath[0] == '\0')
-		return (fpath);
+		return (ft_strdup(fpath));
 	n = 1;
 	i = 0;
 	while (envp && envp[i] != NULL && n != 0)

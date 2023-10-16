@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:14:06 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 18:06:11 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 18:56:56 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int ch_flag)
 		//free_exedt(err->edata);//!!!
 		//free_rows(row + (row->nrows - 1 - row->pipeid));
 		tbl = row - row->pipeid;
-		freeall(err);
+		freeall(err, 1);
 		// free(get_data()->prompt);
 		// free(get_data()->input);
 		// free(get_data()->tokens);
