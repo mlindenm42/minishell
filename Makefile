@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 15:23:37 by mrubina           #+#    #+#              #
-<<<<<<<<< Temporary merge branch 1
-#    Updated: 2023/10/16 00:13:47 by mlindenm         ###   ########.fr        #
-=========
-#    Updated: 2023/10/15 22:56:14 by mrubina          ###   ########.fr        #
->>>>>>>>> Temporary merge branch 2
+#    Updated: 2023/10/16 02:09:07 by mlindenm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

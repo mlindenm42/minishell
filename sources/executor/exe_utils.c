@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-<<<<<<<<< Temporary merge branch 1
-/*   Updated: 2023/10/15 20:10:18 by mlindenm         ###   ########.fr       */
-=========
-/*   Updated: 2023/10/16 00:26:51 by mrubina          ###   ########.fr       */
->>>>>>>>> Temporary merge branch 2
+/*   Created: 2023/10/16 02:14:06 by mlindenm          #+#    #+#             */
+/*   Updated: 2023/10/16 02:14:24 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

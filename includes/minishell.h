@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-<<<<<<<<< Temporary merge branch 1
-/*   Updated: 2023/10/16 00:18:04 by mlindenm         ###   ########.fr       */
-=========
-/*   Updated: 2023/10/15 21:38:12 by mrubina          ###   ########.fr       */
->>>>>>>>> Temporary merge branch 2
+/*   Created: 2023/10/16 02:12:10 by mlindenm          #+#    #+#             */
+/*   Updated: 2023/10/16 02:12:28 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +77,6 @@ void envappend(char *str, char *envp[]);
 int 	varlen(char *var);
 void freeall(t_errdata *err);
 void freecycle(t_errdata *err);
-
-
-// check.c
-// void	check_arg(int argc, char *argv[]);
-
-// init.c
-
-// error.c
-void	error(char *reason);
-// void	free_all(void);
-
-// lexer.c
-void	lexer(char *input);
 
 // main.c
 t_data	*get_data(void);
