@@ -6,7 +6,11 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 01:08:38 by mrubina          ###   ########.fr       */
+<<<<<<<<< Temporary merge branch 1
+/*   Updated: 2023/10/15 20:11:41 by mlindenm         ###   ########.fr       */
+=========
+/*   Updated: 2023/10/15 22:15:30 by mrubina          ###   ########.fr       */
+>>>>>>>>> Temporary merge branch 2
 /*                                                                            */
 /* ************************************************************************** */
 
