@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 22:43:50 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 10:02:17 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ void	execute(char *envp[], t_errdata *err)
 		if (err->stop == CNT)
 			executor(tbl, envp, err);
 		//printf("p: %p,\n", tbl);
+		freecycle(err);
 	}
-	 //if (tbl != NULL)
-	freecycle(err);
 //	{
 		//free_tbl(err);
 		//dprintf(2, "in f %p\n", tbl->infiles);

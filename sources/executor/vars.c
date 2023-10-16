@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 06:47:06 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:47:32 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,15 @@ char	*varsubst(char **str, char *start, char *exit_stat, char *envp[])
 	value = get_value(start, after_var - 1, exit_stat, envp);
 	before_var = ft_substr(*str, 0, start - *str);
 	if (value != NULL)
+	{
+		free(*str);
 		*str = strjoin3(before_var, value, after_var);
+	}
 	else
+	{
+		free(*str);	
 		*str = ft_strjoin(before_var, after_var);
+	}
 	len = ft_strlen(before_var);
 	free(before_var);
 	if (value != NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 21:32:05 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 09:11:10 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ t_cmdtable	*parser(t_tkn *tkns, t_errdata *err)
 	tkn = tkns;
 	pipes = calcpipes(tkns);
 	err->tbl = malloc(pipes * sizeof(t_cmdtable));
+	err->tbl->eflag = 0;
 	row = err->tbl;
 	if (err->tbl == NULL)
 		errfree(err, NULL, NULL, STP);

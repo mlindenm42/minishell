@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 22:07:21 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 09:06:15 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	heredoc(t_cmdtable *tbl, t_exedata *data, t_errdata *err)
 	int	i;
 
 	i = 0;
-	data->path = malloc(sizeof(char *) * tbl->nrows + 1);
+	data->path = malloc(sizeof(char *) * (tbl->nrows + 1));
 	if (data->path == NULL)
 	{
 		errfree(err, &data, &free_exedt, CNT);

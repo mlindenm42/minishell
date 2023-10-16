@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 23:05:18 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 13:03:43 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static int	data_init(t_cmdtable *tbl, t_exedata *data, int *i, t_errdata *err)
 {
 	data->pbreak = NB;
 	data->path = NULL;
+	data->id = NULL;
 	data->nrows = tbl->nrows;
 	data->id = malloc(sizeof(pid_t) * tbl->nrows);
 	if (data->id == NULL)
@@ -156,5 +157,6 @@ int	executor(t_cmdtable *tbl, char *envp[], t_errdata *err)
 	}
 	lastcmd(&tbl[i], &data, envp, err);
 	finish(tbl, &data, err);
+	//free_tbl(err);
 	return (0);
 }

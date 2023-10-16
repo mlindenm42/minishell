@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:11:52 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 02:12:03 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 08:19:29 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_exedata
 	int		pbreak;
 	pid_t	*id;
 	char	**path;
-	int	nrows;
+	int		nrows;
 }	t_exedata;
 
 typedef struct s_cmdtable
@@ -72,12 +72,12 @@ typedef struct s_cmdtable
 
 typedef struct s_errdata
 {
-	int		stop;
-	int		stat;
-	char	*statstr;
+	int			stop;
+	int			stat;
+	char		*statstr;
 	t_cmdtable	*tbl;
 	t_exedata	*edata;
-	char **envp;
+	char		**envp;
 }	t_errdata;
 
 typedef struct s_data {

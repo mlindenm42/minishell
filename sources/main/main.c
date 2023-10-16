@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/15 21:26:19 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 08:21:56 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,3 +53,9 @@ int	main(int argc, char *argv[], char *envp[])
 	terminal(envp, &err);
 	return (0);
 }
+
+// leaks
+// expander
+// echo "$PATH"sf <- auch expander
+// pipes
+// cd 

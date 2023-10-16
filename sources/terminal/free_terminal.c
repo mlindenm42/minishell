@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_terminal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 00:06:03 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 00:07:37 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 07:47:12 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,5 @@ void	free_tokens(void)
 			get_data()->tokens = NULL;
 		}
 	}
+	get_data()->tokenslength = 0;
 }

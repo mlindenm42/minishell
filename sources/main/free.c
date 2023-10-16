@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 22:36:35 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 13:15:34 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	free_row(void *row)
 		((t_cmdtable *)row)->args = NULL;
 		((t_cmdtable *)row)->infiles = NULL;
 		((t_cmdtable *)row)->outfiles = NULL;
+		free(row);
 	}
 }
 
@@ -88,13 +89,18 @@ void	free_patharr(char **arr, int n)
 
 void	free_exedt(void *data)
 {
-	if (((t_exedata *)data)->id != NULL)
-		free(((t_exedata *)data)->id);
-	((t_exedata *)data)->id = NULL;
-	if (((t_exedata *)data)->path != NULL)
-		free_patharr(((t_exedata *)data)->path, ((t_exedata *)data)->nrows);
-	free(((t_exedata *)data)->path);
-	((t_exedata *)data)->path = NULL;
+	if (((t_exedata *)data) != NULL)
+	{
+		if (((t_exedata *)data)->id != NULL)
+			free(((t_exedata *)data)->id);
+		((t_exedata *)data)->id = NULL;
+		if (((t_exedata *)data)->path != NULL)
+		{
+			free_patharr(((t_exedata *)data)->path, ((t_exedata *)data)->nrows);
+			free(((t_exedata *)data)->path);
+		}
+		((t_exedata *)data)->path = NULL;
+	}
 }
 
 /* void	free_exedt1(t_exedata*data, int n)
@@ -118,7 +124,7 @@ void	free_ptr(void *p)
 
 void	free_iof(t_iof *arr, int n)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < n)
@@ -140,7 +146,6 @@ void freeall(t_errdata *err)
 void freecycle(t_errdata *err)
 {
 	free_exedt(err->edata);
-	free(err->edata->path);
 	free_tokens();
 	free_tbl(err);
 }

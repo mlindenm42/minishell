@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 16:06:20 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 12:34:42 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,20 @@ void	expand_word(char **word, char *exit_stat, char *envp[])
 {
 	char	*tmp;
 
-	if (*word != NULL && **word == '\'')
 	// {
 	// 	free(*word);
 	// 	word = ft_strtrim(*word, "\'")
 	// }
-	*word = ft_strtrim(*word, "\'");
-	else if (*word != NULL && **word == '"')
+	if (*word != NULL && **word == '\'')
+	{
+		tmp = ft_strtrim(*word, "\'");
+		//free(*word);
+		*word = tmp;
+	}
+	if (*word != NULL && **word == '"')
 	{
 		tmp = ft_strtrim(*word, "\"");
+		//free(*word);
 		*word = tmp;
 		varscan(word, exit_stat, envp);
 	}
