@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 17:22:19 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 17:31:48 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	varscan(char **word, char *exit_stat, char *envp[])
 {
 	char	*cur;
 	char *tmp;
-	// int		i;
 
 	cur = *word;
 	while (cur != NULL && *cur != '\0')

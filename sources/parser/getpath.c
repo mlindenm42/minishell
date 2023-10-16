@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 22:37:30 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 13:38:39 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 18:01:54 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*extract_path(char *path_str, char *cmd)
 		return (path_cand);
 	if (path_cand != NULL)
 		free_str(&path_cand);
-	return (cmd);
+	return (ft_strdup(cmd));
 }
 
 /* cand_path is "/dir1/dir2/file"
@@ -75,7 +75,7 @@ char	*getpath(char *fpath, char *envp[])
 	if (envp && envp[i] != NULL && n == 0)
 		path_str = extract_path(&((envp[i])[5]), fpath);
 	else if (access(fpath, X_OK) == 0)
-		path_str = fpath;
+		path_str = ft_strdup(fpath);
 	else
 		free_str(&path_str);
 	return (path_str);

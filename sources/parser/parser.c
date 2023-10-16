@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 09:11:10 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 17:46:54 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static void	iototbl(t_tkn *tkn, t_cmdtable *row)
 {
 	if ((tkn - 1)->type == LT || (tkn - 1)->type == LLT)
 	{
-		row->curr_i->file = tkn->val;
+		row->curr_i->file = ft_strdup(tkn->val);
 		row->curr_i->io = (tkn - 1)->type;
 		(row->curr_i)++;
 	}
 	else
 	{
-		row->curr_o->file = tkn->val;
+		row->curr_o->file = ft_strdup(tkn->val);
 		row->curr_o->io = (tkn - 1)->type;
 		(row->curr_o)++;
 	}
@@ -35,7 +35,7 @@ static void	iototbl(t_tkn *tkn, t_cmdtable *row)
 //writing args to a row
 static void	argtotbl(t_tkn *tkn, t_cmdtable *row)
 {
-	*row->curr_a = tkn->val;
+	*row->curr_a = ft_strdup(tkn->val);
 	(row->curr_a)++;
 }
 
@@ -43,10 +43,10 @@ static void	argtotbl(t_tkn *tkn, t_cmdtable *row)
 //path_flag means that cmd should be freed separately from tokens
 static void	cmdtotbl(t_tkn *tkn, t_cmdtable *row, char *envp[])
 {
-	row->cmd = getpath(tkn->val, envp);
-	*row->args = tkn->val;
-	if (row->cmd != tkn->val)
-		row->path_flag = 1;
+	row->cmd = getpath(tkn->val, envp); //allocated
+	*row->args = ft_strdup(tkn->val);
+	// if (row->cmd != tkn->val)
+	// 	row->path_flag = 1;
 	(row->curr_a)++;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 14:09:49 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 18:01:11 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,24 @@ void	free_tbl(t_errdata *err)
 	row = err->tbl;
 	while (row->pipeid < row->nrows - 1)
 	{
-		// if (row->nins != 0)
-		// 	//free_iof(row->infiles, row->nins);
-		// 	free(row->infiles);
-		// if (row->nouts != 0)
-		// 	//free_iof(row->outfiles, row->nouts);
-		// 	free(row->outfiles);
+		if (row->nins != 0)
+			free_iof(row->infiles, row->nins);
+		if (row->nouts != 0)
+			free_iof(row->outfiles, row->nouts);
+		row->infiles = NULL;
+		row->outfiles = NULL;
+		dprintf(2, "row before freeing %p\n", row);
 		free_row(row);
 		row++;
 	}
-	// if (row->nins != 0)
-	// 	free(row->infiles);
-	// 	//free_iof(row->infiles, row->nins);
-	// if (row->nouts != 0)
-	// 	free(row->outfiles);
-		//free_iof(row->outfiles, row->nouts);
+	dprintf(2, "last row %p\n", row);
+	if (row->nins != 0)
+		free(row->infiles);
+		//free_iof(row->infiles, row->nins);
+	if (row->nouts != 0)
+		free(row->outfiles);
+		free_iof(row->outfiles, row->nouts);
+	dprintf(2, "tbl %p\n", err->tbl);
 	free_row(err->tbl);
 	//free(err->tbl);
 	err->tbl = NULL;
@@ -129,10 +132,11 @@ void	free_iof(t_iof *arr, int n)
 	i = 0;
 	while (i < n)
 	{
-		free(arr->file);
-		arr++;
+		free(arr[i].file);
+		//arr++;
 		i++;
 	}
+	free(arr);
 }
 
 void freeall(t_errdata *err)
@@ -147,5 +151,5 @@ void freecycle(t_errdata *err)
 {
 	free_exedt(err->edata);
 	free_tokens();
-	// free_tbl(err);
+	free_tbl(err);
 }
