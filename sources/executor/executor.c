@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 15:51:03 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 20:57:10 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	data_init(t_cmdtable *tbl, t_exedata *data, int *i, t_errdata *err)
 	data->path = NULL;
 	data->id = NULL;
 	data->nrows = tbl->nrows;
-	data->id = malloc(sizeof(pid_t) * tbl->nrows);
+	data->id = create_pile(&err->gc, sizeof(pid_t), tbl->nrows);
 	if (data->id == NULL)
 	{
 		errfree(err, data->id, NULL, STP);
@@ -91,11 +91,9 @@ void	finish(t_cmdtable *tbl, t_exedata *data, t_errdata *err)
 	i = 0;
 	while (i <= tbl->nrows - 1)
 	{
-		errstr = ft_itoa(data->id[i]);
+		errstr = ft_itoa(data->id[i], err);
 		if (tbl[i].eflag != ERR && waitpid(data->id[i], &data->status, 0) == -1)
 			err_handler(err, errstr, CNT);
-		if (errstr != NULL)
-			free(errstr);
 		i++;
 	}
 	i++;
@@ -152,13 +150,11 @@ int	executor(t_cmdtable *tbl, char *envp[], t_errdata *err)
 			return (1);
 		if (err->stop == CNT)
 			create_child(&tbl[i], envp, err);
-		// close(err->edata->infd);
 		close(err->edata->outfd);
 		setnextin(&tbl[i + 1], &data, err, i + 1);
 		i++;
 	}
 	lastcmd(&tbl[i], &data, envp, err);
 	finish(tbl, &data, err);
-	//free_tbl(err);
 	return (0);
 }

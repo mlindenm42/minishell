@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 15:13:06 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 21:11:22 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	cd(char *argv[])
 		return (1);
 	// if (argv[1] != NULL && argv[1][0] != '/')
 		// free_str(&newdir);
+	free(curdir);
 	return (0);
 }
 
@@ -65,8 +66,8 @@ void	pwd(void)
 
 void	exitbuiltin(char *argv[], t_errdata *err)
 {
-	int	stat;
-	char *tmp;
+	int		stat;
+	char	*tmp;
 
 	stat = 0;
 	if (argv[1] != NULL && argv[2] == NULL)
@@ -74,13 +75,13 @@ void	exitbuiltin(char *argv[], t_errdata *err)
 		stat = ft_atoi(argv[1]);
 		if (stat == 0)
 		{
-			tmp = ft_strjoin(argv[1], ": numeric argument required");
-			custom_err("bash: exit", tmp);
+			tmp = ft_strjoin(argv[1], ": numeric argument required", err);
+			custom_err("bash: exit", tmp, err);
 			stat = 255;
-			free(tmp);
 		}
 	}
 	// freeall(err);
 	printf("exit\n");
+	burn_it_down(&err->gc, err->gc.dump);
 	exit(stat);
 }

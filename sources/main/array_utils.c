@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 19:42:01 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 21:20:55 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ char	**copy_arr(char **newarr, char **arr)
 //frees a string
 void	free_str(char **s)
 {
-	if (*s != NULL)
-	{
-		//dprintf(2, "s %p\n", s);
-		free(*s);
-		*s = NULL;
-		//dprintf(2, "s %p\n", s);
-	}
+	//if (*s != NULL)
+	//{
+	//	//dprintf(2, "s %p\n", s);
+	//	free(*s);
+	//	*s = NULL;
+	//	//dprintf(2, "s %p\n", s);
+	//}
 }
 
 //returns length of a null ending array of srings including null

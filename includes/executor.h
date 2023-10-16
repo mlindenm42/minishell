@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 18:18:11 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 21:08:18 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ char	*readbuf(char *buf, int size);
 void	midouts(t_cmdtable *row, t_exedata *data, t_errdata *err);
 void	setnextin(t_cmdtable *row, t_exedata *data, t_errdata *err, int i);
 int		ft_strcmp(const char *s1, const char *s2);
-char	*varsubst(char **str, char *start, char *exit_stat, char *env[]);
-void	varscan(char **word, char *exit_stat, char *env[]);
-void	expand_word(char **word, char *exit_stat, char *env[]);
+char	*varsubst(char **str, char *start, char *exit_stat, char *env[], t_errdata *err);
+void	varscan(char **word, char *exit_stat, char *env[], t_errdata *err);
+void	expand_word(char **word, char *exit_stat, char *env[], t_errdata *err);
 char	*skip_var(char *start);
 void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int id);
 void	arr_sort(char **arr, int n);

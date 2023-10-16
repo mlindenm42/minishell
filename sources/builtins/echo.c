@@ -6,7 +6,7 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 12:49:53 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 19:14:15 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	echo(char *argv[])
 				printf("%s\n", argv[i]);
 			else
 				printf("%s", argv[i]);
-			free(argv[i]);
+			//free(argv[i]);
 			i++;
 		}
 	}

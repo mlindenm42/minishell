@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 00:14:56 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 21:34:46 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	add_char_to_str(char **c)
+void	add_char_to_str(char **c, t_errdata *err)
 {
 	get_data()->slistend->character = **c;
-	get_data()->slistend->next = (t_stringlist *)malloc(sizeof(t_stringlist));
+	get_data()->slistend->next = create_pile(&err->gc, sizeof(t_stringlist), 1);
 	get_data()->slistend = get_data()->slistend->next;
 	get_data()->slistend->next = NULL;
 	get_data()->slistend->character = '\0';
 	(*c)++;
 }
 
-int	dquotationcheck(char **input)
+int	dquotationcheck(char **input, t_errdata *err)
 {
 	while (**input != '"')
 	{
@@ -39,17 +39,17 @@ int	dquotationcheck(char **input)
 			write(2, "quotation not closed\n", 21);
 			get_data()->input[0] = '\0';
 			get_data()->tlist = NULL;
-			get_data()->tlist = (t_tokenlist *)malloc(sizeof(t_tokenlist));
+			get_data()->tlist = create_pile(&err->gc, sizeof(t_tokenlist), 1);
 			get_data()->tlistend = get_data()->tlist;
 			get_data()->tlistend->next = NULL;
 			return (1);
 		}
-		add_char_to_str(input);
+		add_char_to_str(input, err);
 	}
 	return (0);
 }
 
-int	quotationcheck(char **input)
+int	quotationcheck(char **input, t_errdata *err)
 {
 	while (**input != '\'')
 	{
@@ -66,39 +66,39 @@ int	quotationcheck(char **input)
 			write(2, "quotation not closed\n", 21);
 			get_data()->input[0] = '\0';
 			get_data()->tlist = NULL;
-			get_data()->tlist = (t_tokenlist *)malloc(sizeof(t_tokenlist));
+			get_data()->tlist = create_pile(&err->gc, sizeof(t_tokenlist), 1);
 			get_data()->tlistend = get_data()->tlist;
 			get_data()->tlistend->next = NULL;
 			return (1);
 		}
-		add_char_to_str(input);
+		add_char_to_str(input, err);
 	}
 	return (0);
 }
 
-void	lexer(char *input)
+void	lexer(char *input, t_errdata *err)
 {
 	get_data()->tlist = NULL;
-	get_data()->tlist = (t_tokenlist *)malloc(sizeof(t_tokenlist));
+	get_data()->tlist = create_pile(&err->gc, sizeof(t_tokenlist), 1);
 	get_data()->tlistend = get_data()->tlist;
 	get_data()->tlistend->token.type = NOTOKEN;
 	get_data()->tlistend->next = NULL;
-	get_next_token(&input);
+	get_next_token(&input, err);
 	while (*input != '\0')
 	{
-		get_data()->tlistend->next = (t_tokenlist *)malloc(sizeof(t_tokenlist));
+		get_data()->tlistend->next = create_pile(&err->gc, sizeof(t_tokenlist), 1);
 		get_data()->tlistend = get_data()->tlistend->next;
 		get_data()->tlistend->next = NULL;
-		get_next_token(&input);
+		get_next_token(&input, err);
 	}
 	if (get_data()->tlistend->token.type != END)
 	{
-		get_data()->tlistend->next = (t_tokenlist *)malloc(sizeof(t_tokenlist));
+		get_data()->tlistend->next = create_pile(&err->gc, sizeof(t_tokenlist), 1);
 		get_data()->tlistend = get_data()->tlistend->next;
 		get_data()->tlistend->next = NULL;
-		create_token(END, "END4");
+		create_token(END, "END4", err);
 	}
-	tokenlist_to_array();
-	free_stringlist();
-	free_tokenlist();
+	tokenlist_to_array(err);
+	//free_stringlist();
+	//free_tokenlist();
 }

@@ -6,7 +6,7 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 08:21:56 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 21:09:56 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@ t_data	*get_data(void)
 	return (&all_t_data);
 }
 
+void	init_gc(t_errdata *err)
+{
+	err->gc.dump = malloc(sizeof(t_dump));
+	if (!err->gc.dump)
+		printf("kekw!");
+	err->gc.dump->garbage_pile = NULL;
+	err->gc.dump->next = NULL;
+	err->gc.dump_status = 1;
+}
+
 //err->envmem_end pointer to the end of the last used character of the
 //allocated memory
 //we use memory after it for created variables
@@ -34,6 +44,7 @@ static void	errinit(t_errdata *err, char *envp[])
 	err->edata = NULL;
 	err->tbl = NULL;
 	err->envp = envp;
+	init_gc(err);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -49,8 +60,9 @@ int	main(int argc, char *argv[], char *envp[])
 	if (test1 || test2)
 		printf("STOP\n");
 	errinit(&err, envp);
-	set_loc_env(envp);
+	set_loc_env(envp, &err);
 	terminal(envp, &err);
+	burn_it_down(&err.gc, err.gc.dump);
 	return (0);
 }
 

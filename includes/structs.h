@@ -6,7 +6,7 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:11:52 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 08:19:29 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 17:46:56 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+#include "../sources/trash/trash.h"
 
 typedef struct s_tkn
 {
@@ -78,6 +80,7 @@ typedef struct s_errdata
 	t_cmdtable	*tbl;
 	t_exedata	*edata;
 	char		**envp;
+	t_gc		gc;
 }	t_errdata;
 
 typedef struct s_data {

@@ -6,7 +6,7 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 12:47:32 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 21:22:52 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,13 @@ static char	*get_value(char *start, char *end, char *exit_stat, char *envp[])
 }
 
 //joins 3 strings
-char	*strjoin3(char *str1, char *str2, char *str3)
+char	*strjoin3(char *str1, char *str2, char *str3, t_errdata *err)
 {
 	char	*tmp;
 	char	*result;
 
-	tmp = ft_strjoin(str1, str2);
-	result = ft_strjoin(tmp, str3);
-	free(tmp);
+	tmp = ft_strjoin(str1, str2, err);
+	result = ft_strjoin(tmp, str3, err);
 	return (result);
 }
 
@@ -64,7 +63,7 @@ char	*strjoin3(char *str1, char *str2, char *str3)
 because it's allocated we need to free it at the end!!!
 text[$var]text
 text[value]text */
-char	*varsubst(char **str, char *start, char *exit_stat, char *envp[])
+char	*varsubst(char **str, char *start, char *exit_stat, char *envp[], t_errdata *err)
 {
 	char	*after_var;
 	char	*before_var;
@@ -77,15 +76,9 @@ char	*varsubst(char **str, char *start, char *exit_stat, char *envp[])
 	value = get_value(start, after_var - 1, exit_stat, envp);
 	before_var = ft_substr(*str, 0, start - *str);
 	if (value != NULL)
-	{
-		free(*str);
-		*str = strjoin3(before_var, value, after_var);
-	}
+		*str = strjoin3(before_var, value, after_var, err);
 	else
-	{
-		free(*str);	
-		*str = ft_strjoin(before_var, after_var);
-	}
+		*str = ft_strjoin(before_var, after_var, err);
 	len = ft_strlen(before_var);
 	free(before_var);
 	if (value != NULL)
@@ -95,7 +88,7 @@ char	*varsubst(char **str, char *start, char *exit_stat, char *envp[])
 }
 
 //scanning a string for vars and substituting if necessary
-void	varscan(char **word, char *exit_stat, char *envp[])
+void	varscan(char **word, char *exit_stat, char *envp[], t_errdata *err)
 {
 	char	*cur;
 	// int		i;
@@ -105,6 +98,6 @@ void	varscan(char **word, char *exit_stat, char *envp[])
 	{
 		cur = ft_strchr(cur, '$');
 		if (cur != NULL)
-			cur = varsubst(word, cur, exit_stat, envp);
+			cur = varsubst(word, cur, exit_stat, envp, err);
 	}
 }

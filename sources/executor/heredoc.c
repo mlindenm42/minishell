@@ -6,7 +6,7 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 09:06:15 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 21:12:10 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,15 @@ buffer variants
 */
 
 //generates temporary file name based on row number
-static char	*genpath(int i)
+static char	*genpath(int i, t_errdata *err)
 {
 	char	*n;
 	char	*fpath;
 
 	fpath = NULL;
-	n = ft_itoa(i);
+	n = ft_itoa(i, err);
 	if (n != NULL)
-	{
-		fpath = ft_strjoin("sources/obj/tmp", n);
-		free(n);
-	}
+		fpath = ft_strjoin("sources/obj/tmp", n, err);
 	return (fpath);
 }
 
@@ -45,7 +42,7 @@ static int	stdintofd(char *dlm, int filefd)
 	{
 		input = readline("> ");
 		if (ft_strcmp(input, dlm) == 0)
-			break;
+			break ;
 		ft_putendl_fd(input, filefd);
 		free(input);
 		input = NULL;
@@ -65,7 +62,7 @@ static void	inputscan(t_exedata *data, t_cmdtable *row, t_errdata *err, int i)
 		if (row->infiles[k].io == LLT)
 		{
 			if (data->path[i] == NULL)
-				data->path[i] = genpath(i);
+				data->path[i] = genpath(i, err);
 			if (data->path[i] != NULL)
 			{
 				if (access(data->path[i], F_OK) == 0)
@@ -88,7 +85,7 @@ int	heredoc(t_cmdtable *tbl, t_exedata *data, t_errdata *err)
 	int	i;
 
 	i = 0;
-	data->path = malloc(sizeof(char *) * (tbl->nrows + 1));
+	data->path = create_pile(&err->gc, sizeof(char *), (tbl->nrows + 1));
 	if (data->path == NULL)
 	{
 		errfree(err, &data, &free_exedt, CNT);

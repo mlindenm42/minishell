@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getpath.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 22:37:30 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 13:38:39 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 20:50:09 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	"dir3/dir4/file" - path */
 // gets path for a command
 //if path not found returns command
-char	*extract_path(char *path_str, char *cmd)
+char	*extract_path(char *path_str, char *cmd, t_errdata *err)
 {
 	int		access_given;
 	char	**path_arr;
@@ -26,14 +26,14 @@ char	*extract_path(char *path_str, char *cmd)
 
 	i = 0;
 	//dprintf(2, "cmd%s\n", cmd);
-	slash_cmd = ft_strjoin("/", cmd);
+	slash_cmd = ft_strjoin("/", cmd, err);
 	//dprintf(2, "s cmd%s\n", slash_cmd);
 	//dprintf(2, "cmd%p\n", cmd);
 	path_arr = ft_split(path_str, ':');
 	access_given = -1;
 	while (path_arr[i] != NULL && access_given == -1)
 	{
-		path_cand = ft_strjoin(path_arr[i], slash_cmd);
+		path_cand = ft_strjoin(path_arr[i], slash_cmd, err);
 		access_given = access(path_cand, X_OK);
 		i++;
 		if (path_cand != NULL && access_given == -1)
@@ -54,7 +54,7 @@ char	*extract_path(char *path_str, char *cmd)
 	2) find path variable
 	3) extract needed path from env (special case of null env)
 	*/
-char	*getpath(char *fpath, char *envp[])
+char	*getpath(char *fpath, char *envp[], t_errdata *err)
 {
 	int		n;
 	int		i;
@@ -73,7 +73,7 @@ char	*getpath(char *fpath, char *envp[])
 			i++;
 	}
 	if (envp && envp[i] != NULL && n == 0)
-		path_str = extract_path(&((envp[i])[5]), fpath);
+		path_str = extract_path(&((envp[i])[5]), fpath, err);
 	else if (access(fpath, X_OK) == 0)
 		path_str = fpath;
 	else

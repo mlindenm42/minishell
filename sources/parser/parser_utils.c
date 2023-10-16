@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/15 21:27:54 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 18:04:34 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ void	rowalloc(t_cmdtable *tbl, t_tkn *tkns, int pipes, t_errdata *err)
 	tbl->infiles = NULL;
 	tbl->outfiles = NULL;
 	tbl->path_flag = 0;
-	tbl->args = malloc((tbl->nargs + 1) * sizeof(char *));
+	tbl->args = create_pile(&err->gc, sizeof(char *), (tbl->nargs + 1));
 	if (tbl->nins != 0)
-		tbl->infiles = malloc(tbl->nins * sizeof(t_iof));
+		tbl->infiles = create_pile(&err->gc, sizeof(t_iof), tbl->nins);
 	if (tbl->nouts != 0)
-		tbl->outfiles = malloc(tbl->nouts * sizeof(t_iof));
+		tbl->outfiles = create_pile(&err->gc, sizeof(t_iof), tbl->nouts);
 	if (tbl->args == NULL || (tbl->nins != 0 && tbl->infiles == NULL)
 		|| (tbl->nouts != 0 && tbl->outfiles == NULL))
 		errfree(err, tbl, free_rows, STP);

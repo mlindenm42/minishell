@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:34:22 by mrubina           #+#    #+#             */
-/*   Updated: 2022/12/16 17:42:29 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 21:16:21 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../../sources/trash/trash.h"
+#include "../../includes/structs.h"
 
 static long	power(int n, int unsigned p)
 {
@@ -68,13 +70,13 @@ static void	positive_to_str(int n, int len, char *str)
 /* 
 allocates memory and converts integer to string
  */
-char	*ft_itoa(int n)
+char	*ft_itoa(int n, t_errdata *err)
 {
 	char	*str;
 	int		len;
 
 	len = get_length(n);
-	str = (char *)malloc(len + 1);
+	str = create_pile(&err->gc, sizeof(char), len + 1);
 	if (str == 0)
 		return (0);
 	else if (n == -2147483648)

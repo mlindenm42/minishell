@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 17:41:30 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 20:51:34 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		calcargs(t_tkn *tkns, char *envp[]);
 int		calcins(t_tkn *tkns);
 int		calcouts(t_tkn *tkns);
 void	rowalloc(t_cmdtable *tbl, t_tkn *tkns, int pipes, t_errdata *err);
-char	*getpath(char *fpath, char *envp[]);
+char	*getpath(char *fpath, char *envp[], t_errdata *err);
 int		varvalid(char *str, char *envp[]);
 void	free_arr(char **arr);
 

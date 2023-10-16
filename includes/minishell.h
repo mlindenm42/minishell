@@ -6,7 +6,7 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:12:10 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 09:32:49 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 21:31:52 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char		**copy_arr(char **newarr, char **arr);
 //void	cmderr(void *cmd);
 void		cmderr(t_errdata *err, void *cmd, int stop);
 void		cmderr1(t_errdata *err, void *cmd,char *env[], int stop);
-void		custom_err(char *pref, const char *txt);
+void		custom_err(char *pref, const char *txt, t_errdata *err);
 void		echo(char *argv[]);
 void		printenv(char *env[]);
 int			isbuiltin(char *cmd);
@@ -64,7 +64,7 @@ int			cd(char *argv[]);
 void		pwd(void);
 void		exitbuiltin(char *argv[], t_errdata *err);
 void		setstatstr(t_errdata *err);
-void		set_loc_env(char *envp[]);
+void		set_loc_env(char *envp[], t_errdata *err);
 int			arr_len(char **arr);
 void		printexport(char **envp_loc);
 void		execute(char *envp[], t_errdata *err);
@@ -90,13 +90,13 @@ void		free_tokenlist(void);
 void		free_tokens(void);
 
 // get_next_token.c
-void		get_next_token(char **input);
+void		get_next_token(char **input, t_errdata *err);
 
 // lexer.c
-void		add_char_to_str(char **c);
-int			dquotationcheck(char **input);
-int			quotationcheck(char **input);
-void		lexer(char *input);
+void		add_char_to_str(char **c, t_errdata *err);
+int			dquotationcheck(char **input, t_errdata *err);
+int			quotationcheck(char **input, t_errdata *err);
+void		lexer(char *input, t_errdata *err);
 
 // terminal.c
 void		terminal(char *envp[], t_errdata *err);
@@ -105,8 +105,8 @@ void		handle_ctrl_d(t_errdata *err);
 void		handle_ctrl_backslash(int signal);
 
 // token.c
-void		create_tokenword(int type);
-void		create_token(int type, const char *val);
-void		tokenlist_to_array(void);
+void		create_tokenword(int type, t_errdata *err);
+void		create_token(int type, const char *val, t_errdata *err);
+void		tokenlist_to_array(t_errdata *err);
 
 #endif

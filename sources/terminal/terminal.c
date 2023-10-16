@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 14:09:00 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:07:25 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	handle_ctrl_c(int signal)
 // handles ctrl-D. Exits the shell.
 void	handle_ctrl_d(t_errdata *err)
 {
-	if (err->statstr != NULL)
-		free(err->statstr);
+	burn_it_down(&err->gc, err->gc.dump);
 	printf("exit\n");
 	exit(EXIT_FAILURE);
 }
@@ -73,7 +72,7 @@ void	terminal(char *envp[], t_errdata *err)
 			add_history(get_data()->input);
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
-		lexer(get_data()->input);
+		lexer(get_data()->input, err);
 		execute(envp, err);
 		// free(get_data()->input);
 		get_data()->input = NULL;

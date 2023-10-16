@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:35:31 by mrubina           #+#    #+#             */
-/*   Updated: 2022/12/07 00:11:56 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 20:36:45 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../../sources/trash/trash.h"
+#include "../../includes/structs.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2, t_errdata *err)
 {
 	char	*str;
 	size_t	len1;
@@ -22,7 +24,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	{
 		len1 = ft_strlen(s1);
 		len2 = ft_strlen(s2);
-		str = malloc(len1 + len2 + 1);
+		str = create_pile(&err->gc, sizeof(char), len1 + len2 + 1);
 		if (str != 0)
 		{
 			ft_strlcpy(str, s1, len1 + 1);

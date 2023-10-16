@@ -6,13 +6,15 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:34:53 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 11:27:31 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 20:38:17 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../../sources/trash/trash.h"
+#include "../../includes/structs.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set, t_errdata *err)
 {
 	char const	*start;
 	char const	*end;
@@ -27,9 +29,9 @@ char	*ft_strtrim(char const *s1, char const *set)
 		while ((ft_strchr(set, *end) != 0) && (end != s1))
 			end--;
 		if (start > end)
-			str = malloc(1);
+			str = create_pile(&err->gc, sizeof(char), 1);
 		else
-			str = malloc(end - start + 2);
+			str = create_pile(&err->gc, sizeof(char), end - start + 2);
 		if ((start <= end) && (str != 0))
 			ft_strlcpy(str, start, end - start + 2);
 		else if (str != 0)

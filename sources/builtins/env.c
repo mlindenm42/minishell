@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/14 20:45:01 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/16 21:11:31 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ char	*getenv1(char *var, char *envp[])
 //edits or adds OLDPWD as in bash
 //changes SHLVL
 //malloc!!!
-void	set_loc_env(char *envp[])
+void	set_loc_env(char *envp[], t_errdata *err)
 {
 	// int	n;
 	// char *undsc;
@@ -232,7 +232,6 @@ void	set_loc_env(char *envp[])
 		replace_var("OLDPWD", NULL, envp);
 	else
 		envappend("OLDPWD", envp);
-	shlvl = ft_itoa((ft_atoi(getenv1("SHLVL", envp)) + 1));
+	shlvl = ft_itoa((ft_atoi(getenv1("SHLVL", envp)) + 1), err);
 	replace_var("SHLVL", shlvl, envp);
-	free(shlvl);
 }

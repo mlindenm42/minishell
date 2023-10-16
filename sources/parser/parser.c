@@ -6,7 +6,7 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 09:11:10 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 20:52:45 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ static void	argtotbl(t_tkn *tkn, t_cmdtable *row)
 
 //writing args to a row
 //path_flag means that cmd should be freed separately from tokens
-static void	cmdtotbl(t_tkn *tkn, t_cmdtable *row, char *envp[])
+static void	cmdtotbl(t_tkn *tkn, t_cmdtable *row, char *envp[], t_errdata *err)
 {
-	row->cmd = getpath(tkn->val, envp);
+	row->cmd = getpath(tkn->val, envp, err);
 	*row->args = tkn->val;
 	if (row->cmd != tkn->val)
 		row->path_flag = 1;
@@ -76,7 +76,7 @@ t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes,  t_errdata *err)
 			if ((tkn == tkn0 || (tkn - 2 >= tkn0 && (tkn - 2)->type >= GT
 						&& (tkn - 2)->type <= LLT))
 						&& varvalid(tkn->val, err->envp))
-					cmdtotbl(tkn, row, err->envp);
+					cmdtotbl(tkn, row, err->envp, err);
 			else if ((tkn - 1)->type >= GT && (tkn - 1)->type <= LLT)
 				iototbl(tkn, row);
 			else if (varvalid(tkn->val, err->envp))
@@ -100,7 +100,7 @@ t_cmdtable	*parser(t_tkn *tkns, t_errdata *err)
 
 	tkn = tkns;
 	pipes = calcpipes(tkns);
-	err->tbl = malloc(pipes * sizeof(t_cmdtable));
+	err->tbl = create_pile(&err->gc, sizeof(t_cmdtable), pipes);
 	err->tbl->eflag = 0;
 	row = err->tbl;
 	if (err->tbl == NULL)
