@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:25:02 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 22:42:52 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*strjoin3(char *str1, char *str2, char *str3, t_errdata *err)
 because it's allocated we need to free it at the end!!!
 text[$var]text
 text[value]text */
-char	*varsubst(char **str, char *start, char *exit_stat, char *envp[], t_errdata *err)
+char	*varsubst(char **str, char *start, char *envp[], t_errdata *err)
 {
 	char	*after_var;
 	char	*before_var;
@@ -73,7 +73,7 @@ char	*varsubst(char **str, char *start, char *exit_stat, char *envp[], t_errdata
 	after_var = skip_var(start);
 	if (start == *str && *after_var == '\0' && !varvalid(start, envp))
 		return (after_var);
-	value = get_value(start, after_var - 1, exit_stat, envp);
+	value = get_value(start, after_var - 1, err->statstr, envp);
 	before_var = ft_substr(*str, 0, start - *str);
 	if (value != NULL)
 		*str = strjoin3(before_var, value, after_var, err);
@@ -88,16 +88,15 @@ char	*varsubst(char **str, char *start, char *exit_stat, char *envp[], t_errdata
 }
 
 //scanning a string for vars and substituting if necessary
-void	varscan(char **word, char *exit_stat, char *envp[], t_errdata *err)
+void	varscan(char **word, char *envp[], t_errdata *err)
 {
 	char	*cur;
-	// int		i;
 
 	cur = *word;
 	while (cur != NULL && *cur != '\0')
 	{
 		cur = ft_strchr(cur, '$');
 		if (cur != NULL)
-			cur = varsubst(word, cur, exit_stat, envp, err);
+			cur = varsubst(word, cur, envp, err);
 	}
 }
