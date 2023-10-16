@@ -6,7 +6,7 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 20:52:45 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 21:44:17 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static void	iototbl(t_tkn *tkn, t_cmdtable *row)
 {
 	if ((tkn - 1)->type == LT || (tkn - 1)->type == LLT)
 	{
-		row->curr_i->file = tkn->val;
+		row->curr_i->file = ft_strdup(tkn->val);
 		row->curr_i->io = (tkn - 1)->type;
 		(row->curr_i)++;
 	}
 	else
 	{
-		row->curr_o->file = tkn->val;
+		row->curr_o->file = ft_strdup(tkn->val);
 		row->curr_o->io = (tkn - 1)->type;
 		(row->curr_o)++;
 	}
@@ -35,7 +35,7 @@ static void	iototbl(t_tkn *tkn, t_cmdtable *row)
 //writing args to a row
 static void	argtotbl(t_tkn *tkn, t_cmdtable *row)
 {
-	*row->curr_a = tkn->val;
+	*row->curr_a = ft_strdup(tkn->val);
 	(row->curr_a)++;
 }
 

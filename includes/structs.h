@@ -6,7 +6,7 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:11:52 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 17:46:56 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 21:47:16 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct s_cmdtable
 	int			nins;
 	int			nouts;
 	int			eflag;
-	int			path_flag;
 }	t_cmdtable;
 
 typedef struct s_errdata

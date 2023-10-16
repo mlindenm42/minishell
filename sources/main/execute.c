@@ -6,7 +6,7 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 20:12:25 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 21:45:36 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	execute(char *envp[], t_errdata *err)
 		if (err->stop == CNT)
 			executor(tbl, envp, err);
 		//printf("p: %p,\n", tbl);
-		freecycle(err);
+		freeall(err, 0);
 	}
 //	{
 		//free_tbl(err);

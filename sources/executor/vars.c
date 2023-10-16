@@ -6,7 +6,7 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 21:22:52 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 21:46:22 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*varsubst(char **str, char *start, char *exit_stat, char *envp[], t_errdata
 void	varscan(char **word, char *exit_stat, char *envp[], t_errdata *err)
 {
 	char	*cur;
-	// int		i;
+	char *tmp;
 
 	cur = *word;
 	while (cur != NULL && *cur != '\0')

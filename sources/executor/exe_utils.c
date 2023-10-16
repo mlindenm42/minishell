@@ -6,7 +6,7 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:14:06 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 20:20:24 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 21:46:40 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int ch_flag)
 		//free_exedt(err->edata);//!!!
 		//free_rows(row + (row->nrows - 1 - row->pipeid));
 		tbl = row - row->pipeid;
-		freeall(err);
+		freeall(err, 1);
 		// free(get_data()->prompt);
 		// free(get_data()->input);
 		// free(get_data()->tokens);

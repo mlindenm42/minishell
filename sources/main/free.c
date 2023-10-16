@@ -6,7 +6,7 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 18:13:21 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 21:45:23 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,8 @@ void	free_iof(t_iof *arr, int n)
 	//}
 }
 
-void freeall(t_errdata *err)
+//if we exit exit_flag = 1
+void freeall(t_errdata *err, int exit_flag)
 {
 	//free_exedt(err->edata);
 	//free_str(&(err->statstr));

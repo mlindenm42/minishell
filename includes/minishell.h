@@ -6,7 +6,7 @@
 /*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:12:10 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 21:31:52 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 21:47:09 by dgross           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,7 @@ char		*getenvmem_end(char *envp[]);
 void		movetoend(char *start, char *envp[]);
 void		envappend(char *str, char *envp[]);
 int			varlen(char *var);
-void		freeall(t_errdata *err);
-void		freecycle(t_errdata *err);
-
+void		freeall(t_errdata *err, int exit_flag);
 // main.c
 t_data		*get_data(void);
 
