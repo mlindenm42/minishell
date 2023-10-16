@@ -6,55 +6,77 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:21:19 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 00:06:42 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*
-.. level up
-../ level up and start from it
-. cur dir
-./
-/ -abs path
-
- */
-int	cd(char *argv[])
+//checks if env has PWD
+int	haspwd(char *envp[])
 {
-	// int	i;
-	char *curdir;
-	char *newdir;
-	char *upperdir;
+	int	i;
+	int	pwd;
 
-	curdir = getcwd(NULL, 0);
-	// if (argv[1] != NULL && argv[1][0] == '/')
-	// 	newdir = argv[1];
-	// else if (argv[1] != NULL && argv[1][0] == '.' && argv[1][1] == '.')
-	// {
-	// 	upperdir = ft_substr(curdir, 0, ft_strrchr(curdir, '/') - curdir);
-	// 	newdir = ft_strjoin(upperdir, &argv[1][2]);
-	// 	free_str(&upperdir);
-	// }
-	// else if (argv[1] != NULL && argv[1][0] == '.' && argv[1][1] != '.')
-	// 	newdir = ft_strjoin(curdir, &argv[1][1]);
-	// else if (argv[1] != NULL && ft_strchr(argv[1], '/') == NULL)
-	// {
-	// 	upperdir = ft_strjoin("/", argv[1]);
-	// 	newdir = ft_strjoin(curdir, upperdir);
-	// 	free(upperdir);
-	// }
+	i = 0;
+	pwd = 0;
+	while (envp[i] != NULL)
+	{
+		if (ft_strncmp(envp[i], "PWD", 3) == 0)
+		{
+			pwd = 1;
+		}
+		i++;
+	}
+	return (pwd);
+}
+
+//checks if env has OLDPWD
+int	hasoldpwd(char *envp[])
+{
+	int	i;
+	int	oldpwd;
+
+	i = 0;
+	oldpwd = 0;
+	while (envp[i] != NULL)
+	{
+		if (ft_strncmp(envp[i], "OLDPWD", 6) == 0)
+		{
+			oldpwd = 1;
+		}
+		i++;
+	}
+	return (oldpwd);
+}
+
+int	cd(char *argv[], char *envp[], t_errdata *err)
+{
+	char	*copy;
+	char	*temp;
+
+	copy = getcwd(NULL, 0);
 	if (chdir(argv[1]) == -1)
+	{
+		printf("MINISHELL : cd %s: No such file or directory\n", argv[1]);
 		return (1);
-	// if (argv[1] != NULL && argv[1][0] != '/')
-		// free_str(&newdir);
-	free(curdir);
+	}
+	temp = ft_strjoin("PWD=", getcwd(NULL, 0), err);
+	if (haspwd(envp) == 1)
+		replace_var("PWD=", getcwd(NULL, 0), envp);
+	else
+		envappend(temp, envp);
+	temp = ft_strjoin("OLDPWD=", copy, err);
+	if (hasoldpwd(envp) == 1)
+		replace_var("OLDPWD=", copy, envp);
+	else
+		envappend(temp, envp);
 	return (0);
 }
 
 void	pwd(void)
 {
-	char *curdir;
+	char	*curdir;
 
 	curdir = getcwd(NULL, 0);
 	if (curdir != NULL)
@@ -80,7 +102,6 @@ void	exitbuiltin(char *argv[], t_errdata *err)
 			stat = 255;
 		}
 	}
-	// freeall(err);
 	printf("exit\n");
 	burn_it_down(&err->gc, err->gc.dump);
 	exit(stat);

@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:12:10 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 22:14:42 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 23:20:26 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void		printenv(char *env[]);
 int			isbuiltin(char *cmd);
 void		export(t_cmdtable *row, char *envp[]);
 void		unset(t_cmdtable *row, char *envp[]);
-int			cd(char *argv[]);
+int			cd(char *argv[], char *envp[], t_errdata *err);
 void		pwd(void);
 void		exitbuiltin(char *argv[], t_errdata *err);
 void		setstatstr(t_errdata *err);
@@ -77,6 +77,7 @@ void		envappend(char *str, char *envp[]);
 int			varlen(char *var);
 void		freeall(t_errdata *err);
 void		freecycle(t_errdata *err);
+int			hasoldpwd(char *envp[]);
 
 // main.c
 t_data		*get_data(void);

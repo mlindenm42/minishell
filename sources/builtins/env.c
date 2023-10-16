@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:22:21 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 00:01:04 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,24 +178,24 @@ void unset_var(char *vname, char *envp[])
 		shiftenv(start, envp, start - end - 1, env_end);
 }
 
-//checks if env has OLDPWD
-int	hasoldpwd(char *envp[])
-{
-	int	i;
-	int	oldpwd;
+// //checks if env has OLDPWD
+// int	hasoldpwd(char *envp[])
+// {
+// 	int	i;
+// 	int	oldpwd;
 
-	i = 0;
-	oldpwd = 0;
-	while (envp[i] != NULL)
-	{
-		if (ft_strncmp(envp[i], "OLDPWD", 6) == 0)
-		{
-			oldpwd = 1;
-		}
-		i++;
-	}
-	return (oldpwd);
-}
+// 	i = 0;
+// 	oldpwd = 0;
+// 	while (envp[i] != NULL)
+// 	{
+// 		if (ft_strncmp(envp[i], "OLDPWD", 6) == 0)
+// 		{
+// 			oldpwd = 1;
+// 		}
+// 		i++;
+// 	}
+// 	return (oldpwd);
+// }
 
 char	*getenv1(char *var, char *envp[])
 {

@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:14:06 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 22:23:38 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 23:20:51 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int ch_flag)
 	else if (ft_strcmp(row->args[0], "unset") == 0)
 		unset(row, envp);
 	else if(ft_strcmp(row->args[0], "cd") == 0)
-		cd(row->args);
+		cd(row->args, envp, err);
 	else if(ft_strcmp(row->args[0], "exit") == 0)
 		exitbuiltin(row->args, err);
 	if (ch_flag == 0)
