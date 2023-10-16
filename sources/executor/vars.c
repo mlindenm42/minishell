@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 12:47:32 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 17:22:19 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,9 @@ char	*varsubst(char **str, char *start, char *exit_stat, char *envp[])
 	value = get_value(start, after_var - 1, exit_stat, envp);
 	before_var = ft_substr(*str, 0, start - *str);
 	if (value != NULL)
-	{
-		free(*str);
 		*str = strjoin3(before_var, value, after_var);
-	}
 	else
-	{
-		free(*str);	
 		*str = ft_strjoin(before_var, after_var);
-	}
 	len = ft_strlen(before_var);
 	free(before_var);
 	if (value != NULL)
@@ -98,6 +92,7 @@ char	*varsubst(char **str, char *start, char *exit_stat, char *envp[])
 void	varscan(char **word, char *exit_stat, char *envp[])
 {
 	char	*cur;
+	char *tmp;
 	// int		i;
 
 	cur = *word;
@@ -105,6 +100,10 @@ void	varscan(char **word, char *exit_stat, char *envp[])
 	{
 		cur = ft_strchr(cur, '$');
 		if (cur != NULL)
+		{
+			tmp = *word;
 			cur = varsubst(word, cur, exit_stat, envp);
+			free(tmp);
+		}
 	}
 }
