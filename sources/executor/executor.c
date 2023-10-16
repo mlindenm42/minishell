@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 13:03:43 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 15:51:03 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,8 @@ int	executor(t_cmdtable *tbl, char *envp[], t_errdata *err)
 			return (1);
 		if (err->stop == CNT)
 			create_child(&tbl[i], envp, err);
+		// close(err->edata->infd);
+		close(err->edata->outfd);
 		setnextin(&tbl[i + 1], &data, err, i + 1);
 		i++;
 	}

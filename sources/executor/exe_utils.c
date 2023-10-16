@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:14:06 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 11:11:40 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 16:14:04 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int ch_flag)
 int	create_child(t_cmdtable *row, char *envp[], t_errdata *err)
 {
 	redir_close(err->edata->outfd, 1, err);
-	//printf("arg12 %s\n", row->args[1]);
 	err->edata->id[row->pipeid] = fork();
 	if (err->edata->id[row->pipeid] == -1)
 		err_handler(err, NULL, NXT);
@@ -109,11 +108,11 @@ int	create_child(t_cmdtable *row, char *envp[], t_errdata *err)
 		if (isbuiltin(row->args[0]))
 			exe_builtin(row, envp, err, 0);
 		else if (row->cmd == NULL)
-			cmderr1(err, row->args[0], envp, CNT); //!!!
+			cmderr1(err, row->args[0], envp, CNT);
 		else if (execve(row->cmd, row->args, envp) == -1)
 			cmderr(err, row->cmd, CNT);
 	}
-	else
-		close(err->edata->outfd);
+	close(err->edata->infd);
+	err->edata->infd = dup(STDIN_FILENO);
 	return (err->stop);
 }

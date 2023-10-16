@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 13:15:34 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 14:09:49 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,13 +139,13 @@ void freeall(t_errdata *err)
 {
 	free_exedt(err->edata);
 	free_str(&(err->statstr));
-	free_tokens();
-	free_tbl(err);
+	// free_tokens();
+	// free_tbl(err);
 }
 
 void freecycle(t_errdata *err)
 {
 	free_exedt(err->edata);
 	free_tokens();
-	free_tbl(err);
+	// free_tbl(err);
 }
