@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 21:45:23 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 22:26:17 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,7 @@ void	free_iof(t_iof *arr, int n)
 	//}
 }
 
-//if we exit exit_flag = 1
-void freeall(t_errdata *err, int exit_flag)
+void freeall(t_errdata *err)
 {
 	//free_exedt(err->edata);
 	//free_str(&(err->statstr));

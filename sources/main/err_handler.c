@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 21:45:53 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 22:25:47 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,6 @@ void	cmderr1(t_errdata *err, void *cmd, char *envp[], int stop)
 	else
 		custom_err(tmp, "command not found", err);
 	free(tmp);
-	freeall(err, 1);
+	freeall(err);
 	exit(err->stat);
 }

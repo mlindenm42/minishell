@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 21:46:22 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 22:25:02 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*varsubst(char **str, char *start, char *exit_stat, char *envp[], t_errdata
 void	varscan(char **word, char *exit_stat, char *envp[], t_errdata *err)
 {
 	char	*cur;
-	char *tmp;
+	// int		i;
 
 	cur = *word;
 	while (cur != NULL && *cur != '\0')

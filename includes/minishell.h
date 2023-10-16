@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:12:10 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 21:47:09 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 22:14:42 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ char		*getenvmem_end(char *envp[]);
 void		movetoend(char *start, char *envp[]);
 void		envappend(char *str, char *envp[]);
 int			varlen(char *var);
-void		freeall(t_errdata *err, int exit_flag);
+void		freeall(t_errdata *err);
+void		freecycle(t_errdata *err);
+
 // main.c
 t_data		*get_data(void);
 

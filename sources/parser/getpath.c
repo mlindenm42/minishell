@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getpath.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 22:37:30 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 21:44:54 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 22:28:12 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*extract_path(char *path_str, char *cmd, t_errdata *err)
 		return (path_cand);
 	if (path_cand != NULL)
 		free_str(&path_cand);
-	return (ft_strdup(cmd));
+	return (cmd);
 }
 
 /* cand_path is "/dir1/dir2/file"
@@ -61,9 +61,9 @@ char	*getpath(char *fpath, char *envp[], t_errdata *err)
 	char	*path_str;
 
 	if (isbuiltin(fpath) || ft_strchr(fpath, '/') != NULL)
-		return (ft_strdup(fpath));
+		return (fpath);
 	if (fpath[0] == '\0')
-		return (ft_strdup(fpath));
+		return (fpath);
 	n = 1;
 	i = 0;
 	while (envp && envp[i] != NULL && n != 0)
@@ -75,7 +75,7 @@ char	*getpath(char *fpath, char *envp[], t_errdata *err)
 	if (envp && envp[i] != NULL && n == 0)
 		path_str = extract_path(&((envp[i])[5]), fpath, err);
 	else if (access(fpath, X_OK) == 0)
-		path_str = ft_strdup(fpath);
+		path_str = fpath;
 	else
 		free_str(&path_str);
 	return (path_str);

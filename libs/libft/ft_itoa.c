@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:34:22 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 21:16:21 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/16 22:18:13 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	get_length(int n)
 	return (count);
 }
 
-/* 
+/*
 converts positive integer to string
  */
 static void	positive_to_str(int n, int len, char *str)
@@ -67,7 +67,7 @@ static void	positive_to_str(int n, int len, char *str)
 	*str = '\0';
 }
 
-/* 
+/*
 allocates memory and converts integer to string
  */
 char	*ft_itoa(int n, t_errdata *err)
