@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:11:52 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/17 10:42:11 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 21:25:59 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_data {
 	t_stringlist	*slistend;
 	t_tokenlist		*tlist;
 	t_tokenlist		*tlistend;
+	int				buffer;
 }	t_data;
 
 #endif

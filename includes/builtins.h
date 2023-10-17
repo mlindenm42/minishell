@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:55:59 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/17 19:29:22 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 21:31:47 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	envappend(char *str, char *envp[]);
 void	export(t_cmdtable *row, char *envp[], t_errdata *err);
 
 //unset.c
+void	unset_var(char *vname, char *envp[]);
 void	unset(t_cmdtable *row, char *envp[]);
 
 #endif
