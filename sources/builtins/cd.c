@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 17:25:43 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 17:42:14 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,18 @@ int	cd(char *argv[], char *envp[], t_errdata *err)
 {
 	char	*copy;
 	char	*temp;
+	char	*cwd;
 
 	copy = getcwd(NULL, 0);
-	if (argv[1] != NULL && chdir(argv[1]) == -1)
+	if (chdir(argv[1]) == -1)
 	{
-		err_handler(err, argv[1], CNT);
+		printf("MINISHELL : cd %s: No such file or directory\n", argv[1]);
 		return (1);
 	}
-	temp = ft_strjoin("PWD=", getcwd(NULL, 0), err);
+	cwd = getcwd(NULL, 0);
+	temp = ft_strjoin("PWD=", cwd, err);
 	if (haspwd(envp))
-		replace_var("PWD=", getcwd(NULL, 0), envp);
+		replace_var("PWD=", cwd, envp);
 	else
 		envappend(temp, envp);
 	temp = ft_strjoin("OLDPWD=", copy, err);
@@ -83,5 +85,7 @@ int	cd(char *argv[], char *envp[], t_errdata *err)
 		replace_var("OLDPWD=", copy, envp);
 	else
 		envappend(temp, envp);
+	free(cwd);
+	free(copy);
 	return (0);
 }
