@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:55:59 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/17 15:17:16 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 19:29:22 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		cd(char *argv[], char *envp[], t_errdata *err);
 void	echo(char *argv[]);
 
 // env_utils.c
-void	replace_var(char *v, char *val, char *e[]);
+void	replace_var(char *var, char *val, char *envp[], t_errdata *err);
 void	unset_var(char *vname, char *envp[]);
 
 // env.c

@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 18:59:23 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:36:15 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,26 @@ void	envappend(char *str, char *envp[])
 	envp[n] = NULL;
 }
 
-void	export(t_cmdtable *row, char *envp[], t_errdata *err)
+static void	replace(char *envp[], t_cmdtable *row, t_errdata *err)
 {
 	int		i;
 	char	*end;
 	char	*temp;
+
+	end = ft_strchr(*row->curr_a, '=');
+	i = 0;
+	while (row->curr_a[0][i] != '=' && row->curr_a[0][i] != '\0')
+		i++;
+	temp = NULL;
+	row->curr_a[0][i] = '\0';
+	temp = ft_strdup(*row->curr_a, err);
+	row->curr_a[0][i] = '=';
+	replace_var(temp, end + 1, envp, err);
+}
+
+void	export(t_cmdtable *row, char *envp[], t_errdata *err)
+{
+	int		i;
 
 	if (row->nargs == 1)
 		printexport(err);
@@ -91,20 +106,10 @@ void	export(t_cmdtable *row, char *envp[], t_errdata *err)
 		while (row->curr_a <= &row->args[row->nargs - 1])
 		{
 			i = 0;
-			while (row->curr_a[0][i] != '=')
+			while (row->curr_a[0][i] != '=' && row->curr_a[0][i] != '\0')
 				i++;
 			if (hasvar(envp, *row->curr_a, i + 1))
-			{
-				end = ft_strchr(*row->curr_a, '=');
-				i = 0;
-				while (row->curr_a[0][i] != '=' && row->curr_a[0][i] != '\0')
-					i++;
-				temp = NULL;
-				row->curr_a[0][i] = '\0';
-				temp = ft_strdup(*row->curr_a, err);
-				row->curr_a[0][i] = '=';
-				replace_var(temp, end + 1, envp);
-			}
+				replace(envp, row, err);
 			else
 				envappend(*row->curr_a, envp);
 			row->curr_a++;

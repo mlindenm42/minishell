@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 06:18:02 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:29:56 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,5 @@ void	set_loc_env(char *envp[], t_errdata *err)
 	char	*shlvl;
 
 	shlvl = ft_itoa((ft_atoi(getenv1("SHLVL", envp)) + 1), err);
-	replace_var("SHLVL", shlvl, envp);
+	replace_var("SHLVL", shlvl, envp, err);
 }

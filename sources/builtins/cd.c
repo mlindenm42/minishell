@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 18:35:49 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:29:43 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ int	cd(char *argv[], char *envp[], t_errdata *err)
 	cwd = getcwd(NULL, 0);
 	temp = ft_strjoin("PWD=", cwd, err);
 	if (haspwd(envp))
-		replace_var("PWD", cwd, envp);
+		replace_var("PWD", cwd, envp, err);
 	else
 		envappend(temp, envp);
 	temp = ft_strjoin("OLDPWD=", copy, err);
 	if (hasoldpwd(envp))
-		replace_var("OLDPWD", copy, envp);
+		replace_var("OLDPWD", copy, envp, err);
 	else
 		envappend(temp, envp);
 	free(cwd);

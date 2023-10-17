@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:45:49 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/17 18:58:40 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:39:17 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,56 +42,7 @@ static int	vlen(char *var)
 	return (i);
 }
 
-// static void	shiftenvs(char *var, char *envp[], int shift, char *end)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (envp[i] != var)
-// 		i++;
-// 	i++;
-// 	while (envp[i] != NULL)
-// 	{
-// 		if (envp[i] >= var && envp[i] <= end)
-// 			envp[i] = envp[i] + shift;
-// 		i++;
-// 	}
-// }
-
-//if a variable exists returns the pointer
-//to its start
-//vname only first l chars!!!
-
-char	*getvarstart(char *vname, char *envp[], int l)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		if (ft_strncmp(envp[i], vname, l) == 0
-			&& (envp[i][l] == '=' || envp[i][l] == '\0' ))
-			return (envp[i]);
-		i++;
-	}
-	return (NULL);
-}
-
-//gets length of a variable from an argument)
-//var1=test var2
-int	varlen(char *var)
-{
-	int	i;
-
-	i = 0;
-	while (var[i] != '=' && var[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
-
-void	replace_var(char *var, char *val, char *envp[])
+void	replace_var(char *var, char *val, char *envp[], t_errdata *err)
 {
 	int		index;
 	int		i;
@@ -112,7 +63,7 @@ void	replace_var(char *var, char *val, char *envp[])
 	}
 	if (index != -1)
 	{
-		new_var = (char *)malloc(ft_strlen(var) + ft_strlen(val) + 2);
+		new_var = create_elem(&err->gc, sizeof(char), ft_strlen(var) + ft_strlen(val) + 2);
 		if (new_var != NULL)
 		{
 			strcpy(new_var, var);
@@ -128,7 +79,7 @@ void	replace_var(char *var, char *val, char *envp[])
 	}
 	else
 	{
-		new_entry = (char *)malloc(ft_strlen(var) + ft_strlen(val) + 2);
+		new_entry = create_elem(&err->gc, sizeof(char), ft_strlen(var) + ft_strlen(val) + 2);
 		if (new_entry != NULL)
 		{
 			strcpy(new_entry, var);
