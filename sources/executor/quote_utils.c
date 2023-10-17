@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 15:18:00 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 15:43:04 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,9 +162,9 @@ char	*cropjoin2(char *str, char *qpart, int len, t_errdata *err)
 	char	*part1;
 	char	*rtn;
 
-	part1 = ft_substr(str, 0, len, err);//malloc
+	part1 = ft_substr(str, 0, len, err);
 	varscan(&part1, err->envp, err);
-	rtn = ft_strjoin(part1, qpart, err);//malloc
+	rtn = ft_strjoin(part1, qpart, err);
 	return (rtn);
 }
 
@@ -174,10 +174,10 @@ char	*cropjoin3(char *str, char *qpart, char *start, t_errdata *err)
 	char	*rtn;
 	char	*part2;
 
-	part1 = ft_substr(str, 0, start - str, err);//malloc
+	part1 = ft_substr(str, 0, start - str, err);
 	varscan(&part1, err->envp, err);
 	part2 = closingquote(start, *start) + 1;
-	rtn = strjoin3(part1, qpart, part2, err);//malloc
+	rtn = strjoin3(part1, qpart, part2, err);
 	free(part1);
 	return (rtn);
 }
@@ -202,15 +202,15 @@ int	replace_q(char **word, char *next, t_errdata *err)
 		return (0);
 	}
 	end = closingquote(start, *start);
-	qpart = ft_substr(start, 0, end - start + 1, err);//malloc
-	exp_quotes(&qpart, err->envp, err);//malloc
+	qpart = ft_substr(start, 0, end - start + 1, err);
+	exp_quotes(&qpart, err->envp, err);
 	if (start == str && *(end + 1) == '\0')
 		*word = qpart;
 	else if (start != str && *(end + 1) == '\0')
-		*word = cropjoin2(str, qpart, start - str, err);//malloc
+		*word = cropjoin2(str, qpart, start - str, err);
 	else if (start == str)
-		*word = ft_strjoin(qpart, end + 1, err);//malloc
+		*word = ft_strjoin(qpart, end + 1, err);
 	else if (*(end + 1) != '\0')
-		*word = cropjoin3(str, qpart, start, err);//malloc
+		*word = cropjoin3(str, qpart, start, err);
 	return (ft_strlen(next) - (end - start) - 1);
 }

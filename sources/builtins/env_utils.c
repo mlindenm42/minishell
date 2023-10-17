@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 06:14:54 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/17 12:43:44 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:48:16 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	shiftenvs(char *var, char *envp[], int shift, char *end)
 //if a variable exists returns the pointer
 //to its start
 //vname only first l chars!!!
-char *getvarstart(char *vname, char *envp[], int l)
+char	*getvarstart(char *vname, char *envp[], int l)
 {
 	int	i;
 
@@ -78,7 +78,7 @@ char *getvarstart(char *vname, char *envp[], int l)
 
 //gets length of a variable from an argument)
 //var1=test var2
-int 	varlen(char *var)
+int	varlen(char *var)
 {
 	int	i;
 
@@ -90,23 +90,23 @@ int 	varlen(char *var)
 	return (i);
 }
 
-void replace_var(char *vname, char *val, char *envp[])
+void	replace_var(char *vname, char *val, char *envp[])
 {
-	int	len;
-	char *start;
-	char *dst;
-	char *end;
+	int		len;
+	char	*start;
+	char	*dst;
+	char	*end;
 	char	*env_end;
-	int	n;
+	int		n;
 
-	len = varlen(vname); //vname malloced needed only for length
-	start = getvarstart(vname, envp, len);//p0
-	end = start + ft_strlen(start);// end of old var start of after end + 1  p2
+	len = varlen(vname);
+	start = getvarstart(vname, envp, len);
+	end = start + ft_strlen(start);
 	if (val != NULL)
-		len = len + ft_strlen(val) + 1;//new len
-	dst = start + len + 1;//place where after is shifted
+		len = len + ft_strlen(val) + 1;
+	dst = start + len + 1;
 	if (ft_strchr(start, '=') == NULL)
-	 	*end = '=';
+		*end = '=';
 	if (val == NULL)
 		*(dst - 1) = '\0';
 	env_end = getenvmem_end(envp);
