@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 15:43:04 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 21:28:01 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,6 @@ void	exp_quotes(char **word, char *envp[], t_errdata *err)
 		*word = tmp;
 		varscan(word, envp, err);
 	}
-	else if (*word != NULL)
-		varscan(word, envp, err);
 }
 
 char	*cropjoin2(char *str, char *qpart, int len, t_errdata *err)
@@ -175,10 +173,8 @@ char	*cropjoin3(char *str, char *qpart, char *start, t_errdata *err)
 	char	*part2;
 
 	part1 = ft_substr(str, 0, start - str, err);
-	varscan(&part1, err->envp, err);
 	part2 = closingquote(start, *start) + 1;
 	rtn = strjoin3(part1, qpart, part2, err);
-	free(part1);
 	return (rtn);
 }
 
@@ -187,6 +183,7 @@ char	*cropjoin3(char *str, char *qpart, char *start, t_errdata *err)
 //first quote should be found from the point where we left (next)
 //4 cases: quote part equals word, in the middle
 //on the right or on the left
+//next - part of the string thatshould be handled
 int	replace_q(char **word, char *next, t_errdata *err)
 {
 	char	*qpart;
@@ -197,10 +194,7 @@ int	replace_q(char **word, char *next, t_errdata *err)
 	str = *word;
 	start = firstquote(next);
 	if (start == NULL)
-	{
-		varscan(word, err->envp, err);
 		return (0);
-	}
 	end = closingquote(start, *start);
 	qpart = ft_substr(start, 0, end - start + 1, err);
 	exp_quotes(&qpart, err->envp, err);
@@ -212,5 +206,5 @@ int	replace_q(char **word, char *next, t_errdata *err)
 		*word = ft_strjoin(qpart, end + 1, err);
 	else if (*(end + 1) != '\0')
 		*word = cropjoin3(str, qpart, start, err);
-	return (ft_strlen(next) - (end - start) - 1);
+	return (next + ft_strlen(next) - end - 1);
 }

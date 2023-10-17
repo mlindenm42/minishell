@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 14:57:49 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 21:30:36 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 //offset from the end of the string to the point
 //where we should continue scanning
 //'"$USER"'test'jj'
+// start'"$USER"'end
 static void	expand_word(char **word, t_errdata *err)
 {
 	int		offset;
@@ -23,6 +24,7 @@ static void	expand_word(char **word, t_errdata *err)
 
 	if (*word != NULL)
 	{
+		varscannq(word, err->envp, err);
 		str_end = *word + ft_strlen(*word) - 1;
 		offset = ft_strlen(*word) - 1;
 		next = *word;

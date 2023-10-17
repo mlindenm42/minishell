@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 08:34:23 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 20:03:11 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ int		replace_q(char **word, char *next, t_errdata *err);
 char	*skip_var(char *start);
 char	*strjoin3(char *str1, char *str2, char *str3, t_errdata *err);
 void	varscan(char **word, char *env[], t_errdata *err);
+void	varscannq(char **word, char *envp[], t_errdata *err);
 
 #endif

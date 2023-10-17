@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 15:21:35 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 21:31:51 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,28 @@ void	varscan(char **word, char *envp[], t_errdata *err)
 		cur = ft_strchr(cur, '$');
 		if (cur != NULL)
 			cur = varsubst(word, cur, envp, err);
+	}
+}
+
+//scanning a string for vars and substituting if necessary
+//skipping parts inside quotes
+void	varscannq(char **word, char *envp[], t_errdata *err)
+{
+	char	*cur;
+
+	cur = *word;
+	while (cur != NULL && *cur != '\0')
+	{
+		if (*cur != '"' && *cur != '\'')
+		{
+			if (*cur == '$')
+				cur = varsubst(word, cur, envp, err);
+			else
+				cur++;
+		}
+		if (*cur == '\'')
+			cur = ft_strchr(cur + 1, '\'') + 1;
+		if (*cur == '"')
+			cur = ft_strchr(cur + 1, '"') + 1;
 	}
 }
