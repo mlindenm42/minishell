@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 15:22:04 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 18:59:23 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	export(t_cmdtable *row, char *envp[], t_errdata *err)
 {
 	int		i;
 	char	*end;
+	char	*temp;
 
 	if (row->nargs == 1)
 		printexport(err);
@@ -95,7 +96,14 @@ void	export(t_cmdtable *row, char *envp[], t_errdata *err)
 			if (hasvar(envp, *row->curr_a, i + 1))
 			{
 				end = ft_strchr(*row->curr_a, '=');
-				replace_var(*row->curr_a, end + 1, envp);
+				i = 0;
+				while (row->curr_a[0][i] != '=' && row->curr_a[0][i] != '\0')
+					i++;
+				temp = NULL;
+				row->curr_a[0][i] = '\0';
+				temp = ft_strdup(*row->curr_a, err);
+				row->curr_a[0][i] = '=';
+				replace_var(temp, end + 1, envp);
 			}
 			else
 				envappend(*row->curr_a, envp);

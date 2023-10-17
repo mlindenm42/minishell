@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 06:14:54 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/17 15:48:16 by mrubina          ###   ########.fr       */
+/*   Created: 2023/10/17 17:45:49 by mlindenm          #+#    #+#             */
+/*   Updated: 2023/10/17 18:58:40 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,26 @@ static int	vlen(char *var)
 	return (i);
 }
 
-static void	shiftenvs(char *var, char *envp[], int shift, char *end)
-{
-	int	i;
+// static void	shiftenvs(char *var, char *envp[], int shift, char *end)
+// {
+// 	int	i;
 
-	i = 0;
-	while (envp[i] != var)
-		i++;
-	i++;
-	while (envp[i] != NULL)
-	{
-		if (envp[i] >= var && envp[i] <= end)
-			envp[i] = envp[i] + shift;
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (envp[i] != var)
+// 		i++;
+// 	i++;
+// 	while (envp[i] != NULL)
+// 	{
+// 		if (envp[i] >= var && envp[i] <= end)
+// 			envp[i] = envp[i] + shift;
+// 		i++;
+// 	}
+// }
 
 //if a variable exists returns the pointer
 //to its start
 //vname only first l chars!!!
+
 char	*getvarstart(char *vname, char *envp[], int l)
 {
 	int	i;
@@ -90,70 +91,62 @@ int	varlen(char *var)
 	return (i);
 }
 
-void	replace_var(char *vname, char *val, char *envp[])
+void	replace_var(char *var, char *val, char *envp[])
 {
-	int		len;
-	char	*start;
-	char	*dst;
-	char	*end;
-	char	*env_end;
-	int		n;
+	int		index;
+	int		i;
+	char	*new_var;
+	char	*new_entry;
 
-	len = varlen(vname);
-	start = getvarstart(vname, envp, len);
-	end = start + ft_strlen(start);
-	if (val != NULL)
-		len = len + ft_strlen(val) + 1;
-	dst = start + len + 1;
-	if (ft_strchr(start, '=') == NULL)
-		*end = '=';
-	if (val == NULL)
-		*(dst - 1) = '\0';
-	env_end = getenvmem_end(envp);
-	if (env_end != end)
-		ft_memmove(dst, end + 1, env_end - end);
+	index = -1;
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		if (ft_strncmp(envp[i], var, ft_strlen(var))
+			== 0 && envp[i][ft_strlen(var)] == '=')
+		{
+			index = i;
+			break ;
+		}
+		i++;
+	}
+	if (index != -1)
+	{
+		new_var = (char *)malloc(ft_strlen(var) + ft_strlen(val) + 2);
+		if (new_var != NULL)
+		{
+			strcpy(new_var, var);
+			strcat(new_var, "=");
+			strcat(new_var, val);
+			envp[index] = new_var;
+		}
+		else
+		{
+			fprintf(stderr, "Memory allocation failed.\n");
+			exit(1);
+		}
+	}
 	else
 	{
-		n = arr_len(envp);
-		envp[n - 2] = start;
+		new_entry = (char *)malloc(ft_strlen(var) + ft_strlen(val) + 2);
+		if (new_entry != NULL)
+		{
+			strcpy(new_entry, var);
+			strcat(new_entry, "=");
+			strcat(new_entry, val);
+			i = 0;
+			while (envp[i] != NULL)
+				i++ ;
+			envp[i] = new_entry;
+			envp[i + 1] = NULL;
+		}
+		else
+		{
+			fprintf(stderr, "Memory allocation failed.\n");
+			exit(1);
+		}
 	}
-	if (dst - end - 1 < 0)
-		ft_bzero(env_end + (dst - end) - 1, end + 1 - dst);
-	if (val != NULL)
-		ft_strlcpy(start + varlen(vname) + 1, val, ft_strlen(val) + 1);
-	if (env_end != end)
-		shiftenvs(start, envp, len - (end - start), env_end);
 }
-
-// void	replace_var(char *v, char *val, char *e[])
-// {
-// 	int		len;
-// 	char	*dst;
-// 	char	*end;
-// 	char	*env_end;
-
-// 	len = 0;
-// 	end = var(v, e, vlen(v)) + ft_strlen(var(v, e, vlen(v)));
-// 	if (val != NULL)
-// 		len = vlen(v) + ft_strlen(val) + 1;
-// 	dst = var(v, e, vlen(v)) + len + 1;
-// 	if (ft_strchr(var(v, e, vlen(v)), '=') == NULL)
-// 		*end = '=';
-// 	if (val == NULL)
-// 		*(dst - 1) = '\0';
-// 	env_end = getenvmem_end(e);
-// 	if (env_end != end)
-// 		ft_memmove(dst, end + 1, env_end - end);
-// 	else
-// 		e[arr_len(e) - 2] = var(v, e, vlen(v));
-// 	if (dst - end - 1 < 0)
-// 		ft_bzero(env_end + (dst - end) - 1, end + 1 - dst);
-// 	if (val != NULL)
-// 		ft_strlcpy(var(v, e, vlen(v)) + vlen(v) + 1, val, ft_strlen(val) + 1);
-// 	if (env_end != end)
-// 		shiftenvs(var(v, e, vlen(v)), e,
-// 			len - (end - var(v, e, vlen(v))), env_end);
-// }
 
 void	unset_var(char *vname, char *envp[])
 {
