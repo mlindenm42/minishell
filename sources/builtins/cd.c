@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 08:05:11 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:25:43 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ int	cd(char *argv[], char *envp[], t_errdata *err)
 	char	*temp;
 
 	copy = getcwd(NULL, 0);
-	if (chdir(argv[1]) == -1)
+	if (argv[1] != NULL && chdir(argv[1]) == -1)
 	{
-		printf("MINISHELL : cd %s: No such file or directory\n", argv[1]);
+		err_handler(err, argv[1], CNT);
 		return (1);
 	}
 	temp = ft_strjoin("PWD=", getcwd(NULL, 0), err);
