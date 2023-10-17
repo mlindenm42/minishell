@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:12:10 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 23:20:26 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 05:49:45 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void		envappend(char *str, char *envp[]);
 int			varlen(char *var);
 void		freeall(t_errdata *err);
 void		freecycle(t_errdata *err);
+char		*strjoin3(char *str1, char *str2, char *str3, t_errdata *err);
 int			hasoldpwd(char *envp[]);
 
 // main.c

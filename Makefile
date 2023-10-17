@@ -6,7 +6,7 @@
 #    By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 15:23:37 by mrubina           #+#    #+#              #
-#    Updated: 2023/10/17 00:46:20 by mlindenm         ###   ########.fr        #
+#    Updated: 2023/10/17 05:44:13 by mlindenm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ OBJ_DIR		=	$(SRC_DIR)/obj
 
 SRC_M		=	main.c err_handler.c free.c array_utils.c execute.c
 SRC_P		= 	parser.c parser_utils.c testfunc.c getpath.c var_check.c
-SRC_E		= 	executor.c exe_utils.c heredoc.c hdutils.c ins_outs.c expander.c vars.c
+SRC_E		= 	executor.c exe_utils.c heredoc.c hdutils.c ins_outs.c expander.c vars.c quote_utils.c
 SRC_B		=	echo.c cd.c builtin_utils.c export.c env.c unset.c export_sort.c
 SRC_T		=	free_terminal.c get_next_token.c lexer.c terminal.c token.c
 SRC_G		=	dump.c garbage_truck.c

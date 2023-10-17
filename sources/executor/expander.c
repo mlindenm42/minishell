@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgross <dgross@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:46:42 by dgross           ###   ########.fr       */
+/*   Updated: 2023/10/17 05:51:44 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,24 @@ void	expander(t_cmdtable *tbl, t_errdata *err, char *envp[])
 	}
 }
 
-//if single quotes remove them
-//if double quotes expand variables and remove quotes
-//if no quotes expand vars
+//offset from the end of the string to the point
+//where we should continue scanning
+//'"$USER"'test'jj'
 void	expand_word(char **word, char *envp[], t_errdata *err)
 {
-	char	*tmp;
+	int offset;
+	char *str_end;
+	char *next;
 
-	if (*word != NULL && **word == '\'')
+	str_end = *word + ft_strlen(*word) - 1;
+	offset = ft_strlen(*word) - 1;
+	next = *word;
+	while (offset > 0)
 	{
-		tmp = ft_strtrim(*word, "\'", err);
-		*word = tmp;
+		offset = replace_q(word, next, err);//malloc
+		if (offset == 0)
+			break;
+		str_end = *word + ft_strlen(*word) - 1;
+		next = str_end - offset + 1;
 	}
-	else if (*word != NULL && **word == '"')
-	{
-		tmp = ft_strtrim(*word, "\"", err);
-		*word = tmp;
-		varscan(word, envp, err);
-	}
-	else if (*word != NULL)
-		varscan(word, envp, err);
 }
