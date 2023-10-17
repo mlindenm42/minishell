@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:35:51 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:14:23 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 01:46:14 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,5 @@ char	*skip_var(char *start);
 void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int id);
 void	arr_sort(char **arr, int n);
 int		env_change(char *cmd, int nrows);
+int		replace_q(char **word, char *next, char *exit_stat, t_errdata *err);
 #endif

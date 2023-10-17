@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:21:35 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 00:40:59 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	echo(char *argv[])
 	{
 		while (argv[i] != NULL)
 		{
-			remove_quotes(argv[i]);
+			//remove_quotes(argv[i]);
 			if (i == 1 && ft_strncmp(argv[i], "-n", 2) == 0)
 				newline = 0;
 			else if (argv[i + 1] != NULL)

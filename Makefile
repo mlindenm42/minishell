@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+         #
+#    By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 15:23:37 by mrubina           #+#    #+#              #
-#    Updated: 2023/10/16 22:33:58 by mlindenm         ###   ########.fr        #
+#    Updated: 2023/10/17 05:12:22 by mrubina          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME		=	minishell
 
 CC			=	cc
 # CFLAGS		=	-Wall -Werror -Wextra
-#SANITIZE 	= 	-g -fsanitize=address
-SANITIZE 	= 	-LLeakSanitizer -llsan -lc++
+SANITIZE 	= 	-g -fsanitize=address
+#SANITIZE 	= 	-LLeakSanitizer -llsan -lc++
 # valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./minishell
 
 SRC_DIR		=	sources
@@ -23,7 +23,7 @@ OBJ_DIR		=	$(SRC_DIR)/obj
 
 SRC_M		=	main.c err_handler.c free.c array_utils.c execute.c
 SRC_P		= 	parser.c parser_utils.c testfunc.c getpath.c var_check.c
-SRC_E		= 	executor.c exe_utils.c heredoc.c hdutils.c ins_outs.c expander.c vars.c
+SRC_E		= 	executor.c exe_utils.c heredoc.c hdutils.c ins_outs.c expander.c vars.c quote_utils.c
 SRC_B		=	echo.c cd.c builtin_utils.c export.c env.c unset.c export_sort.c
 SRC_T		=	free_terminal.c get_next_token.c lexer.c terminal.c token.c
 SRC_G		=	dump.c garbage_truck.c

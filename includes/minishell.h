@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:12:10 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 22:14:42 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/16 23:36:32 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void		envappend(char *str, char *envp[]);
 int			varlen(char *var);
 void		freeall(t_errdata *err);
 void		freecycle(t_errdata *err);
+char		*strjoin3(char *str1, char *str2, char *str3, t_errdata *err);
 
 // main.c
 t_data		*get_data(void);
