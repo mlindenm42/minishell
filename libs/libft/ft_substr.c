@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:27:46 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 16:31:46 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:41:09 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len, t_errdata *err)
 		max_len = str_len - start;
 	if (len > max_len)
 		len = max_len;
-	substr = create_elem(&err->gc, sizeof(char), length + 1);
+	substr = create_elem(&err->gc, sizeof(char), len + 1);
 	if ((substr != 0) && (s != 0) && (start <= str_len))
 		ft_strlcpy(substr, &s[start], len + 1);
 	else if ((substr != 0) && (s != 0) && (start > str_len))
