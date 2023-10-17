@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:22:56 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 02:36:42 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,13 @@ int	inenv(char *arg, char *envp[])
 		return (1);
 	}
 	else if (getenv1(arg, envp) != NULL)
-		{
-			//printf("var %s\n", getenv1(arg, envp));
-			return (1);}
+		return (1);
 	else
 		return (inenv_nv(arg, envp));
 }
 
 //adds a string to env
-void envappend(char *str, char *envp[])
+void	envappend(char *str, char *envp[])
 {
 	char	*env_end;
 	int		n;
@@ -127,9 +125,8 @@ replaces only if new value isn't NULL
 void	envscan(t_cmdtable *row, char *envp[])
 {
 	int		i;
-	// int		len;
 	char	*end;
-	char*	vname;
+	char	*vname;
 
 	i = 0;
 	while (i <= arr_len(envp) - 2)
@@ -153,78 +150,29 @@ void	envscan(t_cmdtable *row, char *envp[])
 	}
 }
 
-/* void	export(t_cmdtable *row, char *envp[])
+//checks if env has variable
+int	hasvar(char *envp[], char *str, int len)
 {
-	int		i;
-	int		n;
-	char	*undsc;
+	int	i;
+	int	has;
 
-	if (row->nargs == 1)
-		printexport(envp);
-	else
+	i = 0;
+	has = 0;
+	while (envp[i] != NULL)
 	{
-		envscan(row, envp);
-		row->curr_a = &row->args[1];
-		i = 0;
-		n = arr_len(envp);
-		if (envp[n - 2] != NULL && envp[n - 2] == getenv1("_", envp) - 2)
+		if (ft_strncmp(envp[i], str, len) == 0)
 		{
-			undsc = envp[n - 2];
-			n--;
+			has = 1;
 		}
-		while (row->curr_a <= &row->args[row->nargs - 1])
-		{
-			if (inenv(*row->curr_a, envp) == FALSE)
-			{
-				ft_strlcpy(row->err->envmem_end + 1, *row->curr_a, ft_strlen(*row->curr_a) + 1);
-				envp[n - 1 + i] = row->err->envmem_end + 1;
-				envp[n - 1 + i] = *row->curr_a;
-				row->err->envmem_end = row->err->envmem_end + ft_strlen(*row->curr_a) + 1;
-				//printf("n %s\n", getenv1("var1", envp));
-				i++;
-			}
-			row->curr_a++;
-		}
-		envp[n - 1 + i] = undsc;
-		envp[n + i] = NULL;
-		//printf("n %s\n", getenv("var4"));
+		i++;
 	}
-} */
-//
-/* void	export(t_cmdtable *row, char *envp[])
-{
-	int		n;
-	char	*undsc;
-	char	*end;
-
-	if (row->nargs == 1)
-		printexport(envp);
-	else
-	{
-		envscan(row, envp);
-		row->curr_a = &row->args[1];
-		while (row->curr_a <= &row->args[row->nargs - 1])
-		{
-			if (inenv(*row->curr_a, envp) == FALSE)
-			{
-				//printf("var %s\n", *row->curr_a);
-				envappend(*row->curr_a, envp);
-				n = arr_len(envp);
-				end = getenvmem_end(envp);
-				ft_strlcpy(end + 1, *row->curr_a, ft_strlen(*row->curr_a) + 1);
-				envp[n - 1] = end + 1;
-				envp[n] = NULL;
-			}
-			row->curr_a++;
-		}
-	}
-} */
+	return (has);
+}
 
 void	export(t_cmdtable *row, char *envp[])
 {
-	int	i;
+	int		i;
 	char	*end;
-	int		is_set;
 
 	if (row->nargs == 1)
 		printexport(envp);
@@ -233,21 +181,16 @@ void	export(t_cmdtable *row, char *envp[])
 		row->curr_a = &row->args[1];
 		while (row->curr_a <= &row->args[row->nargs - 1])
 		{
-			is_set = 0;
-			end = ft_strchr(*row->curr_a, '=');
 			i = 0;
-			while (envp[i] != NULL)
-			{
-				if (ft_strncmp(envp[i], *row->curr_a, varlen(*row->curr_a)) == 0)
-				{
-					if (end != NULL)
-						replace_var(*row->curr_a, end + 1, envp);
-					is_set = 1;
-					break;
-				}
+			while (row->curr_a[0][i] != '=')
 				i++;
+			if (hasvar(envp, *row->curr_a, i + 1))
+			{
+				end = ft_strchr(*row->curr_a, '=');
+				printf("ASDF: %s\n", *row->curr_a);
+				replace_var(*row->curr_a, end + 1, envp);
 			}
-			if (is_set == 0)
+			else
 				envappend(*row->curr_a, envp);
 			row->curr_a++;
 		}

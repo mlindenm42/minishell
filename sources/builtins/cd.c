@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 00:06:42 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 02:30:32 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	haspwd(char *envp[])
 	pwd = 0;
 	while (envp[i] != NULL)
 	{
-		if (ft_strncmp(envp[i], "PWD", 3) == 0)
+		if (ft_strncmp(envp[i], "PWD=", 4) == 0)
 		{
 			pwd = 1;
 		}
@@ -41,7 +41,7 @@ int	hasoldpwd(char *envp[])
 	oldpwd = 0;
 	while (envp[i] != NULL)
 	{
-		if (ft_strncmp(envp[i], "OLDPWD", 6) == 0)
+		if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
 		{
 			oldpwd = 1;
 		}
@@ -62,12 +62,12 @@ int	cd(char *argv[], char *envp[], t_errdata *err)
 		return (1);
 	}
 	temp = ft_strjoin("PWD=", getcwd(NULL, 0), err);
-	if (haspwd(envp) == 1)
+	if (haspwd(envp))
 		replace_var("PWD=", getcwd(NULL, 0), envp);
 	else
 		envappend(temp, envp);
 	temp = ft_strjoin("OLDPWD=", copy, err);
-	if (hasoldpwd(envp) == 1)
+	if (hasoldpwd(envp))
 		replace_var("OLDPWD=", copy, envp);
 	else
 		envappend(temp, envp);
