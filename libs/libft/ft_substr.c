@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:27:46 by mrubina           #+#    #+#             */
-/*   Updated: 2022/12/14 15:31:29 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 16:41:09 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../../includes/minishell.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len, t_errdata *err)
 {
 	char	*substr;
 	size_t	str_len;
@@ -27,7 +28,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		max_len = str_len - start;
 	if (len > max_len)
 		len = max_len;
-	substr = malloc(len + 1);
+	substr = create_elem(&err->gc, sizeof(char), len + 1);
 	if ((substr != 0) && (s != 0) && (start <= str_len))
 		ft_strlcpy(substr, &s[start], len + 1);
 	else if ((substr != 0) && (s != 0) && (start > str_len))
