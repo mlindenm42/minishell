@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:14:06 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/17 12:22:58 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:17:40 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int ch_flag)
 	else if (ft_strcmp(row->args[0], "env") == 0)
 		printenv(envp);
 	else if (ft_strcmp(row->args[0], "export") == 0)
-		export(row, envp);
+		export(row, envp, err);
 	else if (ft_strcmp(row->args[0], "unset") == 0)
 		unset(row, envp);
 	else if (ft_strcmp(row->args[0], "cd") == 0)

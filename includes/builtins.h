@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:55:59 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/17 10:40:43 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:17:16 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	arr_sort(char **arr, int n);
 
 // export.c
 void	envappend(char *str, char *envp[]);
-void	export(t_cmdtable *row, char *envp[]);
+void	export(t_cmdtable *row, char *envp[], t_errdata *err);
 
 //unset.c
 void	unset(t_cmdtable *row, char *envp[]);

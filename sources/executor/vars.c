@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 14:01:28 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 15:21:35 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,19 @@ char	*skip_var(char *start)
 	while ((*cur != '\0' && ft_isalnum(*cur) == 1)
 		|| ft_isalpha(*cur) == 1 || *cur == '_')
 		cur++;
-	dprintf(2, "skip %s\n", cur);	return (cur);
+	return (cur);
 }
 
 //given variable start ($) and end, returns its value
-static char	*get_value(char *start, char *end, char *exit_stat, char *envp[])
+static char	*get_value(char *start, char *end, char *exit_stat, t_errdata *err)
 {
 	char	*var;
 	char	*value;
 
 	if (ft_strncmp(start, "$?", end - start) == 0)
 		return (exit_stat);
-	var = ft_substr(start + 1, 0, end - start);
-	value = getenv1(var, envp);
-	free(var);
+	var = ft_substr(start + 1, 0, end - start, err);
+	value = getenv1(var, err->envp);
 	return (value);
 }
 
@@ -54,17 +53,15 @@ static char	*varsubst(char **str, char *start, char *envp[], t_errdata *err)
 	int		len;
 
 	after_var = skip_var(start);
-	dprintf(2, "vsubst%s\n", after_var);
 	if (start == *str && *after_var == '\0' && !valid(start, envp))
 		return (after_var);
-	value = get_value(start, after_var - 1, err->statstr, envp);
-	before_var = ft_substr(*str, 0, start - *str);
+	value = get_value(start, after_var - 1, err->statstr, err);
+	before_var = ft_substr(*str, 0, start - *str, err);
 	if (value != NULL)
 		*str = strjoin3(before_var, value, after_var, err);
 	else
 		*str = ft_strjoin(before_var, after_var, err);
 	len = ft_strlen(before_var);
-	free(before_var);
 	if (value != NULL)
 		return (*str + len + ft_strlen(value));
 	else
@@ -91,7 +88,6 @@ void	varscan(char **word, char *envp[], t_errdata *err)
 	while (cur != NULL && *cur != '\0')
 	{
 		cur = ft_strchr(cur, '$');
-		dprintf(2, "vsubst %s\n", cur);
 		if (cur != NULL)
 			cur = varsubst(word, cur, envp, err);
 	}

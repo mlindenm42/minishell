@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 08:15:10 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:22:04 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 //function shouldnt change env
 //and is generated each time minishell is run
 // varible _ is not printed
-static void	printexport(char **envp)
+static void	printexport(t_errdata *err)
 {
 	char	**envsorted;
 	int		i;
@@ -25,9 +25,9 @@ static void	printexport(char **envp)
 	char	*end;
 	char	*name;
 
-	n = arr_len(envp);
+	n = arr_len(err->envp);
 	envsorted = malloc(n * sizeof(char *));
-	envsorted = copy_arr(envsorted, envp);
+	envsorted = copy_arr(envsorted, err->envp);
 	i = 0;
 	arr_sort(envsorted, n - 1);
 	while (envsorted[i] != NULL)
@@ -35,9 +35,8 @@ static void	printexport(char **envp)
 		end = ft_strchr(envsorted[i], '=');
 		if (ft_strncmp(envsorted[i], "_=", 2) != 0 && end != NULL)
 		{
-			name = ft_substr(envsorted[i], 0, end - envsorted[i]);
-			printf("declare -x %s=\"%s\"\n", name, getenv1(name, envp));
-			free(name);
+			name = ft_substr(envsorted[i], 0, end - envsorted[i], err);
+			printf("declare -x %s=\"%s\"\n", name, getenv1(name, err->envp));
 		}
 		else if (ft_strncmp(envsorted[i], "_=", 2) != 0)
 			printf("declare -x %s\n", envsorted[i]);
@@ -78,13 +77,13 @@ void	envappend(char *str, char *envp[])
 	envp[n] = NULL;
 }
 
-void	export(t_cmdtable *row, char *envp[])
+void	export(t_cmdtable *row, char *envp[], t_errdata *err)
 {
 	int		i;
 	char	*end;
 
 	if (row->nargs == 1)
-		printexport(envp);
+		printexport(err);
 	else
 	{
 		row->curr_a = &row->args[1];

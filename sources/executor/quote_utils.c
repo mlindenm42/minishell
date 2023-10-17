@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 13:07:50 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 15:18:00 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,10 +162,9 @@ char	*cropjoin2(char *str, char *qpart, int len, t_errdata *err)
 	char	*part1;
 	char	*rtn;
 
-	part1 = ft_substr(str, 0, len);//malloc
+	part1 = ft_substr(str, 0, len, err);//malloc
 	varscan(&part1, err->envp, err);
 	rtn = ft_strjoin(part1, qpart, err);//malloc
-	free(part1);
 	return (rtn);
 }
 
@@ -175,7 +174,7 @@ char	*cropjoin3(char *str, char *qpart, char *start, t_errdata *err)
 	char	*rtn;
 	char	*part2;
 
-	part1 = ft_substr(str, 0, start - str);//malloc
+	part1 = ft_substr(str, 0, start - str, err);//malloc
 	varscan(&part1, err->envp, err);
 	part2 = closingquote(start, *start) + 1;
 	rtn = strjoin3(part1, qpart, part2, err);//malloc
@@ -198,9 +197,12 @@ int	replace_q(char **word, char *next, t_errdata *err)
 	str = *word;
 	start = firstquote(next);
 	if (start == NULL)
+	{
+		varscan(word, err->envp, err);
 		return (0);
+	}
 	end = closingquote(start, *start);
-	qpart = ft_substr(start, 0, end - start + 1);//malloc
+	qpart = ft_substr(start, 0, end - start + 1, err);//malloc
 	exp_quotes(&qpart, err->envp, err);//malloc
 	if (start == str && *(end + 1) == '\0')
 		*word = qpart;
