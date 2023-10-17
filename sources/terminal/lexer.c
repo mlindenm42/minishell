@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:20:40 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/17 10:23:51 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:13:00 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int	quotationcheck(char **input, t_errdata *err)
 
 void	pipecheck(t_errdata *err)
 {
-	if (get_data()->tokens[get_data()->tokenslength - 2].type == PIPE)
+	if (get_data()->tokenslength > 2
+		&& get_data()->tokens[get_data()->tokenslength - 2].type == PIPE)
 	{
 		write(2, "pipe not closed\n", 16);
 		get_data()->tlist = NULL;
