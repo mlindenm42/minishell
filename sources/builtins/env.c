@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 00:01:04 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 04:22:14 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ void	shiftenv(char *var, char *envp[], int shift, char *end)
 	envp[i] = NULL;
 }
 
-
-
 /*
 replaces or deletes variable
 
@@ -157,7 +155,6 @@ void replace_var(char *vname, char *val, char *envp[])
 		shiftenvs(start, envp, len - (end - start), env_end);
 }
 
-
 void unset_var(char *vname, char *envp[])
 {
 	char *start;
@@ -177,25 +174,6 @@ void unset_var(char *vname, char *envp[])
 	else
 		shiftenv(start, envp, start - end - 1, env_end);
 }
-
-// //checks if env has OLDPWD
-// int	hasoldpwd(char *envp[])
-// {
-// 	int	i;
-// 	int	oldpwd;
-
-// 	i = 0;
-// 	oldpwd = 0;
-// 	while (envp[i] != NULL)
-// 	{
-// 		if (ft_strncmp(envp[i], "OLDPWD", 6) == 0)
-// 		{
-// 			oldpwd = 1;
-// 		}
-// 		i++;
-// 	}
-// 	return (oldpwd);
-// }
 
 char	*getenv1(char *var, char *envp[])
 {
@@ -217,21 +195,10 @@ char	*getenv1(char *var, char *envp[])
 	return (value);
 }
 
-
-//edits or adds OLDPWD as in bash
-//changes SHLVL
-//malloc!!!
 void	set_loc_env(char *envp[], t_errdata *err)
 {
-	// int	n;
-	// char *undsc;
 	char	*shlvl;
-	//add pwd!!!
-	// n = arr_len(envp);
-	if (hasoldpwd(envp) == 1)
-		replace_var("OLDPWD", NULL, envp);
-	else
-		envappend("OLDPWD", envp);
+
 	shlvl = ft_itoa((ft_atoi(getenv1("SHLVL", envp)) + 1), err);
 	replace_var("SHLVL", shlvl, envp);
 }

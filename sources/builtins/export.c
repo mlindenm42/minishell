@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 02:36:42 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 04:20:50 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,6 @@ void	export(t_cmdtable *row, char *envp[])
 			if (hasvar(envp, *row->curr_a, i + 1))
 			{
 				end = ft_strchr(*row->curr_a, '=');
-				printf("ASDF: %s\n", *row->curr_a);
 				replace_var(*row->curr_a, end + 1, envp);
 			}
 			else
