@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 18:19:40 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:20:34 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 06:05:35 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-#include "../../includes/structs.h"
+# include "../../includes/structs.h"
 
 typedef struct s_list
 {

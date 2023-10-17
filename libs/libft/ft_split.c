@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:36:03 by mrubina           #+#    #+#             */
-/*   Updated: 2023/05/02 14:37:13 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 09:12:01 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../includes/minishell.h"
 #include "libft.h"
 
 static size_t	word_count(char const *s, char c)
@@ -80,7 +81,7 @@ static int	wordiszero(char *word, int *index, char ***arr)
 		free(*arr);
 		*arr = 0;
 		return (1);
-	}	
+	}
 }
 
 char	**ft_split(char const *s, char c)

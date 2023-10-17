@@ -6,18 +6,11 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:24:03 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:43:27 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-//printf("end pipe%i, %s\n", tkn->token, tkn->val);
-//printf("nd token%i, %s\n", tkn->token, tkn->val);
-//printf("%i\n", pipes);
-//ft_putnbr_fd(flag, 2);
-//ft_putchar_fd('\n', 2);
-//dprintf(2, "my id%i\n", data.id[i]);
-//dprintf(2, " %p\n", p);
 
 //takes command table and executes commmand
 /* int		pipe;
@@ -33,7 +26,7 @@
 	int		nouts; */
 
 //setting input
-void	setin(t_cmdtable *row, t_exedata *data, int *i, t_errdata *err)
+static void	setin(t_cmdtable *row, t_exedata *data, int *i, t_errdata *err)
 {
 	if (row->nins != 0)
 	{
@@ -58,7 +51,7 @@ static int	data_init(t_cmdtable *tbl, t_exedata *data, int *i, t_errdata *err)
 	data->path = NULL;
 	data->id = NULL;
 	data->nrows = tbl->nrows;
-	data->id = create_pile(&err->gc, sizeof(pid_t), tbl->nrows);
+	data->id = create_elem(&err->gc, sizeof(pid_t), tbl->nrows);
 	if (data->id == NULL)
 	{
 		errfree(err, data->id, NULL, STP);
@@ -76,6 +69,28 @@ static int	data_init(t_cmdtable *tbl, t_exedata *data, int *i, t_errdata *err)
 	return (0);
 }
 
+//set output for the last command
+static int	lastcmd(t_cmdtable *row, t_exedata *data,
+char *envp[], t_errdata *err)
+{
+	outopen(row, &data->outfd, NXT, err);
+	if (row->nouts == 0)
+		data->outfd = dup(data->outtmpfd);
+	if (row->pipeid != 0 && data->pbreak != BR && (row - 1)->eflag != ERR)
+		redir_close(data->infd, 0, err);
+	if (err->stop != NXT)
+	{
+		if (row->cmd != NULL && env_change(row->cmd, row->nrows))
+		{
+			exe_builtin(row, envp, err, 1);
+			row->eflag = ERR;
+		}
+		else
+			create_child(row, envp, err);
+	}
+	return (0);
+}
+
 /*
  wait for the end of cmds
  set exitstatus
@@ -83,7 +98,7 @@ static int	data_init(t_cmdtable *tbl, t_exedata *data, int *i, t_errdata *err)
  delete temporary files
  free what was allocated
  */
-void	finish(t_cmdtable *tbl, t_exedata *data, t_errdata *err)
+static void	finish(t_cmdtable *tbl, t_exedata *data, t_errdata *err)
 {
 	int		i;
 	char	*errstr;
@@ -108,27 +123,6 @@ void	finish(t_cmdtable *tbl, t_exedata *data, t_errdata *err)
 			unlink(data->path[i]);
 		i++;
 	}
-}
-
-//set output for the last command
-int	lastcmd(t_cmdtable *row, t_exedata *data, char *envp[], t_errdata *err)
-{
-	outopen(row, &data->outfd, NXT, err);
-	if (row->nouts == 0)
-		data->outfd = dup(data->outtmpfd);
-	if (row->pipeid != 0 && data->pbreak != BR && (row - 1)->eflag != ERR)
-		redir_close(data->infd, 0, err);
-	if (err->stop != NXT)
-	{
-		if (row->cmd != NULL && env_change(row->cmd, row->nrows))
-		{
-			exe_builtin(row, envp, err, 1);
-			row->eflag = ERR;
-		}
-		else
-			create_child(row, envp, err);
-	}
-	return (0);
 }
 
 int	executor(t_cmdtable *tbl, char *envp[], t_errdata *err)

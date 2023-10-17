@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:25:26 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 08:37:53 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,6 @@ char	**copy_arr(char **newarr, char **arr)
 	}
 	newarr[i] = NULL;
 	return (newarr);
-}
-
-//frees a string
-void	free_str(char **s)
-{
-	//if (*s != NULL)
-	//{
-	//	//dprintf(2, "s %p\n", s);
-	//	free(*s);
-	//	*s = NULL;
-	//	//dprintf(2, "s %p\n", s);
-	//}
 }
 
 //returns length of a null ending array of srings including null

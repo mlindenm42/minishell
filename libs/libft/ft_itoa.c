@@ -6,13 +6,12 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:34:22 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:18:13 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:42:35 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "../../sources/trash/trash.h"
-#include "../../includes/structs.h"
+#include "../../includes/minishell.h"
 
 static long	power(int n, int unsigned p)
 {
@@ -76,7 +75,7 @@ char	*ft_itoa(int n, t_errdata *err)
 	int		len;
 
 	len = get_length(n);
-	str = create_pile(&err->gc, sizeof(char), len + 1);
+	str = create_elem(&err->gc, sizeof(char), len + 1);
 	if (str == 0)
 		return (0);
 	else if (n == -2147483648)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_sort.c                                      :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/09/27 20:01:13 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 08:13:01 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //helper function for sorting
 //returns 1 if the first string is smaller
-int	issmaller(char *str1, char *str2)
+static int	issmaller(char *str1, char *str2)
 {
 	int	len1;
 	int	len2;
@@ -28,7 +28,7 @@ int	issmaller(char *str1, char *str2)
 
 //helper function for sorting
 //replaces an element of the array with the smallest
-void	replace(char **arr, int ind, int n)
+static void	replace(char **arr, int ind, int n)
 {
 	int		i;
 	char	*tmp;

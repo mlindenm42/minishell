@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:11:52 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 22:15:25 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:42:11 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,27 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-#include "../sources/trash/trash.h"
+typedef struct s_free_elem
+{
+	void				*elem;
+	void				(*free_func)(void	*piece);
+	struct s_free_elem	*next;
+}t_free_elem;
+
+typedef struct s_free_all
+{
+	void				*all;
+	void				(*free_func)(void	*piece);
+	struct s_free_all	*next;
+}t_free_all;
+
+typedef struct s_free
+{
+	t_free_elem	*elem;
+	t_free_all	*all;
+	int			elemcounter;
+	int			allcounter;
+}t_free;
 
 typedef struct s_tkn
 {
@@ -80,7 +100,7 @@ typedef struct s_errdata
 	t_cmdtable	*tbl;
 	t_exedata	*edata;
 	char		**envp;
-	t_gc		gc;
+	t_free		gc;
 }	t_errdata;
 
 typedef struct s_data {

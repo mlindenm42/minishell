@@ -6,14 +6,14 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 02:30:32 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 08:05:11 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 //checks if env has PWD
-int	haspwd(char *envp[])
+static int	haspwd(char *envp[])
 {
 	int	i;
 	int	pwd;
@@ -32,7 +32,7 @@ int	haspwd(char *envp[])
 }
 
 //checks if env has OLDPWD
-int	hasoldpwd(char *envp[])
+static int	hasoldpwd(char *envp[])
 {
 	int	i;
 	int	oldpwd;
@@ -48,6 +48,18 @@ int	hasoldpwd(char *envp[])
 		i++;
 	}
 	return (oldpwd);
+}
+
+void	pwd(void)
+{
+	char	*curdir;
+
+	curdir = getcwd(NULL, 0);
+	if (curdir != NULL)
+	{
+		printf("%s\n", curdir);
+		free(curdir);
+	}
 }
 
 int	cd(char *argv[], char *envp[], t_errdata *err)
@@ -72,37 +84,4 @@ int	cd(char *argv[], char *envp[], t_errdata *err)
 	else
 		envappend(temp, envp);
 	return (0);
-}
-
-void	pwd(void)
-{
-	char	*curdir;
-
-	curdir = getcwd(NULL, 0);
-	if (curdir != NULL)
-	{
-		printf("%s\n", curdir);
-		free(curdir);
-	}
-}
-
-void	exitbuiltin(char *argv[], t_errdata *err)
-{
-	int		stat;
-	char	*tmp;
-
-	stat = 0;
-	if (argv[1] != NULL && argv[2] == NULL)
-	{
-		stat = ft_atoi(argv[1]);
-		if (stat == 0)
-		{
-			tmp = ft_strjoin(argv[1], ": numeric argument required", err);
-			custom_err("bash: exit", tmp, err);
-			stat = 255;
-		}
-	}
-	printf("exit\n");
-	burn_it_down(&err->gc, err->gc.dump);
-	exit(stat);
 }

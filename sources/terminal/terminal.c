@@ -6,11 +6,31 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 22:31:13 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:18:50 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+// This function configures the terminal settings to hide the control characters
+// and sets the prompt for a program called "MINISHELL."
+static void	setup_terminal(void)
+{
+	struct termios	settings;
+
+	tcgetattr(STDIN_FILENO, &settings);
+	settings.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &settings);
+	get_data()->prompt = "MINISHELL : ";
+}
+
+// handles ctrl-D. Exits the shell.
+static void	handle_ctrl_d(t_errdata *err)
+{
+	free_data(&err->gc, err->gc.elem);
+	printf("exit\n");
+	exit(EXIT_FAILURE);
+}
 
 // handles ctrl-C. Displays a new prompt on a new line.
 void	handle_ctrl_c(int signal)
@@ -24,31 +44,11 @@ void	handle_ctrl_c(int signal)
 	}
 }
 
-// handles ctrl-D. Exits the shell.
-void	handle_ctrl_d(t_errdata *err)
-{
-	burn_it_down(&err->gc, err->gc.dump);
-	printf("exit\n");
-	exit(EXIT_FAILURE);
-}
-
 // handles ctrl-\. Does nothing.
 void	handle_ctrl_backslash(int signal)
 {
 	if (signal == SIGQUIT)
 		rl_redisplay();
-}
-
-// This function configures the terminal settings to hide the control characters
-// and sets the prompt for a program called "MINISHELL."
-static void	setup_terminal(void)
-{
-	struct termios	settings;
-
-	tcgetattr(STDIN_FILENO, &settings);
-	settings.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &settings);
-	get_data()->prompt = "MINISHELL : ";
 }
 
 // This function sets up a terminal, processes user input in a loop, and handles
@@ -74,9 +74,7 @@ void	terminal(char *envp[], t_errdata *err)
 		signal(SIGQUIT, SIG_IGN);
 		lexer(get_data()->input, err);
 		execute(envp, err);
-		// free(get_data()->input);
 		get_data()->input = NULL;
-		// free_tokens();
 	}
 	rl_clear_history();
 }

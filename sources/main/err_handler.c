@@ -6,32 +6,20 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:32:01 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:25:47 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:18:50 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-//for now it frees only a row of a cmd table pointed by the argument
-//to be completed later
-
 // free structure and output error
 void	errfree(t_errdata *err, void *struc, void (*del)(void *), int stop)
 {
-	// char	*pref;
-
 	err->stop = stop;
 	err->stat = 1;
 	if (del != NULL && struc != NULL)
 		del(struc);
 	perror("minishell");
-}
-
-void	setstatstr(t_errdata *err)
-{
-	if (err->statstr != NULL)
-		free_str(&err->statstr);
-	err->statstr = ft_itoa(err->stat, err);
 }
 
 void	custom_err(char *pref, const char *txt, t_errdata *err)
@@ -81,13 +69,11 @@ void	cmderr(t_errdata *err, void *cmd, int stop)
 	}
 	else if (ft_strchr(cmd, '/') == NULL)
 	{
-		//dprintf(2, " %i\n", err->edata->id[0]);
 		custom_err(tmp, "command not found", err);
 	}
 	else
 		perror(tmp);
-	freeall(err);
-	burn_it_down(&err->gc, err->gc.dump);
+	free_data(&err->gc, err->gc.elem);
 	exit(err->stat);
 }
 
@@ -112,6 +98,5 @@ void	cmderr1(t_errdata *err, void *cmd, char *envp[], int stop)
 	else
 		custom_err(tmp, "command not found", err);
 	free(tmp);
-	freeall(err);
 	exit(err->stat);
 }

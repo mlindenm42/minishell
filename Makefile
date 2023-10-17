@@ -6,29 +6,29 @@
 #    By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 15:23:37 by mrubina           #+#    #+#              #
-#    Updated: 2023/10/17 05:44:13 by mlindenm         ###   ########.fr        #
+#    Updated: 2023/10/17 10:33:47 by mlindenm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
 CC			=	cc
-# CFLAGS		=	-Wall -Werror -Wextra
-SANITIZE 	= 	-g -fsanitize=address
+CFLAGS		=	-Wall -Werror -Wextra
+# SANITIZE 	= 	-g -fsanitize=address
 # SANITIZE 	= 	-LLeakSanitizer -llsan -lc++
 # valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./minishell
 
 SRC_DIR		=	sources
 OBJ_DIR		=	$(SRC_DIR)/obj
 
-SRC_M		=	main.c err_handler.c free.c array_utils.c execute.c
-SRC_P		= 	parser.c parser_utils.c testfunc.c getpath.c var_check.c
-SRC_E		= 	executor.c exe_utils.c heredoc.c hdutils.c ins_outs.c expander.c vars.c quote_utils.c
-SRC_B		=	echo.c cd.c builtin_utils.c export.c env.c unset.c export_sort.c
-SRC_T		=	free_terminal.c get_next_token.c lexer.c terminal.c token.c
-SRC_G		=	dump.c garbage_truck.c
 
-SRC 		= 	$(SRC_P) $(SRC_M) $(SRC_E) $(SRC_B) $(SRC_T) $(SRC_G)
+SRC_B		=	builtin_utils.c cd.c echo.c env.c env_utils.c  export_utils.c export.c unset.c
+SRC_E		= 	exe_utils.c executor.c expander.c heredoc.c ins_outs.c quote_utils.c vars.c
+SRC_M		=	array_utils.c err_handler.c execute.c free_data.c main.c
+SRC_P		= 	getpath.c parser_utils.c parser.c var_check.c
+SRC_T		=	free_terminal.c get_next_token.c lexer.c terminal.c token.c
+
+SRC 		= 	$(SRC_B) $(SRC_E) $(SRC_M) $(SRC_P) $(SRC_T)
 
 OBJ 		= 	$(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 

@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ins_outs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 18:45:33 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 10:43:43 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+//sets error flag for the pipeline and prints out error
+static void	seterr(t_cmdtable *row, int i, t_errdata *err, int stop)
+{
+	row->eflag = ERR;
+	err_handler(err, row->outfiles[i].file, stop);
+}
 
 /* handling infiles
 	in case of an error at least in one of the files process
@@ -45,13 +52,6 @@ void	inopen(t_cmdtable *row, int *fd, char *hdpath, t_errdata *err)
 	}
 }
 
-//sets error flag for the pipeline and prints out error
-static void	seterr(t_cmdtable *row, int i, t_errdata *err, int stop)
-{
-	row->eflag = ERR;
-	err_handler(err, row->outfiles[i].file, stop);
-}
-
 /*
 opening fds one by one
 1) check if access permited (if denied we don't execute this pipe)
@@ -67,7 +67,7 @@ int	outopen(t_cmdtable *row, int *fd, int stop, t_errdata *err)
 	while (i <= row->nouts - 1)
 	{
 		if ((access(row->outfiles[i].file, W_OK) == -1 && errno == EACCES)
-			|| !varvalid(row->outfiles[i].file, err->envp))
+			|| !valid(row->outfiles[i].file, err->envp))
 		{
 			seterr(row, i, err, stop);
 			return (1);

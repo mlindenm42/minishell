@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:36:21 by mrubina           #+#    #+#             */
-/*   Updated: 2022/12/16 17:46:45 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 06:03:58 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	get_length(int n)
 	{
 		n = -n;
 		count = 1;
-	}	
+	}
 	else
 		count = 0;
 	while (n > 0)
@@ -48,7 +48,7 @@ static int	get_length(int n)
 	return (count);
 }
 
-/* 
+/*
 prints positive integer
  */
 static void	positive_tostr(int n, int len, int fd)

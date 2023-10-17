@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:24:36 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:23:51 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ int	heredoc(t_cmdtable *tbl, t_exedata *data, t_errdata *err)
 	int	i;
 
 	i = 0;
-	data->path = create_pile(&err->gc, sizeof(char *), (tbl->nrows + 1));
+	data->path = create_elem(&err->gc, sizeof(char *), (tbl->nrows + 1));
 	if (data->path == NULL)
 	{
-		errfree(err, &data, &free_exedt, CNT);
+		errfree(err, &data, NULL, CNT);
 		return (1);
 	}
 	data->path[tbl->nrows] = NULL;

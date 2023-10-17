@@ -6,13 +6,12 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:34:53 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:19:53 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:23:51 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "../../sources/trash/trash.h"
-#include "../../includes/structs.h"
+#include "../../includes/minishell.h"
 
 char	*ft_strtrim(char const *s1, char const *set, t_errdata *err)
 {
@@ -29,9 +28,9 @@ char	*ft_strtrim(char const *s1, char const *set, t_errdata *err)
 		while ((ft_strchr(set, *end) != 0) && (end != s1))
 			end--;
 		if (start > end)
-			str = create_pile(&err->gc, sizeof(char), 1);
+			str = create_elem(&err->gc, sizeof(char), 1);
 		else
-			str = create_pile(&err->gc, sizeof(char), end - start + 2);
+			str = create_elem(&err->gc, sizeof(char), end - start + 2);
 		if ((start <= end) && (str != 0))
 			ft_strlcpy(str, start, end - start + 2);
 		else if (str != 0)

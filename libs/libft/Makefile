@@ -6,7 +6,7 @@
 #    By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/13 19:18:45 by mrubina           #+#    #+#              #
-#    Updated: 2023/10/16 22:17:17 by mlindenm         ###   ########.fr        #
+#    Updated: 2023/10/17 10:00:59 by mlindenm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 	ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c\
 	ft_lstclear_bonus.c ft_lstdelone_bonus.c ft_lstlast_bonus.c ft_lstnew_bonus.c ft_lstsize_bonus.c \
 	ft_lstiter_bonus.c ft_lstmap_bonus.c ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c \
-	dump.c garbage_truck.c
+	free_data_libft.c
 
 OBJS = $(SRCS:.c=.o)
 FLAGS  = -Wall -Werror -Wextra

@@ -6,31 +6,20 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:14:35 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 22:27:12 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:20:23 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// dprintf(2, "p %p\n", str);
-// dprintf(2, "t %s\n", str);
-//printf("s %s\n", start);
-
-t_data	*get_data(void)
+static void	init_gc(t_errdata *err)
 {
-	static t_data	all_t_data;
-
-	return (&all_t_data);
-}
-
-void	init_gc(t_errdata *err)
-{
-	err->gc.dump = malloc(sizeof(t_dump));
-	if (!err->gc.dump)
+	err->gc.elem = malloc(sizeof(t_free_elem));
+	if (!err->gc.elem)
 		printf("kekw!");
-	err->gc.dump->garbage_pile = NULL;
-	err->gc.dump->next = NULL;
-	err->gc.dump_status = 1;
+	err->gc.elem->elem = NULL;
+	err->gc.elem->next = NULL;
+	err->gc.elemcounter = 1;
 }
 
 //err->envmem_end pointer to the end of the last used character of the
@@ -45,6 +34,13 @@ static void	errinit(t_errdata *err, char *envp[])
 	err->tbl = NULL;
 	err->envp = envp;
 	init_gc(err);
+}
+
+t_data	*get_data(void)
+{
+	static t_data	all_t_data;
+
+	return (&all_t_data);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -62,12 +58,6 @@ int	main(int argc, char *argv[], char *envp[])
 	errinit(&err, envp);
 	set_loc_env(envp, &err);
 	terminal(envp, &err);
-	burn_it_down(&err.gc, err.gc.dump);
+	free_data(&err.gc, err.gc.elem);
 	return (0);
 }
-
-// leaks
-// expander
-// echo "$PATH"sf <- auch expander
-// pipes
-// cd

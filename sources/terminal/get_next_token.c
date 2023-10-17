@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 23:55:11 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 22:30:23 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:23:51 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	get_next_token(char **input, t_errdata *err)
 {
 	get_data()->slist = NULL;
 	get_data()->slistend = NULL;
-	get_data()->slist = create_pile(&err->gc, sizeof(t_stringlist), 1);
+	get_data()->slist = create_elem(&err->gc, sizeof(t_stringlist), 1);
 	get_data()->slistend = get_data()->slist;
 	get_data()->slistend->next = NULL;
 	get_data()->slistend->character = '\0';

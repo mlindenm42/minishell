@@ -6,14 +6,11 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/16 22:28:53 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:23:51 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-//printf("end pipe%i, %s\n", tkn->type, tkn->val);
-//printf("nd token%i, %s\n", tkn->type, tkn->val);
-//printf("%i\n", pipes);
 
 //writing io_part to a row
 static void	iototbl(t_tkn *tkn, t_cmdtable *row)
@@ -53,41 +50,33 @@ static void	cmdtotbl(t_tkn *tkn, t_cmdtable *row, char *envp[], t_errdata *err)
 //fills a row of the table (one pipe)
 //returns either the token that should go to the next row
 //or the last token in the token array
-t_tkn	*to_row(t_tkn *tkn, t_cmdtable *row, int npipes,  t_errdata *err)
+static t_tkn	*to_row(t_tkn *t, t_cmdtable *row, int npipes, t_errdata *err)
 {
-	t_tkn	*tkn0;
+	t_tkn	*t_copy;
 
-	//free(tkn);
-	//dprintf(2, " %s\n", tkn->val);
-	while (tkn->type == WORD && !varvalid(tkn->val, err->envp))
-		tkn++;
-	tkn0 = tkn;
-	//dprintf(2, "pointer to tkn0 %p\n", tkn0);
-	//dprintf(2, "pointer to tkns %p\n", tkn);
-	//dprintf(2, "pipeid %i\n", row->pipeid);
+	while (t->type == WORD && !valid(t->val, err->envp))
+		t++;
+	t_copy = t;
 	if (row->pipeid < npipes - 1)
 		(row + 1)->pipeid = row->pipeid + 1;
-	while (tkn->type != PIPE && tkn->type != END)
+	while (t->type != PIPE && t->type != END)
 	{
-		if (tkn->type == WORD)
+		if (t->type == WORD)
 		{
-			//dprintf(2, "pointer to tkns %p\n", tkn);
-			//dprintf(2, "tt %s\n", tkn0->val);
-			if ((tkn == tkn0 || (tkn - 2 >= tkn0 && (tkn - 2)->type >= GT
-						&& (tkn - 2)->type <= LLT))
-						&& varvalid(tkn->val, err->envp))
-					cmdtotbl(tkn, row, err->envp, err);
-			else if ((tkn - 1)->type >= GT && (tkn - 1)->type <= LLT)
-				iototbl(tkn, row);
-			else if (varvalid(tkn->val, err->envp))
-				argtotbl(tkn, row);
+			if ((t == t_copy || (t - 2 >= t_copy && (t - 2)->type >= GT
+						&& (t - 2)->type <= LLT)) && valid(t->val, err->envp))
+				cmdtotbl(t, row, err->envp, err);
+			else if ((t - 1)->type >= GT && (t - 1)->type <= LLT)
+				iototbl(t, row);
+			else if (valid(t->val, err->envp))
+				argtotbl(t, row);
 		}
-		tkn++;
+		t++;
 	}
 	row->args[row->nargs] = NULL;
-	if (tkn->type != END)
-		return (tkn + 1);
-	return (tkn);
+	if (t->type != END)
+		return (t + 1);
+	return (t);
 }
 
 //takes an array of tokens and outputs the command table
@@ -100,7 +89,7 @@ t_cmdtable	*parser(t_tkn *tkns, t_errdata *err)
 
 	tkn = tkns;
 	pipes = calcpipes(tkns);
-	err->tbl = create_pile(&err->gc, sizeof(t_cmdtable), pipes);
+	err->tbl = create_elem(&err->gc, sizeof(t_cmdtable), pipes);
 	err->tbl->eflag = 0;
 	row = err->tbl;
 	if (err->tbl == NULL)

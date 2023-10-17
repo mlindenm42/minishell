@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 23:45:47 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/16 22:31:33 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:23:51 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	create_tokenword(int type, t_errdata *err)
 	get_data()->tlistend->token.type = type;
 	actual = get_data()->slist;
 	get_data()->tlistend->token.val = NULL;
-	get_data()->tlistend->token.val = create_pile(&err->gc, sizeof(char), get_slist_length());
+	(get_data()->tlistend->token.val
+			= create_elem(&err->gc, sizeof(char), get_slist_length()));
 	i = 0;
 	while (actual->next != NULL)
 	{
@@ -44,7 +45,6 @@ void	create_tokenword(int type, t_errdata *err)
 		actual = actual->next;
 	}
 	get_data()->tlistend->token.val[i] = '\0';
-	//free_stringlist();
 }
 
 void	create_token(int type, const char *val, t_errdata *err)
@@ -53,7 +53,7 @@ void	create_token(int type, const char *val, t_errdata *err)
 	get_data()->tlistend->token.type = type;
 	get_data()->tlistend->token.val = NULL;
 	if (type != END)
-		get_data()->tlistend->token.val = ft_strdup(val, err);
+		(get_data()->tlistend->token.val = ft_strdup(val, err));
 }
 
 void	tokenlist_to_array(t_errdata *err)
@@ -69,8 +69,8 @@ void	tokenlist_to_array(t_errdata *err)
 		actual = actual->next;
 	}
 	get_data()->tokens = NULL;
-	get_data()->tokens
-	= create_pile(&err->gc, sizeof(t_tkn), get_data()->tokenslength);
+	(get_data()->tokens
+			= create_elem(&err->gc, sizeof(t_tkn), get_data()->tokenslength));
 	i = 0;
 	actual = get_data()->tlist;
 	while (i < get_data()->tokenslength)
@@ -81,17 +81,3 @@ void	tokenlist_to_array(t_errdata *err)
 		i++;
 	}
 }
-
-// void	print_tokens(void)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (get_data()->tokens[i].type != END)
-// 	{
-// 		printf("Token type: %d, Value: %s\n",
-// 			get_data()->tokens[i].type, get_data()->tokens[i].val);
-// 		i++;
-// 	}
-// 	printf("Token type: %d\n", get_data()->tokens[i].type);
-// }
