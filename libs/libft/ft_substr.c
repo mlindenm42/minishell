@@ -6,14 +6,15 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:27:46 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 16:41:09 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 21:59:32 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "../../includes/minishell.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len, t_errdata *err)
+char	*ft_substr(char const *s, unsigned int start,
+		size_t len, t_errdata *err)
 {
 	char	*substr;
 	size_t	str_len;
