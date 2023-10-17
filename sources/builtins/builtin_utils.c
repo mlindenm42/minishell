@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 10:18:50 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 13:26:22 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 int	isbuiltin(char *cmd)
 {
-	return (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "cd") == 0
-		|| ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "export") == 0
-		|| ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "env") == 0
-		|| ft_strcmp(cmd, "exit") == 0);
+	if (cmd == NULL)
+		return (0);
+	else
+		return (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "cd") == 0
+			|| ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "export") == 0
+			|| ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "env") == 0
+			|| ft_strcmp(cmd, "exit") == 0);
 }
 
 int	env_change(char *cmd, int nrows)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 08:23:47 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 13:23:54 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,19 @@ static void	expand_word(char **word, t_errdata *err)
 	char	*str_end;
 	char	*next;
 
-	str_end = *word + ft_strlen(*word) - 1;
-	offset = ft_strlen(*word) - 1;
-	next = *word;
-	while (offset > 0)
+	if (*word != NULL)
 	{
-		offset = replace_q(word, next, err);
-		if (offset == 0)
-			break ;
 		str_end = *word + ft_strlen(*word) - 1;
-		next = str_end - offset + 1;
+		offset = ft_strlen(*word) - 1;
+		next = *word;
+		while (offset > 0)
+		{
+			offset = replace_q(word, next, err);
+			if (offset == 0)
+				break ;
+			str_end = *word + ft_strlen(*word) - 1;
+			next = str_end - offset + 1;
+		}
 	}
 }
 

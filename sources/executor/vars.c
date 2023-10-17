@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 08:34:06 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 14:01:28 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*skip_var(char *start)
 	while ((*cur != '\0' && ft_isalnum(*cur) == 1)
 		|| ft_isalpha(*cur) == 1 || *cur == '_')
 		cur++;
-	return (cur);
+	dprintf(2, "skip %s\n", cur);	return (cur);
 }
 
 //given variable start ($) and end, returns its value
@@ -54,6 +54,7 @@ static char	*varsubst(char **str, char *start, char *envp[], t_errdata *err)
 	int		len;
 
 	after_var = skip_var(start);
+	dprintf(2, "vsubst%s\n", after_var);
 	if (start == *str && *after_var == '\0' && !valid(start, envp))
 		return (after_var);
 	value = get_value(start, after_var - 1, err->statstr, envp);
@@ -90,6 +91,7 @@ void	varscan(char **word, char *envp[], t_errdata *err)
 	while (cur != NULL && *cur != '\0')
 	{
 		cur = ft_strchr(cur, '$');
+		dprintf(2, "vsubst %s\n", cur);
 		if (cur != NULL)
 			cur = varsubst(word, cur, envp, err);
 	}

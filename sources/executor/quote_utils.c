@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 12:45:42 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 13:07:50 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ char	*cropjoin2(char *str, char *qpart, int len, t_errdata *err)
 	char	*rtn;
 
 	part1 = ft_substr(str, 0, len);//malloc
+	varscan(&part1, err->envp, err);
 	rtn = ft_strjoin(part1, qpart, err);//malloc
 	free(part1);
 	return (rtn);
@@ -175,6 +176,7 @@ char	*cropjoin3(char *str, char *qpart, char *start, t_errdata *err)
 	char	*part2;
 
 	part1 = ft_substr(str, 0, start - str);//malloc
+	varscan(&part1, err->envp, err);
 	part2 = closingquote(start, *start) + 1;
 	rtn = strjoin3(part1, qpart, part2, err);//malloc
 	free(part1);
