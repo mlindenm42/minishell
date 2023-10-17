@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:14:06 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/17 10:18:50 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 12:22:58 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int ch_flag)
 {
-	t_cmdtable	*tbl;
-
 	if (ft_strcmp(row->args[0], "echo") == 0)
 		echo(row->args);
 	else if (ft_strcmp(row->args[0], "pwd") == 0)
@@ -68,7 +66,6 @@ void	exe_builtin(t_cmdtable *row, char *envp[], t_errdata *err, int ch_flag)
 		exitbuiltin(row->args, err);
 	if (ch_flag == 0)
 	{
-		tbl = row - row->pipeid;
 		free_data(&err->gc, err->gc.elem);
 		exit(0);
 	}
