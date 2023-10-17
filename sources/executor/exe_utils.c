@@ -6,7 +6,7 @@
 /*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 02:14:06 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/17 15:17:40 by mrubina          ###   ########.fr       */
+/*   Updated: 2023/10/17 23:42:45 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	create_child(t_cmdtable *row, char *envp[], t_errdata *err)
 		else if (execve(row->cmd, row->args, envp) == -1)
 			cmderr(err, row->cmd, CNT);
 	}
-	close(err->edata->infd);
-	err->edata->infd = dup(STDIN_FILENO);
 	return (err->stop);
 }
+	// close(err->edata->infd);
+	// err->edata->infd = dup(STDIN_FILENO);
