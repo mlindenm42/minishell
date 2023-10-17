@@ -6,7 +6,7 @@
 /*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 21:57:23 by mlindenm          #+#    #+#             */
-/*   Updated: 2023/10/17 10:18:50 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/17 20:22:06 by mlindenm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	terminal(char *envp[], t_errdata *err)
 		signal(SIGQUIT, SIG_IGN);
 		lexer(get_data()->input, err);
 		execute(envp, err);
+		free(get_data()->input);
 		get_data()->input = NULL;
 	}
 	rl_clear_history();
