@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ins_outs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlindenm <mlindenm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrubina <mrubina@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 22:04:43 by mrubina           #+#    #+#             */
-/*   Updated: 2023/10/17 10:43:43 by mlindenm         ###   ########.fr       */
+/*   Updated: 2023/10/18 02:38:03 by mrubina          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,13 @@ void	midouts(t_cmdtable *row, t_exedata *data, t_errdata *err)
 {
 	if (row->nouts != 0)
 	{
-		outopen(row, &data->outfd, NXT, err);
+		outopen(row, &(data->outfd), NXT, err);
 		data->pbreak = BR;
 		if (err->stop != NXT)
 		{
+			dprintf(2, "%i\n", err->stop);
+			close(data->infd);
+			data->infd = open("/dev/null", O_RDONLY);
 			if (access(row->cmd, F_OK) == -1 || access(row->cmd, X_OK) == -1)
 				data->pbreak = NB;
 		}
